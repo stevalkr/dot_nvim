@@ -10,13 +10,13 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-local conf = require('plug_configs')
+local conf = require('configs')
 
 return require('packer').startup({ function(use)
   use 'wbthomason/packer.nvim'
 
   -- plugins
-  use({'ryanoasis/vim-devicons'})
+  use({ 'ryanoasis/vim-devicons' })
   use({
     'SmiteshP/nvim-navic',
     requires = 'neovim/nvim-lspconfig'
@@ -28,14 +28,14 @@ return require('packer').startup({ function(use)
   use({
     'lewis6991/gitsigns.nvim',
     config = conf.gitsigns,
-    event = {'BufReadPost', 'BufNewFile'},
+    event = { 'BufReadPost', 'BufNewFile' },
   })
   use({
     'rcarriga/nvim-notify',
     config = conf.notify
   })
-  use({'nvim-lua/popup.nvim'})
-  use({'nvim-lua/plenary.nvim'})
+  use({ 'nvim-lua/popup.nvim' })
+  use({ 'nvim-lua/plenary.nvim' })
   use({
     'rainbowhxch/accelerated-jk.nvim',
     config = conf.accelerated_jk,
@@ -88,6 +88,14 @@ return require('packer').startup({ function(use)
     after = 'nvim-treesitter',
   })
   use({
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  })
+  use({
+    'andymass/vim-matchup',
+    after = 'nvim-treesitter',
+  })
+  use({
     'windwp/nvim-autopairs',
     config = conf.autopairs,
     event = 'InsertEnter',
@@ -131,12 +139,12 @@ return require('packer').startup({ function(use)
   use({
     'michaelb/sniprun',
     config = conf.sniprun,
-    ft = {'cpp', 'c', 'python', 'lua', 'go', 'cmake'}
+    ft = { 'cpp', 'c', 'python', 'lua', 'go', 'cmake' }
   })
   use({
     'mfussenegger/nvim-dap',
     config = conf.dap,
-    ft = {'cpp', 'go'},
+    ft = { 'cpp', 'go' },
   })
   use({
     'rcarriga/nvim-dap-ui',
@@ -194,17 +202,17 @@ return require('packer').startup({ function(use)
   use({
     'github/copilot.vim',
     config = conf.copilot,
-    ft = {'cpp', 'c', 'python', 'lua', 'go', 'cmake'}
+    ft = { 'cpp', 'c', 'python', 'lua', 'go', 'cmake' }
   })
   use({
     'fatih/vim-go',
     run = ':GoUpdateBinaries',
     config = conf.vim_go,
-    ft = {'go'}
+    ft = { 'go' }
   })
   use({
     'buoto/gotests-vim',
-    ft = {'go'}
+    ft = { 'go' }
   })
 
 

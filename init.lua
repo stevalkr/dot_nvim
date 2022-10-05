@@ -1,3 +1,3 @@
-require('localconf')
-require('keymaps')
+require('settings')
+require('mappings')
 require('plugins')
