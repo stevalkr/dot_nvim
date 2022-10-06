@@ -184,7 +184,7 @@ return require('packer').startup({ function(use)
   use({
     'hrsh7th/nvim-cmp',
     config = conf.cmp,
-    event = 'InsertEnter',
+    -- event = 'InsertEnter',
     requires = {
       { 'saadparwaiz1/cmp_luasnip', after = 'LuaSnip' },
       { 'lukas-reineke/cmp-under-comparator' },
