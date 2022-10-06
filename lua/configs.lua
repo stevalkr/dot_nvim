@@ -404,6 +404,7 @@ function config.vim_go()
   vim.g.go_term_height = 10
   vim.g.go_term_close_on_exit = 0
   vim.g.go_list_type = "quickfix"
+	vim.g.go_fmt_autosave = 0
 end
 
 function config.telescope()
