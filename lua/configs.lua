@@ -6,8 +6,8 @@ norexpr = { noremap = true, silent = true, expr = true }
 
 
 function config.copilot()
-  vim.g.copilot_no_tab_map = true
   map('i', '<m-cr>', [[copilot#Accept("\<cr>")]], norexpr)
+  vim.g.copilot_no_tab_map = true
 end
 
 function config.lspconfig()

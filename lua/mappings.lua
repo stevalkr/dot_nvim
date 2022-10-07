@@ -10,6 +10,16 @@ map('n', '<esc>', [[<esc>:noh<cr>]], noremap)
 map('n', '<space>', [[viw]], noremap)
 map('i', 'jj', [[<esc>]], noremap)
 
+-- avoid copy
+map('n', 'x', [["_x]], noremap)
+map('n', 'X', [["_X]], noremap)
+map('n', 'D', [["_D]], noremap)
+map('n', 'C', [["_C]], noremap)
+map('n', 'cc', [["_cc]], noremap)
+-- map('n', 'dd', [["_dd]], noremap)
+map('v', 'c', [["_c]], noremap)
+-- map('v', 'd', [["_d]], noremap)
+
 -- windows
 map('n', '<c-s-q>', [[:qa<cr>]], noremap)
 map('n', '<leader>w', [[:bp | bd #<cr>]], noremap)
