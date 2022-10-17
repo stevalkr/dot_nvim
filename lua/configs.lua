@@ -245,9 +245,9 @@ end
 function config.mason_install()
   require('mason-tool-installer').setup {
     ensure_installed = {
-      -- 'clangd',
-      -- 'clang-format',
-      -- 'cpplint',
+      'clangd',
+      'clang-format',
+      'cpplint',
       'cmake-language-server',
       'cmakelang',
       'cspell',
@@ -481,6 +481,10 @@ function config.treesitter()
         scope_incremental = "<cr>",
         node_decremental = "<bs>",
       },
+    },
+
+    indent = {
+      enable = true
     },
 
     rainbow = {
