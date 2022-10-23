@@ -89,7 +89,7 @@ function config.lspconfig()
   table.insert(runtime_path, "lua/?/init.lua")
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
   require('lspconfig')['pyright'].setup {
     on_attach = on_attach,
@@ -645,10 +645,13 @@ function config.filetype()
 
       -- The same as the ones above except the keys map to functions
       function_extensions = {
+        ["c"] = function()
+          vim.bo.filetype = "c"
+        end,
         ["cpp"] = function()
           vim.bo.filetype = "cpp"
           -- Remove annoying indent jumping
-          vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
+          -- vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
         end,
         ["pdf"] = function()
           vim.bo.filetype = "pdf"
