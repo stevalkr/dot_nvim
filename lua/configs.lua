@@ -287,7 +287,7 @@ function config.dap()
   local t = io.popen('which lldb-vscode')
   if t then
     local lldb_path = string.sub(t:read("*all"), 1, -2)
-    vim.notify("found dap: " .. lldb_path)
+    -- vim.notify("found dap: " .. lldb_path)
     dap.adapters.lldb = {
       name = "lldb",
       type = "executable",

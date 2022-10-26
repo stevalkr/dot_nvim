@@ -139,7 +139,7 @@ return require('packer').startup({ function(use)
   use({
     'michaelb/sniprun',
     config = conf.sniprun,
-    ft = { 'cpp', 'c', 'python', 'lua', 'go', 'cmake' }
+    ft = { 'cpp', 'c', 'python', 'go' }
   })
   use({
     'mfussenegger/nvim-dap',
@@ -202,7 +202,7 @@ return require('packer').startup({ function(use)
   use({
     'github/copilot.vim',
     config = conf.copilot,
-    ft = { 'cpp', 'c', 'python', 'lua', 'go', 'cmake' }
+    -- ft = { 'cpp', 'c', 'python', 'lua', 'go', 'cmake' }
   })
   use({
     'fatih/vim-go',
