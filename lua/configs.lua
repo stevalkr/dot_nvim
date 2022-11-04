@@ -126,14 +126,14 @@ function config.lspconfig()
     },
   }
 
-  -- require('lspconfig')['rust_analyzer'].setup {
-  --   on_attach = on_attach,
-  --   flags = lsp_flags,
-  --   capabilities = capabilities,
-  --   settings = {
-  --     ["rust-analyzer"] = {}
-  --   }
-  -- }
+  require('lspconfig')['rust_analyzer'].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    settings = {
+      ["rust-analyzer"] = {}
+    }
+  }
 
   capabilities.offsetEncoding = { "utf-16" }
   require('lspconfig')['clangd'].setup {
