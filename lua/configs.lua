@@ -126,6 +126,15 @@ function config.lspconfig()
     },
   }
 
+  -- require('lspconfig')['rust_analyzer'].setup {
+  --   on_attach = on_attach,
+  --   flags = lsp_flags,
+  --   capabilities = capabilities,
+  --   settings = {
+  --     ["rust-analyzer"] = {}
+  --   }
+  -- }
+
   capabilities.offsetEncoding = { "utf-16" }
   require('lspconfig')['clangd'].setup {
     on_attach = on_attach,
@@ -404,7 +413,12 @@ function config.vim_go()
   vim.g.go_term_height = 10
   vim.g.go_term_close_on_exit = 0
   vim.g.go_list_type = "quickfix"
-	vim.g.go_fmt_autosave = 0
+  vim.g.go_fmt_autosave = 0
+end
+
+function config.rust()
+  vim.g.rust_recommended_style = 0
+  vim.g.rustfmt_autosave = 0
 end
 
 function config.telescope()

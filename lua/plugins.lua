@@ -214,6 +214,11 @@ return require('packer').startup({ function(use)
     'buoto/gotests-vim',
     ft = { 'go' }
   })
+  use({
+    'rust-lang/rust.vim',
+    config = conf.rust,
+    ft = { 'rust' }
+  })
 
 
   -- UI
