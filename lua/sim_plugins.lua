@@ -163,13 +163,14 @@ return require('packer').startup({ function(use)
 
   -- UI
   use({
-    'shaunsingh/nord.nvim',
+    -- 'shaunsingh/nord.nvim',
+    'arcticicestudio/nord-vim',
     config = conf.theme
   })
   use({
     'goolord/alpha-nvim',
     config = conf.alpha,
-    event = 'BufWinEnter',
+    -- event = 'BufWinEnter',
   })
   use({
     'glepnir/galaxyline.nvim',

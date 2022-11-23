@@ -53,6 +53,8 @@ map('i', '<a-h>', [[<left>]], noremap)
 map('i', '<a-j>', [[<down>]], noremap)
 map('i', '<a-k>', [[<up>]], noremap)
 map('i', '<a-l>', [[<right>]], noremap)
+map('i', '<c-a>', [[<c-o>I]], noremap)
+map('i', '<c-e>', [[<c-o>A]], noremap)
 
 map('n', '<c-u>', [[10k]], noremap)
 map('n', '<c-d>', [[10j]], noremap)
