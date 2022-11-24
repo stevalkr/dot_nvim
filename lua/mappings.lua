@@ -21,7 +21,7 @@ map('v', 'c', [["_c]], noremap)
 -- map('v', 'd', [["_d]], noremap)
 
 -- windows
-map('n', '<c-s-q>', [[:qa<cr>]], noremap)
+map('n', '<c-a-q>', [[:qa<cr>]], noremap)
 map('n', '<leader>w', [[:bp | bd #<cr>]], noremap)
 map('n', '<leader>e', [[:q<cr>]], noremap)
 
@@ -35,11 +35,11 @@ map('n', '<a-=>', [[:resize +1<cr>]], noremap)
 map('n', '<a-->', [[:resize -1<cr>]], noremap)
 
 -- terminal
-map('t', '<leader><esc>', [[<c-\><c-n>]], noremap)
-map('t', '<leader><c-h>', [[<c-\><c-n><c-W>h]], noremap)
-map('t', '<leader><c-j>', [[<c-\><c-n><c-W>j]], noremap)
-map('t', '<leader><c-k>', [[<c-\><c-n><c-W>k]], noremap)
-map('t', '<leader><c-l>', [[<c-\><c-n><c-W>l]], noremap)
+map('t', '<esc>', [[<c-\><c-n>]], noremap)
+map('t', '<c-h>', [[<c-\><c-n><c-W>h]], noremap)
+map('t', '<c-j>', [[<c-\><c-n><c-W>j]], noremap)
+map('t', '<c-k>', [[<c-\><c-n><c-W>k]], noremap)
+map('t', '<c-l>', [[<c-\><c-n><c-W>l]], noremap)
 
 -- move
 map('n', '<c-h>', [[<c-w>h]], noremap)

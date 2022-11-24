@@ -752,9 +752,10 @@ function config.toggleterm()
       width = function(term)
         return math.ceil(vim.o.columns * 0.5)
       end,
-      height = 40,
+      height = math.ceil(vim.o.columns * 0.16),
       -- winblend = 3,
     },
+    direction = 'float',
   }
 
   map('n', ';t', [[:ToggleTerm<cr>]], noremap)
@@ -765,6 +766,11 @@ function config.toggleterm()
   map('n', '<leader>t3', [[:3ToggleTerm direction=horizontal size=15<cr>]], noremap)
   map('n', '<leader>t4', [[:4ToggleTerm direction=horizontal size=15<cr>]], noremap)
   map('n', '<leader>tt', [[:5ToggleTerm direction=float size=15<cr>]], noremap)
+  map('t', '<leader>t1', [[<c-\><c-n>:1ToggleTerm direction=horizontal size=15<cr>]], noremap)
+  map('t', '<leader>t2', [[<c-\><c-n>:2ToggleTerm direction=horizontal size=15<cr>]], noremap)
+  map('t', '<leader>t3', [[<c-\><c-n>:3ToggleTerm direction=horizontal size=15<cr>]], noremap)
+  map('t', '<leader>t4', [[<c-\><c-n>:4ToggleTerm direction=horizontal size=15<cr>]], noremap)
+  map('t', '<leader>tt', [[<c-\><c-n>:5ToggleTerm direction=float size=15<cr>]], noremap)
 end
 
 function config.better_escape()
