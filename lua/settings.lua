@@ -103,10 +103,10 @@ nvim_create_augroups({
       "*", [[:%s/\s\+$//e]]
     },
   -- auto_change_directory
-    {
-      "BufEnter",
-      "*", [[silent! lcd %:p:h]]
-    }
+    -- {
+    --   "BufEnter",
+    --   "*", [[silent! lcd %:p:h]]
+    -- }
   },
   yank = {
   -- highlight yank
