@@ -44,7 +44,7 @@ function config.lspconfig()
     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+    vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.formatting { async = true } end, bufopts)
 
     -- If Telescope is installed, use it for LSP code actions
     vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
@@ -145,7 +145,7 @@ function config.lspconfig()
       "clangd",
       "--background-index",
       "--pch-storage=memory",
-      "--clang-tidy",
+      -- "--clang-tidy",
       "--all-scopes-completion",
       "--cross-file-rename",
       "--completion-style=detailed",

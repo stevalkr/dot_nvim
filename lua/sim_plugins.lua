@@ -114,6 +114,14 @@ return require('packer').startup({ function(use)
     event = 'BufReadPre',
   })
   use({
+    'williamboman/mason.nvim',
+    config = conf.mason
+  })
+  use({
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    config = conf.mason_install
+  })
+  use({
     'ray-x/lsp_signature.nvim',
     after = 'nvim-lspconfig',
     config = conf.lsp_signature
