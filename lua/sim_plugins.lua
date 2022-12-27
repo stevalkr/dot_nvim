@@ -118,8 +118,8 @@ return require('packer').startup({ function(use)
     config = conf.mason
   })
   use({
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    config = conf.mason_install
+    'williamboman/mason-lspconfig.nvim',
+    config = conf.mason_lspconfig
   })
   use({
     'ray-x/lsp_signature.nvim',
