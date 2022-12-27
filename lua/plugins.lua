@@ -50,7 +50,7 @@ return require('packer').startup({ function(use)
     event = 'BufReadPost',
   })
   use({
-    'terrortylor/nvim-comment',
+    'numToStr/Comment.nvim',
     config = conf.comment,
     event = 'BufReadPost',
   })
