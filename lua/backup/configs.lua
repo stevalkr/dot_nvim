@@ -103,7 +103,7 @@ function config.lspconfig()
     capabilities = capabilities,
   }
 
-  require('lspconfig')['sumneko_lua'].setup {
+  require('lspconfig')['lua_ls'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -124,6 +124,19 @@ function config.lspconfig()
         },
       },
     },
+  }
+
+  require('lspconfig')['tsserver'].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+  }
+
+  require('lspconfig')['elixirls'].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    cmd = { "elixir-ls" },
   }
 
   require('lspconfig')['rust_analyzer'].setup {
@@ -468,7 +481,7 @@ function config.treesitter()
     -- A list of parser names, or "all"
     ensure_installed = { "c", "cpp", "cmake", "lua", "rust", "go",
       "bash", "comment", "python", "json", "yaml",
-      "html", "css", "javascript", "typescript", },
+      "html", "css", "javascript", "typescript", "elixir", "heex", "eex" },
 
     sync_install = false,
     auto_install = true,
@@ -1502,12 +1515,14 @@ function config.bufferline()
         items = {
           {
             name = "Tests", -- Mandatory
-            highlight = { undercurl = true, sp = "blue" }, -- Optional
+            -- highlight = { sp = "blue" }, -- Optional
             priority = 2, -- determines where it will appear relative to other groups (Optional)
             icon = "", -- Optional
             matcher = function(buf) -- Mandatory
               return buf.name:match('%_test') or buf.name:match('%_spec')
             end,
+            separator = { -- Optional
+              style = require('bufferline.groups').separator.tab },
           },
           {
             name = "Docs",
