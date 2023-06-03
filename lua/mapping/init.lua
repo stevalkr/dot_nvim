@@ -95,6 +95,8 @@ inoremap <silent> <A-h> <Left>
 inoremap <silent> <A-j> <Down>
 inoremap <silent> <A-k> <Up>
 inoremap <silent> <A-l> <Right>
+inoremap <silent> <C-a> <C-o>I
+inoremap <silent> <C-e> <C-o>A
 
 nnoremap <silent> <C-u> 10kzz
 nnoremap <silent> <C-d> 10jzz
