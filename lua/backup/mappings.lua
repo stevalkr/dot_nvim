@@ -5,7 +5,7 @@ local noremap = { noremap = true, silent = true }
 -- general
 map('n', '*', [[*``]], noremap)
 map('n', 'U', [[<c-R>]], noremap)
-map('v', '<c-c>', [["+y]], noremap)
+map('v', 'Y', [["+y]], noremap)
 map('n', '<esc>', [[<esc>:noh<cr>]], noremap)
 map('n', '<space>', [[viw]], noremap)
 map('i', 'jj', [[<esc>]], noremap)

@@ -42,6 +42,7 @@ vim.o.hlsearch = true
 vim.o.showmatch = true
 vim.o.laststatus = 2
 vim.o.termguicolors = true
+vim.o.splitkeep = 'screen'
 
 vim.g.mapleader = ','
 vim.g.cursorhold_updatetime = 100
