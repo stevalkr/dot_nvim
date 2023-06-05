@@ -76,8 +76,8 @@ return {
         attach_mappings = function(_, map)
           local Actions = require('auto-session.session-lens.actions')
           require('telescope.actions').select_default:replace(Actions.source_session)
-          map("i", "dd", Actions.delete_session)
-          map("i", ";s", Actions.alternate_session)
+          map("n", "dd", Actions.delete_session)
+          map("n", ";s", Actions.alternate_session)
           return true
         end,
       },

@@ -104,5 +104,12 @@ nvim_create_augroups({
       'TextYankPost',
       '*', [[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]],
     }
+  },
+  comment = {
+    -- set cpp line comment
+    {
+      'FileType',
+      'c,cpp,cs,java', [[setlocal commentstring=//\ %s]],
+    }
   }
 })
