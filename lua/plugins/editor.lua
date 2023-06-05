@@ -67,7 +67,7 @@ return {
     'rmagatti/auto-session',
     opts = {
       auto_session_suppress_dirs = { '~/', '~/*', '/', '/*' },
-      auto_session_allowed_dirs = { '~/.config/*' },
+      auto_session_allowed_dirs = { '~/.config/*', '/home/share/config/*' },
       auto_session_use_git_branch = true,
       session_lens = {
         load_on_setup = true,
