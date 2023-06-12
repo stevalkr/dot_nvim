@@ -107,9 +107,9 @@ nvim_create_augroups({
   },
   comment = {
     -- set cpp line comment
-    {
-      'FileType',
-      'c,cpp,cs,java', [[setlocal commentstring=//\ %s]],
-    }
+    -- {
+    --   'FileType',
+    --   'c,cpp,cs,java', [[setlocal commentstring=//\ %s]],
+    -- }
   }
 })

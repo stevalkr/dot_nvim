@@ -14,6 +14,14 @@ return {
     opts = {
       options = {
         ignore_blank_line = true,
+        custom_commentstring = function(_)
+          local filetype = vim.bo.filetype
+          for _, s in pairs({ 'cpp', 'c' }) do
+            if filetype == s then
+              return [[// %s]]
+            end
+          end
+        end,
       }
     },
   },
