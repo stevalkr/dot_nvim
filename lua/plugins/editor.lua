@@ -84,8 +84,8 @@ return {
         attach_mappings = function(_, map)
           local Actions = require('auto-session.session-lens.actions')
           require('telescope.actions').select_default:replace(Actions.source_session)
-          map("n", "dd", Actions.delete_session)
-          map("n", ";s", Actions.alternate_session)
+          map('n', 'dd', Actions.delete_session)
+          map('n', ';s', Actions.alternate_session)
           return true
         end,
       },
@@ -96,7 +96,7 @@ return {
       require('auto-session').setup(opts)
       require('telescope').load_extension('session-lens')
       local kopts = { noremap = true, silent = true }
-      vim.keymap.set('n', ';s', require("auto-session.session-lens").search_session, kopts)
+      vim.keymap.set('n', ';s', require('auto-session.session-lens').search_session, kopts)
     end
   },
 
