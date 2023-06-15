@@ -40,7 +40,7 @@ vim.opt.wildignore =
 '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
 vim.opt.wildignorecase = true
 
-vim.opt.nofoldenable = true
+vim.opt.foldenable = false
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
@@ -115,5 +115,20 @@ nvim_create_augroups({
     --   'FileType',
     --   'c,cpp,cs,java', [[setlocal commentstring=//\ %s]],
     -- }
-  }
+  },
+})
+
+vim.api.nvim_create_autocmd('UIEnter', {
+  callback = function()
+    if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
+      return
+    end
+    -- If it doesn't we check if it's empty
+    if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
+      local session_lens = require('auto-session.session-lens')
+      if session_lens then
+        session_lens.search_session()
+      end
+    end
+  end,
 })
