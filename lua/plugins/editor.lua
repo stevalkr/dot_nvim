@@ -52,6 +52,7 @@ return {
   {
     'j-hui/fidget.nvim',
     event = 'BufReadPost',
+    tag = 'legacy',
     opts = {
       window = { blend = 0 },
     }

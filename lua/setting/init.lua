@@ -40,6 +40,10 @@ vim.opt.wildignore =
 '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
 vim.opt.wildignorecase = true
 
+vim.opt.nofoldenable = true
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
 
 local function nvim_create_augroups(definitions)
   for group_name, definition in pairs(definitions) do
