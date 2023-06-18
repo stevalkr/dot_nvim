@@ -132,3 +132,11 @@ vim.api.nvim_create_autocmd('UIEnter', {
     end
   end,
 })
+
+local M = {}
+M.use_treesitter_fold = function()
+  vim.opt.foldenable = false
+  vim.opt.foldmethod = 'expr'
+  vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+end
+return M
