@@ -45,92 +45,140 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 
-local function nvim_create_augroups(definitions)
+local function augroup(definitions)
   for group_name, definition in pairs(definitions) do
-    vim.api.nvim_command('augroup ' .. group_name)
-    vim.api.nvim_command('autocmd!')
+    vim.api.nvim_create_augroup(group_name, { clear = true })
     for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
-      vim.api.nvim_command(command)
+      vim.api.nvim_create_autocmd(def.event, {
+        pattern = def.pattern,
+        group = group_name,
+        command = def.command,
+        callback = def.callback
+      })
     end
-    vim.api.nvim_command('augroup END')
   end
 end
 
-nvim_create_augroups({
-  inserts = {
-    -- relative_number
+augroup({
+  relative_number = {
     {
-      'InsertEnter',
-      '*', [[set norelativenumber]]
+      event = 'InsertEnter',
+      callback = function()
+        vim.opt.relativenumber = false
+      end
     },
     {
-      'InsertLeave',
-      '*', [[set relativenumber]]
+      event = 'InsertLeave',
+      callback = function()
+        vim.opt.relativenumber = true
+      end
     }
   },
+  highlight_current_line = {
+    {
+      event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
+      command = [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
+    },
+    {
+      event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
+      command = [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+    },
+  },
   wins = {
-    -- highlight_current_line
-    {
-      'WinLeave,BufLeave,InsertEnter',
-      '*', [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
-    },
-    {
-      'WinEnter,BufEnter,InsertLeave',
-      '*', [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
-    },
     -- check if file changed when its window is focus, more eager than 'autoread'
     {
-      'FocusGained',
-      '*', [[checktime]]
+      event = 'FocusGained',
+      command = [[checktime]]
     },
     -- equalize window dimensions when resizing vim window
     {
-      'VimResized',
-      '*', [[tabdo wincmd =]]
+      event = 'VimResized',
+      command = [[tabdo wincmd =]]
     },
   },
-  bufs = {
-    -- last_edit
+  last_edited = {
     {
-      'BufReadPost',
-      '*', [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
-    },
-    -- remove_spaces
-    {
-      'BufWritePre',
-      '*', [[:%s/\s\+$//e]]
+      event = 'BufReadPost',
+      callback = function(opts)
+        if vim.tbl_contains({ "quickfix", "nofile", "help" },
+              vim.bo.buftype) then
+          return
+        end
+
+        if vim.tbl_contains({ "gitcommit", "gitrebase", "svn", "hgcommit" },
+              vim.bo.filetype) then
+          vim.cmd([[normal! gg]])
+          return
+        end
+
+        if vim.api.nvim_win_get_cursor(0)[1] > 1 then
+          return
+        end
+
+        local ft = vim.bo[opts.buf].filetype
+        local last_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
+        local buff_last_line = vim.api.nvim_buf_line_count(opts.buf)
+
+        if not (ft:match('commit') and ft:match('rebase'))
+            and last_line > 0
+            and last_line <= buff_last_line then
+          local win_last_line = vim.fn.line("w$")
+          local win_first_line = vim.fn.line("w0")
+
+          if win_last_line == buff_last_line then
+            vim.cmd [[normal! g`"]]
+          elseif buff_last_line - last_line > ((win_last_line - win_first_line) / 2) - 1 then
+            vim.cmd [[normal! g`"zz]]
+          else
+            vim.cmd [[normal! G'"<c-e>]]
+          end
+        end
+      end
     },
   },
-  yank = {
-    -- highlight yank
+  tailing_spaces = {
     {
-      'TextYankPost',
-      '*', [[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]],
+      event = 'BufWritePre',
+      callback = function()
+        local save_cursor = vim.fn.getpos(".")
+        vim.cmd([[%s/\s\+$//e]])
+        vim.fn.setpos(".", save_cursor)
+      end,
+    },
+  },
+  highlight_yank = {
+    {
+      event = 'TextYankPost',
+      callback = function()
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 300 })
+      end
     }
   },
   comment = {
-    -- set cpp line comment
     -- {
-    --   'FileType',
-    --   'c,cpp,cs,java', [[setlocal commentstring=//\ %s]],
+    --   event = 'FileType',
+    --   pattern = 'c,cpp,cs,java',
+    --   command = [[setlocal commentstring=//\ %s]],
     -- }
   },
-})
+  auto_session = {
+    {
+      event = 'UIEnter',
+      callback = function()
+        if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
+          return
+        end
+        -- If it doesn't we check if it's empty
+        if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
+          local session_lens = require('auto-session.session-lens')
+          if session_lens then
+            session_lens.search_session()
+          end
+        end
+      end,
+    }
+  }
 
-vim.api.nvim_create_autocmd('UIEnter', {
-  callback = function()
-    if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
-      return
-    end
-    -- If it doesn't we check if it's empty
-    if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
-      local session_lens = require('auto-session.session-lens')
-      if session_lens then
-        session_lens.search_session()
-      end
-    end
-  end,
 })
 
 local M = {}
