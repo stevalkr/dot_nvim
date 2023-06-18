@@ -31,7 +31,11 @@ if os.getenv('NVIM') ~= nil then
   require('lazy').setup({
     'willothy/flatten.nvim',
     lazy = false,
-    opts = {},
+    opts = {
+      window = {
+        open = 'tab'
+      },
+    },
   })
 else
   require('lazy').setup('plugins')

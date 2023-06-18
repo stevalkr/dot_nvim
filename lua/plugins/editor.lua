@@ -75,7 +75,11 @@ return {
   {
     'willothy/flatten.nvim',
     lazy = false,
-    opts = {},
+    opts = {
+      window = {
+        open = 'tab'
+      },
+    },
   },
 
   {
