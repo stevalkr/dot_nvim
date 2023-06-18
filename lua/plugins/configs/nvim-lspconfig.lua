@@ -101,6 +101,26 @@ function M.config(_, _opts)
     capabilities = capabilities,
   })
 
+  lspconfig['tailwindcss'].setup({
+    capabilities = capabilities,
+    init_options = {
+      userLanguages = {
+        elixir = "html-eex",
+        eelixir = "html-eex",
+        heex = "html-eex",
+      },
+    },
+    settings = {
+      tailwindCSS = {
+        experimental = {
+          classRegex = {
+            'class[:]\\s*"([^"]*)"',
+          },
+        },
+      },
+    },
+  })
+
   lspconfig['rust_analyzer'].setup({
     capabilities = capabilities,
     settings = {
