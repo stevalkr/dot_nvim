@@ -43,6 +43,19 @@ M.config = function(_, _opts)
         }
       },
     },
+    pickers = {
+      buffers = {
+        initial_mode = 'normal',
+        mappings = {
+          i = {
+            ['<C-d>'] = actions.delete_buffer
+          },
+          n = {
+            ['dd'] = actions.delete_buffer
+          }
+        }
+      }
+    },
     extensions = {
       fzf = {
         fuzzy = true,
