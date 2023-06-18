@@ -15,7 +15,7 @@ require('mapping')
 -- plugins --
 -------------
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     'git',
     'clone',
@@ -27,5 +27,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('plugins')
-
+if os.getenv('NVIM') ~= nil then
+  require('lazy').setup({
+    'willothy/flatten.nvim',
+    lazy = false,
+    opts = {},
+  })
+else
+  require('lazy').setup('plugins')
+end

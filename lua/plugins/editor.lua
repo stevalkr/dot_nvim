@@ -73,6 +73,12 @@ return {
   },
 
   {
+    'willothy/flatten.nvim',
+    lazy = false,
+    opts = {},
+  },
+
+  {
     'rmagatti/auto-session',
     opts = {
       auto_session_suppress_dirs = { '~/', '~/*', '/', '/*' },

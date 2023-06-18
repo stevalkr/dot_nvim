@@ -59,7 +59,7 @@ function M.config(_, _opts)
     },
     on_attach = function(_client, _bufnr)
       local kopts = { noremap = true, silent = true }
-      vim.keymap.set('n', '<leader>s', '<Cmd>ClangdSwitchSourceHeader<CR>', kopts)
+      vim.keymap.set('n', '<leader>c', '<Cmd>ClangdSwitchSourceHeader<CR>', kopts)
     end
   })
 
@@ -177,6 +177,8 @@ function M.config(_, _opts)
         vim.keymap.set('n', 'gi', telescope.lsp_implementations, kopts)
         vim.keymap.set('n', 'gr', telescope.lsp_references, kopts)
         vim.keymap.set('n', '<leader>D', telescope.lsp_type_definitions, kopts)
+        vim.keymap.set('n', '<leader>s', telescope.lsp_document_symbols, kopts)
+        vim.keymap.set('n', '<leader>S', telescope.lsp_workspace_symbols, kopts)
       end
     end,
   })
