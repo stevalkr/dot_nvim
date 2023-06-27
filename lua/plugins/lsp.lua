@@ -3,7 +3,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
-    config = require('plugins.configs.nvim-lspconfig').config
+    config = require('configs.nvim-lspconfig').config
   },
 
   {
@@ -29,7 +29,7 @@ return {
       { 'hrsh7th/cmp-path' },
       { 'saadparwaiz1/cmp_luasnip' },
     },
-    config = require('plugins.configs.nvim-cmp').config
+    config = require('configs.nvim-cmp').config
   },
 
   {
@@ -38,7 +38,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
-    config = require('plugins.configs.null-ls').config
+    config = require('configs.null-ls').config
   },
 
 }

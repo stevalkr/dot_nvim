@@ -1,5 +1,5 @@
 local M = {}
-
+local utils = require('utils')
 
 M.current_bufr_dir = function(prompt_bufnr)
   local fb_utils = require('telescope._extensions.file_browser.utils')
@@ -106,23 +106,21 @@ M.config = function(_, _opts)
   require('telescope').load_extension('file_browser')
   -- require("telescope").load_extension("ui-select")
 
-  local utils = require('telescope.utils')
   local builtin = require('telescope.builtin')
   local extensions = require('telescope').extensions
-  local kopts = { noremap = true, silent = true }
 
-  vim.keymap.set('n', ';f', builtin.find_files, kopts)
-  vim.keymap.set('n', ';F', function()
-    builtin.find_files({ cwd = utils.buffer_dir() })
-  end, kopts)
-  vim.keymap.set('n', ';g', builtin.live_grep, kopts)
-  vim.keymap.set('v', ';g', builtin.grep_string, kopts)
-  vim.keymap.set('n', ';b', builtin.buffers, kopts)
-  vim.keymap.set('n', ';h', builtin.help_tags, kopts)
-  vim.keymap.set('n', ';e', extensions.file_browser.file_browser, kopts)
-  vim.keymap.set('n', ';E', function()
+  utils.keymap('n', ';f', builtin.find_files, 'Find files')
+  utils.keymap('n', ';F', function()
+    builtin.find_files({ cwd = require('telescope.utils').buffer_dir() })
+  end, 'Find file in current folder')
+  utils.keymap('n', ';g', builtin.live_grep, 'Live grep')
+  utils.keymap('v', ';g', builtin.grep_string, 'Grep string')
+  utils.keymap('n', ';b', builtin.buffers, 'Buffers')
+  utils.keymap('n', ';h', builtin.help_tags, 'Help tags')
+  utils.keymap('n', ';e', extensions.file_browser.file_browser, 'File browser')
+  utils.keymap('n', ';E', function()
     extensions.file_browser.file_browser({ path = '%:p:h' })
-  end, kopts)
+  end, 'File browser in current folder')
 end
 
 return M

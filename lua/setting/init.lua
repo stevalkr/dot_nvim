@@ -60,6 +60,7 @@ local function augroup(definitions)
 end
 
 augroup({
+
   relative_number = {
     {
       event = 'InsertEnter',
@@ -74,6 +75,7 @@ augroup({
       end
     }
   },
+
   highlight_current_line = {
     {
       event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
@@ -84,6 +86,7 @@ augroup({
       command = [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
     },
   },
+
   wins = {
     -- check if file changed when its window is focus, more eager than 'autoread'
     {
@@ -96,6 +99,7 @@ augroup({
       command = [[tabdo wincmd =]]
     },
   },
+
   last_edited = {
     {
       event = 'BufReadPost',
@@ -136,6 +140,7 @@ augroup({
       end
     },
   },
+
   tailing_spaces = {
     {
       event = 'BufWritePre',
@@ -146,6 +151,7 @@ augroup({
       end,
     },
   },
+
   highlight_yank = {
     {
       event = 'TextYankPost',
@@ -154,6 +160,7 @@ augroup({
       end
     }
   },
+
   comment = {
     -- {
     --   event = 'FileType',
@@ -161,14 +168,15 @@ augroup({
     --   command = [[setlocal commentstring=//\ %s]],
     -- }
   },
+
   auto_session = {
     {
       event = 'UIEnter',
       callback = function()
-        if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
+        if vim.bo.filetype ~= '' then
           return
         end
-        -- If it doesn't we check if it's empty
+
         if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
           local session_lens = require('auto-session.session-lens')
           if session_lens then
@@ -181,10 +189,3 @@ augroup({
 
 })
 
-local M = {}
-M.use_treesitter_fold = function()
-  vim.opt.foldenable = false
-  vim.opt.foldmethod = 'expr'
-  vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-end
-return M

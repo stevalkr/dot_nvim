@@ -15,7 +15,7 @@ return {
       'nvim-telescope/telescope-file-browser.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
     },
-    config = require('plugins.configs.telescope').config
+    config = require('configs.telescope').config
   },
 
   {
@@ -24,7 +24,7 @@ return {
     build = function()
       require('nvim-treesitter.install').update({ with_sync = true })
     end,
-    config = require('plugins.configs.nvim-treesitter').config
+    config = require('configs.nvim-treesitter').config
   },
 
 }
