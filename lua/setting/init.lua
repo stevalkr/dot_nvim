@@ -44,6 +44,8 @@ vim.opt.foldenable = false
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
+vim.opt.foldtext = [[v:lua.require('utils').foldtext()]]
+
 
 local function augroup(definitions)
   for group_name, definition in pairs(definitions) do
@@ -79,11 +81,15 @@ augroup({
   highlight_current_line = {
     {
       event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
-      command = [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
+      callback = function()
+        vim.opt.cursorline = false
+      end
     },
     {
       event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
-      command = [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+      callback = function()
+        vim.opt.cursorline = true
+      end
     },
   },
 
@@ -188,4 +194,3 @@ augroup({
   }
 
 })
-

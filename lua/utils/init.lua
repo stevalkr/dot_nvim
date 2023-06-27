@@ -26,4 +26,10 @@ M.keymap = function(mode, lhs, rhs, desc, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+M.foldtext = function()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local line_count = vim.v.foldend - vim.v.foldstart + 1
+  return line .. "  <- " .. line_count .. " lines "
+end
+
 return M
