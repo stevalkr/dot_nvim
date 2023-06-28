@@ -18,7 +18,7 @@ function M.config(_, _opts)
       '--completion-style=detailed',
     },
     on_attach = function(_client, _bufnr)
-      utils.keymap('n', '<leader>c', '<Cmd>ClangdSwitchSourceHeader<CR>', 'Switch to source/header')
+      utils.keymap('n', '<leader>cc', '<Cmd>ClangdSwitchSourceHeader<CR>', 'Switch to source/header')
     end
   })
 

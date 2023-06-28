@@ -52,8 +52,8 @@ nnoremap <silent> <leader>0 <Cmd>tablast<CR>
 nnoremap <silent> <leader>[ <Cmd>tabmove -1<CR>
 nnoremap <silent> <leader>] <Cmd>tabmove +1<CR>
 
-nnoremap <silent> st <Cmd>tabnew %:p<CR>
-nnoremap <silent> ss <Cmd>tabnew<CR>
+nnoremap <silent> ss <Cmd>tabnew %:p<CR>
+nnoremap <silent> st <Cmd>tabnew<CR>
 nnoremap <silent> sj <Cmd>split<CR>
 nnoremap <silent> sl <Cmd>vertical split<CR>
 
