@@ -1,5 +1,11 @@
 # dot nvim
 
+My personal Neovim configuration, aimed at satisfying my usage needs while keeping it as lightweight as possible.
+
+It summarizes the keymaps and usage habits that have been most suitable for me personally over the years.
+
+![dot nvim](https://github.com/etherswangel/leetcode_go/assets/65963536/b9e4b972-5295-4bd8-afea-e99b1e4044d7)
+
 ## requirements
 
 - [neovim](https://github.com/neovim/neovim) (nightly required)
