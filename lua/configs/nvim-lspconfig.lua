@@ -130,7 +130,7 @@ function M.config(_, _opts)
         vim.lsp.buf.hover, 'Hover',
         kopts
       )
-      utils.keymap('i', '<C-k><C-k>',
+      utils.keymap('i', '<C-k>',
         vim.lsp.buf.signature_help, 'Signature help',
         kopts
       )
