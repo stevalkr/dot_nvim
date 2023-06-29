@@ -48,12 +48,14 @@ M.delete_hidden_buffers = function()
   end
 
   for _, buffer in ipairs(buffers) do
-    if vim.api.nvim_buf_get_option(buffer, 'modified') then
-      vim.api.nvim_err_writeln(
-        string.format('No write since last change for buffer %d', buffer)
-      )
-    elseif non_hidden_buffer[buffer] == nil then
-      vim.cmd('bdelete ' .. buffer)
+    if non_hidden_buffer[buffer] == nil then
+      if vim.api.nvim_buf_get_option(buffer, 'modified') then
+        vim.api.nvim_err_writeln(
+          string.format('No write since last change for buffer %d', buffer)
+        )
+      else
+        vim.cmd('bdelete ' .. buffer)
+      end
     end
   end
 end
