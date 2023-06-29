@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 vim.opt.mouse = 'a'
 vim.opt.syntax = 'ON'
 vim.opt.scrolloff = 5

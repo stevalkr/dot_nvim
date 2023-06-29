@@ -52,6 +52,17 @@ return {
   },
 
   {
+    'nathom/filetype.nvim',
+    opts = {
+      overrides = {
+        extensions = {
+          launch = 'xml'
+        }
+      }
+    }
+  },
+
+  {
     'j-hui/fidget.nvim',
     event = 'BufReadPost',
     tag = 'legacy',
