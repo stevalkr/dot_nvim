@@ -114,8 +114,6 @@ return {
       },
     },
     config = function(_, opts)
-      -- opts['session_lens'] = vim.tbl_deep_extend('force', opts['session_lens'],
-      --   require('telescope.themes').get_cursor(opts['session_lens'].theme_conf))
       require('auto-session').setup(opts)
       require('telescope').load_extension('session-lens')
       utils.keymap('n', ';s', require('auto-session.session-lens').search_session, 'Sessions')

@@ -32,4 +32,35 @@ M.foldtext = function()
   return line .. "  <- " .. line_count .. " lines "
 end
 
+M.delete_hidden_buffers = function()
+  local function buffer_filter(buf)
+    if not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_buf_get_option(buf, 'buflisted') then
+      return false
+    end
+    return true
+  end
+
+  local buffers = vim.tbl_filter(buffer_filter, vim.api.nvim_list_bufs())
+
+  local non_hidden_buffer = {}
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
+  end
+
+  for _, buffer in ipairs(buffers) do
+    if vim.api.nvim_buf_get_option(buffer, 'modified') then
+      vim.api.nvim_err_writeln(
+        string.format('No write since last change for buffer %d', buffer)
+      )
+    elseif non_hidden_buffer[buffer] == nil then
+      vim.cmd('bdelete ' .. buffer)
+    end
+  end
+end
+
+vim.api.nvim_create_user_command('DeleteHiddenBuf',
+  M.delete_hidden_buffers,
+  { nargs = 0 }
+)
+
 return M
