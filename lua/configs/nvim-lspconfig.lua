@@ -55,6 +55,10 @@ function M.config(_, _opts)
     capabilities = capabilities,
   })
 
+  lspconfig['svelte'].setup({
+    capabilities = capabilities,
+  })
+
   lspconfig['elixirls'].setup({
     cmd = { 'elixir-ls' },
     capabilities = capabilities,
