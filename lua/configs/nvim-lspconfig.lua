@@ -95,6 +95,10 @@ function M.config(_, _opts)
     },
   })
 
+  lspconfig['zls'].setup({
+    capabilities = capabilities,
+  })
+
 
   -- Global mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
