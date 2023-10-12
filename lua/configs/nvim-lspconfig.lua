@@ -99,6 +99,15 @@ function M.config(_, _opts)
     capabilities = capabilities,
   })
 
+  lspconfig['ltex'].setup({
+    capabilities = capabilities,
+    settings = {
+      ltex = {
+        language = "en-GB",
+      },
+    },
+  })
+
 
   -- Global mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions

@@ -80,6 +80,7 @@ return {
       window = {
         open = 'tab'
       },
+      nest_if_no_args = true,
     },
   },
 
