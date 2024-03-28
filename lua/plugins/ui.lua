@@ -4,9 +4,17 @@ return {
     'shaunsingh/nord.nvim',
     config = function()
       vim.cmd [[colorscheme nord]]
-      vim.cmd [[highlight Normal guibg=NONE ctermbg=NONE]]
-      vim.cmd [[highlight NonText guibg=NONE ctermbg=NONE]]
-      vim.cmd [[highlight SignColumn guibg=NONE ctermbg=NONE]]
+
+      vim.g.nord_disable_background = true
+      require('nord').set()
+
+      local colors = require('nord.colors')
+      require('nord.util').highlight('@type.qualifier.cpp',
+        { fg = colors.nord6_gui, style = 'italic' }
+      )
+      require('nord.util').highlight('@lsp.typemod.variable.readonly.cpp',
+        { style = 'undercurl' }
+      )
     end
   },
 

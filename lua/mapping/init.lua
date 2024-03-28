@@ -30,6 +30,8 @@ nnoremap <silent> <C-i> <C-i>zz
 
 nnoremap <silent> <C-e> <C-^>
 
+nnoremap <silent> zj zMzv
+
 
 " ------------
 " -- window --
