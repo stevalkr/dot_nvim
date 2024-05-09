@@ -41,4 +41,10 @@ return {
     config = require('configs.null-ls').config
   },
 
+  {
+    'github/copilot.vim',
+    event = { 'InsertEnter' },
+    build = '<Cmd>Copilot setup'
+  }
+
 }

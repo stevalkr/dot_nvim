@@ -36,7 +36,7 @@ return {
   {
     'stevearc/profile.nvim',
     lazy = true,
-    disable = true,
+    enabled = false,
     config = require('configs.profile').config
   },
 
