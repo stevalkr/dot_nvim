@@ -3,6 +3,15 @@ local utils = require('utils')
 
 M.config = function()
   require('gitsigns').setup({
+    current_line_blame = true,
+    current_line_blame_opts = {
+      virt_text = true,
+      -- 'eol' | 'overlay' | 'right_align'
+      virt_text_pos = 'eol',
+      delay = 500,
+      ignore_whitespace = false,
+      virt_text_priority = 100,
+    },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
       local kopts = { buffer = bufnr }
@@ -88,28 +97,23 @@ M.config = function()
       )
 
       kopts.expr = true
-      -- Navigation
-      utils.keymap('n', ']h',
-        function()
-          if vim.wo.diff then
-            return ']h'
-          end
-          vim.schedule(function() gs.next_hunk() end)
-          return '<Ignore>'
-        end, 'Next hunk',
-        kopts
-      )
 
-      utils.keymap('n', '[h',
-        function()
-          if vim.wo.diff then
-            return '[h'
-          end
-          vim.schedule(function() gs.prev_hunk() end)
-          return '<Ignore>'
-        end, 'Previous hunk',
-        kopts
-      )
+      -- Navigation
+      utils.keymap('n', ']h', function()
+        if vim.wo.diff then
+          vim.cmd.normal({ ']h', bang = true })
+        else
+          require('gitsigns').nav_hunk('next')
+        end
+      end, 'Next Hunk')
+
+      utils.keymap('n', '[h', function()
+        if vim.wo.diff then
+          vim.cmd.normal({ '[h', bang = true })
+        else
+          require('gitsigns').nav_hunk('prev')
+        end
+      end, 'Prev Hunk')
     end
   })
 end

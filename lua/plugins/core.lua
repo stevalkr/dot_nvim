@@ -19,12 +19,25 @@ return {
   },
 
   {
+    'stevearc/oil.nvim',
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = require('configs.oil').config
+  },
+
+  {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
     build = function()
       require('nvim-treesitter.install').update({ with_sync = true })
     end,
     config = require('configs.nvim-treesitter').config
+  },
+
+  {
+    'stevearc/profile.nvim',
+    lazy = true,
+    disable = true,
+    config = require('configs.profile').config
   },
 
 }

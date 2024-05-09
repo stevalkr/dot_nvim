@@ -11,7 +11,13 @@ M.config = function(_, _opts)
           end,
         },
       }),
+
       null_ls.builtins.diagnostics.codespell,
+      null_ls.builtins.diagnostics.markdownlint,
+      null_ls.builtins.diagnostics.fish,
+
+      null_ls.builtins.formatting.nixpkgs_fmt,
+      null_ls.builtins.formatting.cmake_format,
     }
   })
 end
