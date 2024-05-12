@@ -44,7 +44,7 @@ return {
   {
     'github/copilot.vim',
     event = { 'BufReadPost' },
-    build = '<Cmd>Copilot setup',
+    build = ':Copilot setup',
     config = function(_, _opt)
       vim.keymap.set('i', '<C-CR>', 'copilot#Accept("\\<CR>")', {
         expr = true,
