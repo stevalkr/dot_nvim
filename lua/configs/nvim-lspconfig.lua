@@ -5,6 +5,8 @@ function M.config(_, _opts)
   local lspconfig = require('lspconfig')
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+  vim.lsp.inlay_hint.enable()
+
   lspconfig['clangd'].setup({
     capabilities = capabilities,
     cmd = {
@@ -113,8 +115,8 @@ function M.config(_, _opts)
   -- Global mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
   utils.keymap('n', '<leader>d', vim.diagnostic.open_float, 'Open diagnostic')
-  utils.keymap('n', '[d', vim.diagnostic.goto_prev, 'Previous diagnostic')
-  utils.keymap('n', ']d', vim.diagnostic.goto_next, 'Next diagnostic')
+  -- utils.keymap('n', '[d', vim.diagnostic.goto_prev, 'Previous diagnostic')
+  -- utils.keymap('n', ']d', vim.diagnostic.goto_next, 'Next diagnostic')
   -- utils.keymap('n', '<space>q', vim.diagnostic.setloclist)
 
   -- Use LspAttach autocommand to only map the following keys
