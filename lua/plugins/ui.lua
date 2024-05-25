@@ -3,8 +3,6 @@ return {
   {
     'shaunsingh/nord.nvim',
     config = function()
-      vim.cmd [[colorscheme nord]]
-
       vim.g.nord_disable_background = true
       require('nord').set()
 
@@ -14,6 +12,9 @@ return {
       )
       require('nord.util').highlight('@lsp.typemod.variable.readonly.cpp',
         { style = 'undercurl' }
+      )
+      require('nord.util').highlight('LspInlayHint',
+        { fg = colors.nord3_gui_bright, style = 'italic' }
       )
     end
   },
