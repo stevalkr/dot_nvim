@@ -1,21 +1,33 @@
 return {
 
   {
-    'shaunsingh/nord.nvim',
+    'gbprod/nord.nvim',
     config = function()
-      vim.g.nord_disable_background = true
-      require('nord').set()
+      require('nord').setup({
+        transparent = true,         -- Enable this to disable setting the background color
+        terminal_colors = true,     -- Configure the colors used when opening a `:terminal` in Neovim
+        diff = { mode = 'bg' },     -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+        borders = true,             -- Enable the border between vertically split windows visible
+        errors = { mode = 'bg' },   -- Display mode for errors and diagnostics
+        -- values : [bg|fg|none]
+        search = { theme = 'vim' }, -- theme for highlighting search results
+        -- values : [vim|vscode]
+        styles = {
+          -- Style to be applied to different syntax groups
+          -- Value is any valid attr-list value for `:help nvim_set_hl`
+          comments = { italic = true },
+          keywords = {},
+          functions = {},
+          variables = {},
+        },
 
-      local colors = require('nord.colors')
-      require('nord.util').highlight('@type.qualifier.cpp',
-        { fg = colors.nord6_gui, style = 'italic' }
-      )
-      require('nord.util').highlight('@lsp.typemod.variable.readonly.cpp',
-        { style = 'undercurl' }
-      )
-      require('nord.util').highlight('LspInlayHint',
-        { fg = colors.nord3_gui_bright, style = 'italic' }
-      )
+        on_highlights = function(highlights, colors)
+          highlights.LspInlayHint = { fg = colors.aurora.orange }
+          highlights['@lsp.typemod.variable.readonly.cpp'] = { undercurl = true }
+        end,
+      })
+
+      require('nord').load()
     end
   },
 
