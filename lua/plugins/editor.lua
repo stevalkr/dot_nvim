@@ -24,29 +24,22 @@ return {
   },
 
   {
+    'echasnovski/mini.ai',
+    version = '*',
+    event = 'VeryLazy',
+    opts = {
+      mappings = {
+        goto_left = '[[',
+        goto_right = ']]',
+      }
+    }
+  },
+
+  {
     'echasnovski/mini.pairs',
     version = '*',
     event = 'VeryLazy',
     opts = {},
-  },
-
-  {
-    'echasnovski/mini.comment',
-    version = '*',
-    event = 'VeryLazy',
-    opts = {
-      options = {
-        ignore_blank_line = true,
-        custom_commentstring = function(_)
-          local filetype = vim.bo.filetype
-          for _, s in pairs({ 'cpp', 'c' }) do
-            if filetype == s then
-              return [[// %s]]
-            end
-          end
-        end,
-      }
-    },
   },
 
   {

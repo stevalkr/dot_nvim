@@ -1,5 +1,17 @@
 local M = {}
 
+M.notify = function(funname, opts)
+  opts.once = vim.F.if_nil(opts.once, false)
+  local level = vim.log.levels[opts.level]
+  if not level then
+    error("Invalid error level", 2)
+  end
+  local notify_fn = opts.once and vim.notify_once or vim.notify
+  notify_fn(string.format("[config.%s]: %s", funname, opts.msg), level, {
+    title = "config",
+  })
+end
+
 M.treesitter_fold = function()
   vim.opt.foldenable = false
   vim.opt.foldmethod = 'expr'

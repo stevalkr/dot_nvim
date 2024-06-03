@@ -170,11 +170,11 @@ augroup({
   },
 
   comment = {
-    -- {
-    --   event = 'FileType',
-    --   pattern = 'c,cpp,cs,java',
-    --   command = [[setlocal commentstring=//\ %s]],
-    -- }
+    {
+      event = 'FileType',
+      pattern = 'c,cpp',
+      command = [[setlocal commentstring=//\ %s]],
+    }
   },
 
   auto_session = {
@@ -193,6 +193,21 @@ augroup({
         end
       end,
     }
-  }
+  },
 
+  save_cwd = {
+    {
+      event = 'VimLeave',
+      callback = function ()
+        local path = os.getenv('TMPDIR') .. '/vim_cwd'
+        local file = io.open(path, 'w')
+        if file then
+          file:write(vim.fn.getcwd())
+          file:close()
+        else
+          print('Error: Unable to write to ' .. file_path)
+        end
+      end
+    }
+  }
 })

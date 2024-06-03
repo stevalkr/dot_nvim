@@ -22,7 +22,6 @@ return {
         },
 
         on_highlights = function(highlights, colors)
-          highlights.LspInlayHint = { fg = colors.aurora.orange }
           highlights['@lsp.typemod.variable.readonly.cpp'] = { undercurl = true }
         end,
       })
