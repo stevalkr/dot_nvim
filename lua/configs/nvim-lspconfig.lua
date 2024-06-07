@@ -180,10 +180,10 @@ function M.config(_, _opts)
 
       local telescope = require('telescope.builtin')
       if telescope then
-        utils.keymap('n', '<leader>d',
-          telescope.diagnostics, 'Open diagnostic',
-          kopts
-        )
+        -- utils.keymap('n', '<leader>d',
+        --   telescope.diagnostics, 'Open diagnostic',
+        --   kopts
+        -- )
         utils.keymap('n', 'gd',
           telescope.lsp_definitions, 'Go to definition',
           kopts
