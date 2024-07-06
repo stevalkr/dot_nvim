@@ -173,7 +173,9 @@ augroup({
     {
       event = 'FileType',
       pattern = 'c,cpp',
-      command = [[setlocal commentstring=//\ %s]],
+      callback = function()
+        vim.bo.commentstring = [[// %s]]
+      end
     }
   },
 

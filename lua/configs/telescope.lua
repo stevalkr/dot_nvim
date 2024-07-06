@@ -33,6 +33,9 @@ M.config = function(_, _opts)
         i = {
           ['<M-k>'] = actions.move_selection_previous,
           ['<M-j>'] = actions.move_selection_next,
+          ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+          ["<Tab>"] = actions.toggle_selection,
+          ["<S-Tab>"] = actions.toggle_selection,
         },
         n = {
           ['l'] = actions.select_horizontal,

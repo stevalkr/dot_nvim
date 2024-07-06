@@ -21,6 +21,22 @@ function M.config(_, _opts)
     },
     on_attach = function(_client, _bufnr)
       utils.keymap('n', '<leader>cc', '<Cmd>ClangdSwitchSourceHeader<CR>', 'Switch to source/header')
+      vim.bo.errorformat = '' ..
+        '%-GIn file included from %f:%l:%c:,' ..
+        '%-GIn file included from %f:%l:,' ..
+        '%-GIn file included from %f:%l:%c,' ..
+        '%-GIn file included from %f:%l,' ..
+        -- '%f:%l:%c: %trror: %m,' ..
+        -- '%f:%l:%c: %tarning: %m,' ..
+        -- '%f:%l:%c: %tnfo: %m,' ..
+        -- '%f:%l:%c: %tote: %m,'
+        -- '%E%f:%l:%c: %trror: %m,' ..
+        -- '%W%f:%l:%c: %tarning: %m,' ..
+        -- '%I%f:%l:%c: %tnfo: %m,' ..
+        -- '%N%f:%l:%c: %tote: %m,' ..
+        '%A%f:%l:%c: %m,' ..
+        '%Z%.%#^%.%#,' ..
+        '%C%m,'
     end
   })
 
@@ -159,10 +175,10 @@ function M.config(_, _opts)
       -- utils.keymap('n', '<space>wl', function()
       --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       -- end, kopts)
-      utils.keymap('n', '<leader>D',
-        vim.lsp.buf.type_definition, 'Go to type definition',
-        kopts
-      )
+      -- utils.keymap('n', '<leader>D',
+      --   vim.lsp.buf.type_definition, 'Go to type definition',
+      --   kopts
+      -- )
       utils.keymap('n', '<leader>rn',
         vim.lsp.buf.rename, 'Rename',
         kopts
@@ -180,10 +196,10 @@ function M.config(_, _opts)
 
       local telescope = require('telescope.builtin')
       if telescope then
-        -- utils.keymap('n', '<leader>d',
-        --   telescope.diagnostics, 'Open diagnostic',
-        --   kopts
-        -- )
+        utils.keymap('n', '<leader>D',
+          telescope.diagnostics, 'Open diagnostic',
+          kopts
+        )
         utils.keymap('n', 'gd',
           telescope.lsp_definitions, 'Go to definition',
           kopts
@@ -196,10 +212,10 @@ function M.config(_, _opts)
           telescope.lsp_references, 'Go to references',
           kopts
         )
-        utils.keymap('n', '<leader>D',
-          telescope.lsp_type_definitions, 'Go to type definition',
-          kopts
-        )
+        -- utils.keymap('n', '<leader>D',
+        --   telescope.lsp_type_definitions, 'Go to type definition',
+        --   kopts
+        -- )
         utils.keymap('n', '<leader>s',
           telescope.lsp_document_symbols, 'Document symbols',
           kopts
