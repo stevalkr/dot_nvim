@@ -99,6 +99,8 @@ return {
   {
     'rmagatti/auto-session',
     opts = {
+      auto_save_enabled = false,
+      auto_session_create_enabled = false,
       auto_session_suppress_dirs = { '~/', '~/*', '/', '/*' },
       auto_session_use_git_branch = true,
       session_lens = {
