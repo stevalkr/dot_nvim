@@ -36,10 +36,9 @@ return {
   },
 
   {
-    'stevearc/profile.nvim',
-    lazy = true,
-    enabled = false,
-    config = require('configs.profile').config
+    'dstein64/vim-startuptime',
+    lazy = false,
+    enabled = true
   },
 
 }

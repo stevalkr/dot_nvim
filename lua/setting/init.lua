@@ -22,7 +22,7 @@ vim.opt.ignorecase = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.cmdheight = 2
+vim.opt.cmdheight = 1
 vim.opt.helpheight = 12
 vim.opt.previewheight = 12
 vim.opt.showtabline = 2
@@ -176,24 +176,6 @@ augroup({
       callback = function()
         vim.bo.commentstring = [[// %s]]
       end
-    }
-  },
-
-  auto_session = {
-    {
-      event = 'UIEnter',
-      callback = function()
-        if vim.bo.filetype ~= '' then
-          return
-        end
-
-        if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
-          local session_lens = require('auto-session.session-lens')
-          if session_lens then
-            session_lens.search_session()
-          end
-        end
-      end,
     }
   },
 

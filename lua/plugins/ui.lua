@@ -49,6 +49,20 @@ return {
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = { "markdown" },
     build = function() vim.fn["mkdp#util#install"]() end,
-  }
+  },
 
+  {
+    'mikesmithgh/kitty-scrollback.nvim',
+    enabled = ( vim.env.KITTY_SCROLLBACK_NVIM == 'true' ),
+    lazy = true,
+    cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
+    event = { 'User KittyScrollbackLaunch' },
+    version = '*',
+    opts = {{
+      restore_options = true,
+      status_window = {
+        style_simple = true,
+      }
+    }}
+  }
 }

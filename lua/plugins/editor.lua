@@ -98,6 +98,7 @@ return {
 
   {
     'rmagatti/auto-session',
+    enabled = ( vim.env.KITTY_SCROLLBACK_NVIM ~= 'true' ),
     opts = {
       auto_save_enabled = false,
       auto_session_create_enabled = false,
