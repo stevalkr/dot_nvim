@@ -8,9 +8,9 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 
 ## requirements
 
-- [neovim](https://github.com/neovim/neovim) (nightly required)
-- [nerd fonts](https://github.com/ryanoasis/nerd-fonts)
-- [tree-sitter](https://github.com/tree-sitter/tree-sitter)
+- [neovim](https://github.com/neovim/neovim) (version >= 0.10)
+- [nerd fonts](https://github.com/ryanoasis/nerd-fonts) (recommended)
+- [tree-sitter](https://github.com/tree-sitter/tree-sitter) (recommended)
 - [kitty](https://sw.kovidgoyal.net/kitty/) (version >= 0.21, or any emulator supports XTVERSION escape codes)
 - [fd](https://github.com/sharkdp/fd) (optional)
 - [rg](https://github.com/BurntSushi/ripgrep) (optional)
@@ -23,6 +23,13 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 - `:Lazy sync` Update plugins
 - `$ brew upgrade neovim` Update neovim by your package manager
 
+## usage
+
+```
+$ git clone https://github.com/etherswangel/dot_nvim.git ~/.config/nvim
+$ nvim
+```
+
 ## keymaps
 
 ### basic
@@ -34,7 +41,7 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 | { i, t } | `jj` | normal mode |
 | n | `<Esc>` | clear highlights |
 | n | `*` | search current word |
-| n | `<Space>` | select current word |
+| n | `<Space>` | select current word and expand |
 | v | `y` | yank |
 | v | `Y` | yank to system clipboard (need `xclip` for X11) |
 | v | `<` | shift left |
@@ -87,6 +94,8 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 | n | `;F` | find files in current folder |
 | n | `;e` | file browser |
 | n | `;E` | file browser in current folder |
+| n | `;o` | open oil |
+| n | `;O` | open oil in float |
 | { n, v } | `;g` | grep in workspace |
 | n | `;b` | buffers |
 
@@ -100,7 +109,8 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 | n | `,s` | document symbols |
 | n | `,S` | workspace symbols |
 | { n, v } | `,f` | format document |
-| n | `,d` | diagnostics |
+| n | `,d` | show current diagnostic |
+| n | `,D` | diagnostics |
 | n | `[d` | previous diagnostic |
 | n | `]d` | next diagnostic |
 | n | `gd` | go to definition |
@@ -109,3 +119,12 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 | n | `K` | hover |
 | i | `<Ctrl-k>` | signature help |
 
+### git
+
+| mode | keymap | usage |
+| ---- | ------ | ----- |
+| n | `,hb` | current line blame |
+| n | `,hB` | blame line |
+| n | `,hd` | diff |
+| n | `,hD` | diff HEAD |
+| n | `,hp` | preview hunk |
