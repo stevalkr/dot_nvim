@@ -57,6 +57,8 @@ $ nvim
 | n | `<S-Tab>` | previous tab |
 | n | `,0` | go to last tab |
 | n | `,{1-9}` | go to nth tab |
+| n | `[i` | go to indent scope top |
+| n | `]i` | go to indent scope bottom |
 
 ### window
 
@@ -123,6 +125,8 @@ $ nvim
 
 | mode | keymap | usage |
 | ---- | ------ | ----- |
+| n | `[h` | previous hunk |
+| n | `]h` | next hunk |
 | n | `,hb` | current line blame |
 | n | `,hB` | blame line |
 | n | `,hd` | diff |
