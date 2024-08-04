@@ -52,6 +52,13 @@ return {
   },
 
   {
+    'MeanderingProgrammer/markdown.nvim',
+    opts = {},
+    main = "render-markdown",
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+  },
+
+  {
     'mikesmithgh/kitty-scrollback.nvim',
     enabled = ( vim.env.KITTY_SCROLLBACK_NVIM == 'true' ),
     lazy = true,

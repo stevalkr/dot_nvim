@@ -26,14 +26,6 @@ function M.config(_, _opts)
         '%-GIn file included from %f:%l:,' ..
         '%-GIn file included from %f:%l:%c,' ..
         '%-GIn file included from %f:%l,' ..
-        -- '%f:%l:%c: %trror: %m,' ..
-        -- '%f:%l:%c: %tarning: %m,' ..
-        -- '%f:%l:%c: %tnfo: %m,' ..
-        -- '%f:%l:%c: %tote: %m,'
-        -- '%E%f:%l:%c: %trror: %m,' ..
-        -- '%W%f:%l:%c: %tarning: %m,' ..
-        -- '%I%f:%l:%c: %tnfo: %m,' ..
-        -- '%N%f:%l:%c: %tote: %m,' ..
         '%A%f:%l:%c: %m,' ..
         '%Z%.%#^%.%#,' ..
         '%C%m,'
