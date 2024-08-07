@@ -32,6 +32,9 @@ M.config = function(_, _opt)
       ['T'] = 'actions.toggle_trash',
     },
     use_default_keymaps = false,
+    float = {
+      padding = 10,
+    },
   })
   utils.keymap('n', ';o', require('oil').open, 'Open Oil')
   utils.keymap('n', ';O', require('oil').open_float, 'Open Oil in Float')

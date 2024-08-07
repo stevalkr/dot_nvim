@@ -109,15 +109,6 @@ function M.config(_, _opts)
     capabilities = capabilities,
   })
 
-  lspconfig['ltex'].setup({
-    capabilities = capabilities,
-    settings = {
-      ltex = {
-        language = "en-GB",
-      },
-    },
-  })
-
   lspconfig['nixd'].setup({})
 
   -- Global mappings.
