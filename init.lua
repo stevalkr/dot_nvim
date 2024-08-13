@@ -1,14 +1,14 @@
 -------------
 -- setting --
 -------------
-require('setting')
+require('settings')
 
 
 -------------
 -- mapping --
 -------------
 vim.g.mapleader = ','
-require('mapping')
+require('mappings')
 
 
 -------------

@@ -1,3 +1,4 @@
+-- vim settings
 vim.loader.enable()
 
 vim.opt.mouse = 'a'
@@ -45,26 +46,19 @@ vim.opt.wildignorecase = true
 vim.opt.foldenable = false
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-
 vim.opt.foldtext = [[v:lua.require('utils').foldtext()]]
 
 
-local function augroup(definitions)
-  for group_name, definition in pairs(definitions) do
-    vim.api.nvim_create_augroup(group_name, { clear = true })
-    for _, def in ipairs(definition) do
-      vim.api.nvim_create_autocmd(def.event, {
-        pattern = def.pattern,
-        group = group_name,
-        command = def.command,
-        callback = def.callback
-      })
-    end
-  end
-end
+local utils = require('utils')
 
-augroup({
+-- user commands
+vim.api.nvim_create_user_command('SaveSession',
+  require('utils').save_session,
+  { nargs = 0 }
+)
 
+-- auto groups
+utils.augroup({
   relative_number = {
     {
       event = 'InsertEnter',
@@ -100,11 +94,6 @@ augroup({
     {
       event = 'FocusGained',
       command = [[checktime]]
-    },
-    -- equalize window dimensions when resizing vim window
-    {
-      event = 'VimResized',
-      command = [[tabdo wincmd =]]
     },
   },
 
@@ -189,7 +178,7 @@ augroup({
           file:write(vim.fn.getcwd())
           file:close()
         else
-          print('Error: Unable to write to ' .. file_path)
+          print('Error: Unable to write to ' .. path)
         end
       end
     }

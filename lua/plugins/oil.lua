@@ -1,0 +1,47 @@
+local utils = require('utils')
+return {
+
+  'stevearc/oil.nvim',
+  dependencies = { 'echasnovski/mini.icons' },
+
+  config = function()
+    local oil = require('oil')
+    oil.setup({
+      columns = {
+        'icon',
+        'permissions',
+        'size',
+        'mtime',
+      },
+      delete_to_trash = false,
+      lsp_file_methods = {
+        autosave_changes = "unmodified",
+      },
+      keymaps = {
+        ['g?']         = 'actions.show_help',
+        ['yp']         = 'actions.copy_entry_path',
+        ['<CR>']       = 'actions.select',
+        ['J']          = 'actions.select_split',
+        ['L']          = 'actions.select_vsplit',
+        ['T']          = 'actions.select_tab',
+        ['<C-p>']      = 'actions.preview',
+        ['<C-d>']      = 'actions.preview_scroll_down',
+        ['<C-u>']      = 'actions.preview_scroll_up',
+        ['<C-r>']      = 'actions.refresh',
+        ['<BS>']       = 'actions.parent',
+        ['<C-e>']      = 'actions.open_cwd',
+        ['<Esc><Esc>'] = 'actions.close',
+        ['cd']         = 'actions.cd',
+        ['tcd']        = 'actions.tcd',
+        ['S']          = 'actions.change_sort',
+        ['H']          = 'actions.toggle_hidden',
+        -- ['<C-t>']      = 'actions.toggle_trash',
+        -- ['<C-o>']      = 'actions.open_external',
+      },
+      use_default_keymaps = false,
+    })
+    utils.keymap('n', ';e', oil.open, 'Open Oil')
+    utils.keymap('n', ';E', oil.open_float, 'Open Oil in Float')
+  end
+
+}

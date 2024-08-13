@@ -88,18 +88,17 @@ $ nvim
 | i | `<Ctrl-e>` | last char in line |
 | v | `{J, K}` | move current line |
 
-### telescope
+### fzf-lua
 
 | mode | keymap | usage |
 | ---- | ------ | ----- |
+| n | `;;` | resume |
+| n | `;a` | fzf builtin |
 | n | `;f` | find files |
-| n | `;F` | find files in current folder |
-| n | `;e` | file browser |
-| n | `;E` | file browser in current folder |
-| n | `;o` | open oil |
-| n | `;O` | open oil in float |
 | { n, v } | `;g` | grep in workspace |
 | n | `;b` | buffers |
+| n | `;e` | open oil |
+| n | `;E` | open oil in float |
 
 ### lsp
 
