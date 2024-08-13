@@ -3,17 +3,18 @@ return {
 
   'stevearc/oil.nvim',
   dependencies = { 'echasnovski/mini.icons' },
+  ft = { 'oil' },
+  keys = { ';e', ';E' },
 
   config = function()
     local oil = require('oil')
     oil.setup({
       columns = {
-        'icon',
-        'permissions',
-        'size',
+        -- 'permissions',
         'mtime',
+        'size',
+        'icon',
       },
-      delete_to_trash = false,
       lsp_file_methods = {
         autosave_changes = "unmodified",
       },

@@ -1,15 +1,13 @@
+local utils = require('utils')
 return {
 
   'github/copilot.vim',
-  event = { 'BufReadPost' },
   build = ':Copilot setup',
+  event = { 'BufReadPost' },
 
-  config = function(_, _opt)
-    vim.keymap.set('i', '<C-CR>', 'copilot#Accept("\\<CR>")', {
-      expr = true,
-      replace_keycodes = false
-    })
+  config = function()
     vim.g.copilot_no_tab_map = true
+    utils.keymap('i', '<C-CR>', 'copilot#Accept("\\<CR>")', 'Copilot', { expr = true, replace_keycodes = false })
   end
 
 }

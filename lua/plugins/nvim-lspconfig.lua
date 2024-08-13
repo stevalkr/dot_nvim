@@ -9,13 +9,14 @@ return {
 
     vim.lsp.inlay_hint.enable()
 
-    lspconfig['pyright'].setup({ capabilities = capabilities, })
-    lspconfig['gopls'].setup({ capabilities = capabilities, })
-    lspconfig['tsserver'].setup({ capabilities = capabilities, })
-    lspconfig['svelte'].setup({ capabilities = capabilities, })
-    lspconfig['elixirls'].setup({ cmd = { 'elixir-ls' }, capabilities = capabilities, })
-    lspconfig['zls'].setup({ capabilities = capabilities, })
     lspconfig['nixd'].setup({})
+    lspconfig['zls'].setup({ capabilities = capabilities })
+    lspconfig['gopls'].setup({ capabilities = capabilities })
+    lspconfig['svelte'].setup({ capabilities = capabilities })
+    lspconfig['pyright'].setup({ capabilities = capabilities })
+    lspconfig['tsserver'].setup({ capabilities = capabilities })
+    lspconfig['rust_analyzer'].setup({ capabilities = capabilities })
+    lspconfig['elixirls'].setup({ capabilities = capabilities, cmd = { 'elixir-ls' } })
 
     lspconfig['clangd'].setup({
       capabilities = capabilities,
@@ -63,38 +64,6 @@ return {
       },
     })
 
-    lspconfig['tailwindcss'].setup({
-      capabilities = capabilities,
-      init_options = {
-        userLanguages = {
-          elixir = "html-eex",
-          eelixir = "html-eex",
-          heex = "html-eex",
-        },
-      },
-      settings = {
-        tailwindCSS = {
-          experimental = {
-            classRegex = {
-              'class[:]\\s*"([^"]*)"',
-            },
-          },
-        },
-      },
-    })
-
-    lspconfig['rust_analyzer'].setup({
-      capabilities = capabilities,
-      settings = {
-        ['rust-analyzer'] = {
-          diagnostics = {
-            enable = false,
-          }
-        }
-      },
-    })
-
-
 
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -119,6 +88,7 @@ return {
         utils.keymap('n', 'gr', vim.lsp.buf.references, 'Go to references', kopts)
         utils.keymap('n', 'K', vim.lsp.buf.hover, 'Hover', kopts)
         utils.keymap('i', '<C-k>', vim.lsp.buf.signature_help, 'Signature help', kopts)
+        -- utils.keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Go to type definition', kopts)
 
         -- utils.keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, 'Add workspace', kopts)
         -- utils.keymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, 'Remove workspace', kopts)
@@ -129,7 +99,6 @@ return {
         utils.keymap('n', '<leader>rn', vim.lsp.buf.rename, 'Rename', kopts)
         utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
         utils.keymap({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format { async = true } end, 'Format', kopts)
-        -- utils.keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Go to type definition', kopts)
       end,
     })
   end

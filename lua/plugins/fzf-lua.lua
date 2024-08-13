@@ -3,6 +3,7 @@ return {
 
   "ibhagwan/fzf-lua",
   dependencies = { "echasnovski/mini.icons" },
+  keys = { ';;', ';a', ';f', ';g', ';b', ';q', 'gd', 'gD', 'gi', 'gr', '<leader>D', '<leader>s', '<leader>S', '<leader>ca', },
 
   config = function()
     local fzf = require('fzf-lua')

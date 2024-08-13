@@ -95,6 +95,10 @@ utils.augroup({
       event = 'FocusGained',
       command = [[checktime]]
     },
+    {
+      event = 'VimResized',
+      command = [[tabdo wincmd =]]
+    }
   },
 
   last_edited = {
@@ -171,7 +175,7 @@ utils.augroup({
   save_cwd = {
     {
       event = 'VimLeave',
-      callback = function ()
+      callback = function()
         local path = os.getenv('TMPDIR') .. '/vim_cwd'
         local file = io.open(path, 'w')
         if file then
