@@ -1,5 +1,27 @@
 local M = {}
 
+M.dump = function(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. M.dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+M.has_plugin = function(name)
+  for _, plugin in ipairs(require('lazy').plugins()) do
+    if plugin.name == name then
+      return true
+    end
+  end
+  return false
+end
+
 M.foldtext = function()
   local line = vim.fn.getline(vim.v.foldstart)
   local line_count = vim.v.foldend - vim.v.foldstart + 1
@@ -36,18 +58,6 @@ M.key = function(mode, lhs, rhs, desc, opts)
   }, opts)
 
   return opts
-end
-
-M.load_keymaps = function(module, keymaps, opts)
-  local keys = {}
-  for _, keymap in ipairs(keymaps) do
-    keymap[3] = function()
-      keymap[3](module)
-    end
-    keymap[5] = vim.tbl_deep_extend('force', opts, keymap[5] or {})
-    table.insert(keys, M.key(unpack(keymap)))
-  end
-  return keys
 end
 
 M.save_session = function()

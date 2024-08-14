@@ -65,40 +65,36 @@ return {
     })
 
 
-    -- Global mappings.
-    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
     utils.keymap('n', '<leader>d', vim.diagnostic.open_float, 'Open diagnostic')
     utils.keymap('n', '<leader>q', vim.diagnostic.setloclist, 'Set diagnostic loclist')
     utils.keymap('n', '<leader>Q', vim.diagnostic.setqflist, 'Set diagnostic quickfix')
 
-    -- Use LspAttach autocommand to only map the following keys
-    -- after the language server attaches to the current buffer
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
       callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
         local kopts = { buffer = ev.buf }
-        utils.keymap('n', 'gd', vim.lsp.buf.definition, 'Go to definition', kopts)
-        utils.keymap('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration', kopts)
-        utils.keymap('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', kopts)
-        utils.keymap('n', 'gr', vim.lsp.buf.references, 'Go to references', kopts)
         utils.keymap('n', 'K', vim.lsp.buf.hover, 'Hover', kopts)
         utils.keymap('i', '<C-k>', vim.lsp.buf.signature_help, 'Signature help', kopts)
-        -- utils.keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Go to type definition', kopts)
 
+        utils.keymap('n', '<leader>rn', vim.lsp.buf.rename, 'Rename', kopts)
+        utils.keymap({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format { async = true } end, 'Format', kopts)
+
+        -- utils.keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Go to type definition', kopts)
         -- utils.keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, 'Add workspace', kopts)
         -- utils.keymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, 'Remove workspace', kopts)
         -- utils.keymap('n', '<leader>wl', function()
         --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         -- end, 'List workspace', kopts)
 
-        utils.keymap('n', '<leader>rn', vim.lsp.buf.rename, 'Rename', kopts)
-        utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
-        utils.keymap({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format { async = true } end, 'Format', kopts)
+        if not utils.has_plugin('fzf-lua') then
+          utils.keymap('n', 'gd', vim.lsp.buf.definition, 'Go to definition', kopts)
+          utils.keymap('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration', kopts)
+          utils.keymap('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', kopts)
+          utils.keymap('n', 'gr', vim.lsp.buf.references, 'Go to references', kopts)
+          utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
+        end
       end,
     })
   end
