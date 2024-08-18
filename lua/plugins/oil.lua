@@ -34,6 +34,7 @@ return {
         ['<Esc><Esc>'] = 'actions.close',
         ['cd']         = 'actions.cd',
         ['tcd']        = 'actions.tcd',
+        ['E']          = 'actions.open_cwd',
         ['S']          = 'actions.change_sort',
         ['H']          = 'actions.toggle_hidden',
         -- ['<C-t>']      = 'actions.toggle_trash',

@@ -6,7 +6,7 @@ return {
   config = function()
     local lspconfig = require('lspconfig')
     local capabilities = lspconfig.default_config.capabilities
-    if utils.has_plugin('cmp') then
+    if utils.has_plugin('nvim-cmp') then
       capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
     end
 
@@ -99,10 +99,11 @@ return {
           utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
         end
 
-        if not utils.has_plugin('cmp') and vim.version.ge(vim.version(), '0.11') then
+        if not utils.has_plugin('nvim-cmp') and vim.version.gt(vim.version(), {0, 10}) then
           vim.opt.pumheight = 10
           vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
-          vim.lsp.buf.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = false })
+          -- https://github.com/neovim/neovim/issues/29225
+          vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = true })
         end
       end
     })

@@ -53,7 +53,12 @@ return {
       vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
-    opts = {}
+    opts = {
+      triggers = {
+        { '<auto>', mode = 'nxsot' },
+        { 's', mode = 'n' }
+      },
+    }
   },
 
   {
