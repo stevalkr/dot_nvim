@@ -43,13 +43,38 @@ vim.opt.wildignore =
 '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
 vim.opt.wildignorecase = true
 
-vim.opt.foldenable = false
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldtext = [[v:lua.require('utils').foldtext()]]
 
-
 local utils = require('utils')
+
+-- neovide settings
+local change_scale_factor = function(delta)
+  vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+end
+if vim.g.neovide then
+  vim.opt.linespace = 6
+  vim.o.winblend = 50
+  vim.g.neovide_floating_blur_amount_x = 3.0
+  vim.g.neovide_floating_blur_amount_y = 3.0
+  vim.g.neovide_transparency = 0.3
+  vim.g.neovide_window_blurred = true
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_theme = 'auto'
+  vim.g.neovide_scroll_animation_length = 0.2
+  vim.g.neovide_cursor_animation_length = 0
+  utils.keymap({ 'v', 's', 'x' }, '<D-c>', '"+y', 'Copy to system clipboard' )
+  utils.keymap({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>',
+    function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end,
+    'Paste from system clipboard'
+  )
+  vim.g.neovide_scale_factor = 1.0
+  vim.keymap.set('n', '<D-=>', function() change_scale_factor(1.25) end)
+  vim.keymap.set('n', '<D-->', function() change_scale_factor(0.8) end)
+end
 
 -- user commands
 vim.api.nvim_create_user_command('SaveSession',

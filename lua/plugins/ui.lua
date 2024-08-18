@@ -25,7 +25,7 @@ return {
     'gbprod/nord.nvim',
     config = function()
       require('nord').setup({
-        transparent = true,
+        transparent = vim.g.neovide == nil,
         terminal_colors = true,
         diff = { mode = 'bg' },
         borders = true,

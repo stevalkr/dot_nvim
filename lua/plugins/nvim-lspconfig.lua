@@ -5,7 +5,10 @@ return {
 
   config = function()
     local lspconfig = require('lspconfig')
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local capabilities = lspconfig.default_config.capabilities
+    if utils.has_plugin('cmp') then
+      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+    end
 
     vim.lsp.inlay_hint.enable()
 
@@ -95,7 +98,13 @@ return {
           utils.keymap('n', 'gr', vim.lsp.buf.references, 'Go to references', kopts)
           utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
         end
-      end,
+
+        if not utils.has_plugin('cmp') and vim.version.ge(vim.version(), '0.11') then
+          vim.opt.pumheight = 10
+          vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
+          vim.lsp.buf.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = false })
+        end
+      end
     })
   end
 
