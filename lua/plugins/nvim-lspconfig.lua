@@ -5,9 +5,9 @@ return {
 
   config = function()
     local lspconfig = require('lspconfig')
-    local capabilities = lspconfig.default_config.capabilities
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
     if utils.has_plugin('nvim-cmp') then
-      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+      capabilities = require('cmp_nvim_lsp').default_capabilities()
     end
 
     vim.lsp.inlay_hint.enable()
@@ -48,25 +48,30 @@ return {
 
     lspconfig['lua_ls'].setup({
       capabilities = capabilities,
-      settings = {
-        Lua = {
+      on_init = function(client)
+        local path = client.workspace_folders[1].name
+        if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+          return
+        end
+
+        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
           runtime = {
-            version = 'LuaJIT',
-          },
-          diagnostics = {
-            globals = { 'vim' },
+            version = 'LuaJIT'
           },
           workspace = {
-            library = vim.api.nvim_get_runtime_file("", true),
             checkThirdParty = false,
-          },
-          telemetry = {
-            enable = false,
-          },
-        },
-      },
+            library = {
+              vim.env.VIMRUNTIME,
+              '${3rd}/luv/library',
+              '${3rd}/busted/library'
+            }
+          }
+        })
+      end,
+      settings = {
+        Lua = {}
+      }
     })
-
 
     utils.keymap('n', '<leader>d', vim.diagnostic.open_float, 'Open diagnostic')
     utils.keymap('n', '<leader>q', vim.diagnostic.setloclist, 'Set diagnostic loclist')
@@ -99,7 +104,7 @@ return {
           utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
         end
 
-        if not utils.has_plugin('nvim-cmp') and vim.version.gt(vim.version(), {0, 10}) then
+        if not utils.has_plugin('nvim-cmp') and vim.version.gt(vim.version(), { 0, 10 }) then
           vim.opt.pumheight = 10
           vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
           -- https://github.com/neovim/neovim/issues/29225
