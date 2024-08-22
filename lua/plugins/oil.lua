@@ -4,7 +4,6 @@ return {
   'stevearc/oil.nvim',
   dependencies = { 'echasnovski/mini.icons' },
   ft = { 'oil' },
-  keys = { ';e', ';E' },
 
   config = function()
     local oil = require('oil')

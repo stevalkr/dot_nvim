@@ -86,6 +86,18 @@ tnoremap <silent> <C-k> <C-\><C-n><C-w>k
 tnoremap <silent> <C-l> <C-\><C-n><C-w>l
 
 
+" -------------
+" -- command --
+" -------------
+
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-e> <End>
+cnoremap <C-f> <Right>
+cnoremap <A-Left> <S-Left>
+cnoremap <A-Right> <S-Right>
+
+
 " ----------
 " -- move --
 " ----------

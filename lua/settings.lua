@@ -60,12 +60,12 @@ if vim.g.neovide then
   vim.o.winblend = 50
   vim.g.neovide_floating_blur_amount_x = 3.0
   vim.g.neovide_floating_blur_amount_y = 3.0
-  vim.g.neovide_transparency = 0.3
-  vim.g.neovide_window_blurred = true
+  vim.g.neovide_transparency = 0.95
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_theme = 'auto'
   vim.g.neovide_scroll_animation_length = 0.2
   vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
   utils.keymap({ 'v', 's', 'x' }, '<D-c>', '"+y', 'Copy to system clipboard' )
   utils.keymap({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>',
     function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end,

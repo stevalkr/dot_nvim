@@ -15,6 +15,9 @@ return {
             end,
           },
         }),
+        null_ls.builtins.code_actions.refactoring.with({
+          filetypes = { 'c', 'cpp', 'go', 'javascript', 'lua', 'python', 'typescript' }
+        }),
 
         null_ls.builtins.diagnostics.codespell,
         null_ls.builtins.diagnostics.markdownlint,

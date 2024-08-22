@@ -3,7 +3,6 @@ return {
 
   "ibhagwan/fzf-lua",
   dependencies = { "echasnovski/mini.icons" },
-  keys = { ';;', ';a', ';f', ';g', ';b', ';q', 'gd', 'gD', 'gi', 'gr', '<leader>D', '<leader>s', '<leader>S', '<leader>ca', },
 
   config = function()
     local fzf = require('fzf-lua')
@@ -40,7 +39,7 @@ return {
     utils.keymap('n', '<leader>D', fzf.diagnostics_document, 'Diagnostics document')
     utils.keymap('n', '<leader>s', fzf.lsp_document_symbols, 'Document symbols')
     utils.keymap('n', '<leader>S', fzf.lsp_workspace_symbols, 'Workspace symbols')
-    utils.keymap('n', '<leader>ca', fzf.lsp_code_actions, 'Code actions')
+    utils.keymap({ 'n', 'v' }, '<leader>ca', fzf.lsp_code_actions, 'Code actions')
   end
 
 }
