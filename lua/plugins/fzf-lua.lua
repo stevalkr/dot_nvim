@@ -14,10 +14,17 @@ return {
           ['<C-u>'] = 'preview-page-up',
         },
       },
+      files = {
+        actions = {
+          ['ctrl-q'] = {
+            fn = actions.file_edit_or_qf
+          },
+        },
+      },
       grep = {
         actions = {
           ['ctrl-q'] = {
-            fn = actions.file_edit_or_qf, prefix = 'select-all+'
+            fn = actions.file_edit_or_qf
           },
         },
       },
