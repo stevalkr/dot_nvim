@@ -14,7 +14,7 @@ return {
         'icon',
       },
       lsp_file_methods = {
-        autosave_changes = "unmodified",
+        autosave_changes = 'unmodified',
       },
       keymaps = {
         ['g?']         = 'actions.show_help',

@@ -130,12 +130,12 @@ utils.augroup({
     {
       event = 'BufReadPost',
       callback = function(opts)
-        if vim.tbl_contains({ "quickfix", "nofile", "help" },
+        if vim.tbl_contains({ 'quickfix', 'nofile', 'help' },
               vim.bo.buftype) then
           return
         end
 
-        if vim.tbl_contains({ "gitcommit", "gitrebase", "svn", "hgcommit" },
+        if vim.tbl_contains({ 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
               vim.bo.filetype) then
           vim.cmd([[normal! gg]])
           return
@@ -152,8 +152,8 @@ utils.augroup({
         if not (ft:match('commit') and ft:match('rebase'))
             and last_line > 0
             and last_line <= buff_last_line then
-          local win_last_line = vim.fn.line("w$")
-          local win_first_line = vim.fn.line("w0")
+          local win_last_line = vim.fn.line('w$')
+          local win_first_line = vim.fn.line('w0')
 
           if win_last_line == buff_last_line then
             vim.cmd [[normal! g`"]]
@@ -171,9 +171,9 @@ utils.augroup({
     {
       event = 'BufWritePre',
       callback = function()
-        local save_cursor = vim.fn.getpos(".")
+        local save_cursor = vim.fn.getpos('.')
         vim.cmd([[%s/\s\+$//e]])
-        vim.fn.setpos(".", save_cursor)
+        vim.fn.setpos('.', save_cursor)
       end,
     },
   },
@@ -182,7 +182,7 @@ utils.augroup({
     {
       event = 'TextYankPost',
       callback = function()
-        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 300 })
+        vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 300 })
       end
     }
   },

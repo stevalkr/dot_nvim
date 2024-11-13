@@ -56,25 +56,53 @@ return {
     opts = {
       triggers = {
         { '<auto>', mode = 'nxsot' },
-        { 's', mode = 'n' }
+        { 's',      mode = 'n' }
       },
     }
   },
 
   {
-    "OXY2DEV/markview.nvim",
-    ft = { "markdown" },
+    'OXY2DEV/markview.nvim',
+    ft = { 'markdown' },
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "nvim-treesitter/nvim-treesitter"
+      'nvim-tree/nvim-web-devicons',
+      'nvim-treesitter/nvim-treesitter'
     }
   },
 
   {
-    "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = function() vim.fn["mkdp#util#install"]() end,
+    'iamcco/markdown-preview.nvim',
+    ft = { 'markdown' },
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = function() vim.fn['mkdp#util#install']() end,
+  },
+
+  {
+    'mrjones2014/smart-splits.nvim',
+    config = function()
+      local smart_splits = require('smart-splits')
+      smart_splits.setup({
+        cursor_follows_swapped_bufs = true,
+        default_amount = 1,
+        at_edge = 'stop'
+      })
+      utils.keymap('n', '<Left>', smart_splits.resize_left, 'resize left')
+      utils.keymap('n', '<Down>', smart_splits.resize_down, 'resize down')
+      utils.keymap('n', '<Up>', smart_splits.resize_up, 'resize up')
+      utils.keymap('n', '<Right>', smart_splits.resize_right, 'resize right')
+      -- utils.keymap('n', '<leader>h', smart_splits.start_resize_mode, 'split left')
+
+      utils.keymap('n', '<C-h>', smart_splits.move_cursor_left, 'move cursor left')
+      utils.keymap('n', '<C-j>', smart_splits.move_cursor_down, 'move cursor down')
+      utils.keymap('n', '<C-k>', smart_splits.move_cursor_up, 'move cursor up')
+      utils.keymap('n', '<C-l>', smart_splits.move_cursor_right, 'move cursor right')
+      -- utils.keymap('n', '<C-\\>', smart_splits.move_cursor_previous, 'move cursor previous')
+
+      utils.keymap('n', 'sH', smart_splits.swap_buf_left, 'swap buffer left')
+      utils.keymap('n', 'sJ', smart_splits.swap_buf_down, 'swap buffer down')
+      utils.keymap('n', 'sK', smart_splits.swap_buf_up, 'swap buffer up')
+      utils.keymap('n', 'sL', smart_splits.swap_buf_right, 'swap buffer right')
+    end
   },
 
   {

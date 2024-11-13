@@ -144,6 +144,5 @@ vnoremap <silent> > >gv
 vnoremap <silent> J :move '>+1<CR>gv-gv
 vnoremap <silent> K :move '<-2<CR>gv-gv
 
-
 ]])
 
