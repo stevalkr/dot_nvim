@@ -69,10 +69,10 @@ nnoremap <silent> sJ <C-w>J
 nnoremap <silent> sK <C-w>K
 nnoremap <silent> sL <C-w>L
 
-nnoremap <silent> <Left> <Cmd>vertical resize +1<CR>
-nnoremap <silent> <Right> <Cmd>vertical resize -1<CR>
-nnoremap <silent> <Up> <Cmd>resize -1<CR>
-nnoremap <silent> <Down> <Cmd>resize +1<CR>
+nnoremap <silent> <C-S-h> <Cmd>vertical resize +1<CR>
+nnoremap <silent> <C-S-l> <Cmd>vertical resize -1<CR>
+nnoremap <silent> <C-S-k> <Cmd>resize -1<CR>
+nnoremap <silent> <C-S-j> <Cmd>resize +1<CR>
 
 
 " --------------

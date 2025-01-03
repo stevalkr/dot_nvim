@@ -94,6 +94,10 @@ return {
       utils.keymap('n', '<C-k>', smart_splits.move_cursor_up, 'move cursor up')
       utils.keymap('n', '<C-l>', smart_splits.move_cursor_right, 'move cursor right')
       -- utils.keymap('n', '<C-\\>', smart_splits.move_cursor_previous, 'move cursor previous')
+      utils.keymap('n', '<C-S-h>', smart_splits.resize_left, 'resize left')
+      utils.keymap('n', '<C-S-j>', smart_splits.resize_down, 'resize down')
+      utils.keymap('n', '<C-S-k>', smart_splits.resize_up, 'resize up')
+      utils.keymap('n', '<C-S-l>', smart_splits.resize_right, 'resize right')
 
       utils.keymap('n', 'sH', smart_splits.swap_buf_left, 'swap buffer left')
       utils.keymap('n', 'sJ', smart_splits.swap_buf_down, 'swap buffer down')
