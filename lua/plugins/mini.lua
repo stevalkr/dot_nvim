@@ -8,6 +8,13 @@ return {
   },
 
   {
+    'echasnovski/mini.icons',
+    version = '*',
+    event = 'VeryLazy',
+    opts = {}
+  },
+
+  {
     'echasnovski/mini.pairs',
     version = '*',
     event = 'VeryLazy',

@@ -62,19 +62,16 @@ return {
   },
 
   {
-    'OXY2DEV/markview.nvim',
-    ft = { 'markdown' },
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-      'nvim-treesitter/nvim-treesitter'
-    }
+    'stevearc/dressing.nvim',
+    opts = {},
   },
 
   {
-    'iamcco/markdown-preview.nvim',
-    ft = { 'markdown' },
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    build = function() vim.fn['mkdp#util#install']() end,
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
   },
 
   {
@@ -103,20 +100,6 @@ return {
       utils.keymap('n', 'sK', smart_splits.swap_buf_up, 'swap buffer up')
       utils.keymap('n', 'sL', smart_splits.swap_buf_right, 'swap buffer right')
     end
-  },
-
-  {
-    'mikesmithgh/kitty-scrollback.nvim',
-    lazy = true,
-    version = '*',
-    event = { 'User KittyScrollbackLaunch' },
-    cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
-    opts = { {
-      restore_options = true,
-      status_window = {
-        style_simple = true,
-      }
-    } }
   }
 
 }

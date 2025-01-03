@@ -66,9 +66,10 @@ return {
 
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'render-markdown' }
       }, {
         { name = 'buffer' },
-        { name = 'path' },
+        { name = 'path' }
       }),
 
       -- disable completion in comments

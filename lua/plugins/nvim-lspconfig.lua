@@ -17,7 +17,6 @@ return {
     lspconfig['gopls'].setup({ capabilities = capabilities })
     lspconfig['svelte'].setup({ capabilities = capabilities })
     lspconfig['pyright'].setup({ capabilities = capabilities })
-    lspconfig['tsserver'].setup({ capabilities = capabilities })
     lspconfig['rust_analyzer'].setup({ capabilities = capabilities })
     lspconfig['elixirls'].setup({ capabilities = capabilities, cmd = { 'elixir-ls' } })
 

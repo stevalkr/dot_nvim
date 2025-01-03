@@ -1,13 +1,17 @@
 local utils = require('utils')
 return {
 
-  'github/copilot.vim',
-  build = ':Copilot setup',
-  event = { 'BufReadPost' },
+  'zbirenbaum/copilot.lua',
+  event = { 'InsertEnter' },
 
-  config = function()
-    vim.g.copilot_no_tab_map = true
-    utils.keymap('i', '<C-CR>', 'copilot#Accept("\\<CR>")', 'Copilot', { expr = true, replace_keycodes = false })
-  end
+  opts = {
+    suggestion = {
+      auto_trigger = true,
+      keymap = {
+        accept = '<C-CR>',
+        accept_word = '<C-l>'
+      }
+    }
+  }
 
 }
