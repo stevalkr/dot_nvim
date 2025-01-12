@@ -4,17 +4,13 @@ return {
   event = 'VeryLazy',
   lazy = false,
   version = false,
-  opts = {
-    provider = 'copilot',
-    auto_suggestions_provider = 'copilot'
-  },
+  opts = { provider = 'copilot' },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
   dependencies = {
     'stevearc/dressing.nvim',
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
-    'hrsh7th/nvim-cmp',
     'echasnovski/mini.icons',
     'zbirenbaum/copilot.lua',
     {
@@ -26,19 +22,19 @@ return {
           embed_image_as_base64 = false,
           prompt_for_file_name = false,
           drag_and_drop = {
-            insert_mode = true,
+            insert_mode = true
           },
           -- required for Windows users
           use_absolute_path = true,
-        },
-      },
+        }
+      }
     },
     {
       'MeanderingProgrammer/render-markdown.nvim',
       opts = {
-        file_types = { 'markdown', 'Avante' },
+        file_types = { 'markdown', 'Avante' }
       },
-      ft = { 'markdown', 'Avante' },
+      ft = { 'markdown', 'Avante' }
     },
   }
 }

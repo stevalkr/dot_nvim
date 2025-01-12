@@ -66,7 +66,7 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0.2
   vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
-  utils.keymap({ 'v', 's', 'x' }, '<D-c>', '"+y', 'Copy to system clipboard' )
+  utils.keymap({ 'v', 's', 'x' }, '<D-c>', '"+y', 'Copy to system clipboard')
   utils.keymap({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>',
     function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end,
     'Paste from system clipboard'
@@ -78,7 +78,7 @@ end
 
 -- user commands
 vim.api.nvim_create_user_command('SaveSession',
-  require('utils').save_session,
+  utils.save_session,
   { nargs = 0 }
 )
 
@@ -209,6 +209,26 @@ utils.augroup({
         else
           print('Error: Unable to write to ' .. path)
         end
+      end
+    }
+  },
+
+  hide_copilot_suggestion = {
+    {
+      event = 'User',
+      pattern = 'BlinkCmpMenuOpen',
+      callback = function()
+        if utils.has_plugin('copilot') then
+          require('copilot.suggestion').dismiss()
+        end
+        vim.b.copilot_suggestion_hidden = true
+      end
+    },
+    {
+      event = 'User',
+      pattern = 'BlinkCmpMenuClose',
+      callback = function()
+        vim.b.copilot_suggestion_hidden = false
       end
     }
   }

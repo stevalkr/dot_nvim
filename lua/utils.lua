@@ -87,8 +87,12 @@ M.key = function(mode, lhs, rhs, desc, opts)
 end
 
 M.save_session = function()
+  if not M.has_plugin('mini.sessions') then
+    vim.api.nvim_err_writeln('Plugin mini.sessions is not installed')
+    return false
+  end
   local function buffer_filter(buf)
-    if not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_buf_get_option(buf, 'buflisted') then
+    if not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_get_option_value('buflisted', { buf = buf }) then
       return false
     end
     return true
@@ -103,7 +107,7 @@ M.save_session = function()
 
   for _, buffer in ipairs(buffers) do
     if non_hidden_buffer[buffer] == nil then
-      if vim.api.nvim_buf_get_option(buffer, 'modified') then
+      if vim.api.nvim_get_option_value('modified', { buf = buffer }) then
         vim.api.nvim_err_writeln(
           string.format('No write since last change for buffer %d', buffer)
         )

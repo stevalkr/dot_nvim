@@ -9,6 +9,9 @@ return {
     if utils.has_plugin('nvim-cmp') then
       capabilities = require('cmp_nvim_lsp').default_capabilities()
     end
+    if utils.has_plugin('blink.cmp') then
+      capabilities = require('blink.cmp').get_lsp_capabilities()
+    end
 
     vim.lsp.inlay_hint.enable()
 
@@ -103,7 +106,7 @@ return {
           utils.keymap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action', kopts)
         end
 
-        if not utils.has_plugin('nvim-cmp') and vim.version.gt(vim.version(), { 0, 10 }) then
+        if not utils.has_plugin('nvim-cmp') and not utils.has_plugin('blink.cmp') and vim.version.gt(vim.version(), { 0, 10 }) then
           vim.opt.pumheight = 10
           vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
           -- https://github.com/neovim/neovim/issues/29225
