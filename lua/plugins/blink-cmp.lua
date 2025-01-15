@@ -38,7 +38,10 @@ return {
         if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
           return { 'buffer' }
         end
-        local sources = { 'lsp', 'path', 'snippets', 'buffer', 'markdown' }
+        local sources = { 'lsp', 'path', 'snippets', 'buffer' }
+        if utils.has_plugin('render-markdown.nvim') then
+          table.insert(sources, 'markdown')
+        end
         if utils.has_plugin('avante.nvim') then
           table.insert(sources, 'avante_commands')
           table.insert(sources, 'avante_mentions')
@@ -70,12 +73,12 @@ return {
           score_offset = 1000,
           opts = {},
         }
-      },
+      }
     },
 
     keymap = {
       preset = 'none',
-      ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'hide', 'fallback' },
       ['<CR>'] = { 'accept', 'fallback' },
 

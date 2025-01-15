@@ -36,7 +36,6 @@ return {
     utils.keymap('n', ';g', fzf.live_grep, 'Live grep')
     utils.keymap('v', ';g', fzf.grep_visual, 'Grep string')
     utils.keymap('n', ';b', fzf.buffers, 'Buffers')
-    utils.keymap('n', ';q', fzf.quickfix, 'Quickfix')
 
     utils.keymap('n', 'gd', function() fzf.lsp_definitions({ jump_to_single_result = true }) end, 'Go to definitions')
     utils.keymap('n', 'gD', function() fzf.lsp_declarations({ jump_to_single_result = true }) end, 'Go to declarations')

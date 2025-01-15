@@ -120,10 +120,10 @@ utils.augroup({
       event = 'FocusGained',
       command = [[checktime]]
     },
-    {
-      event = 'VimResized',
-      command = [[tabdo wincmd =]]
-    }
+    -- {
+    --   event = 'VimResized',
+    --   command = [[tabdo wincmd =]]
+    -- }
   },
 
   last_edited = {

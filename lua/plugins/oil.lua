@@ -4,6 +4,9 @@ return {
   'stevearc/oil.nvim',
   dependencies = { 'echasnovski/mini.icons' },
 
+  dir = '/Users/walker/Downloads/oil.nvim',
+  dev = true,
+
   config = function()
     local oil = require('oil')
     oil.setup({
@@ -35,6 +38,8 @@ return {
         ['E']          = 'actions.open_cwd',
         ['S']          = 'actions.change_sort',
         ['H']          = 'actions.toggle_hidden',
+        ['gy']         = 'actions.copy_to_system_clipboard',
+        ['gp']         = 'actions.paste_from_system_clipboard',
         -- ['<C-t>']      = 'actions.toggle_trash',
         -- ['<C-o>']      = 'actions.open_external',
       },

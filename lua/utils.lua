@@ -88,7 +88,7 @@ end
 
 M.save_session = function()
   if not M.has_plugin('mini.sessions') then
-    vim.api.nvim_err_writeln('Plugin mini.sessions is not installed')
+    vim.notify('Plugin mini.sessions is not installed', vim.log.levels.ERROR)
     return false
   end
   local function buffer_filter(buf)
@@ -108,14 +108,21 @@ M.save_session = function()
   for _, buffer in ipairs(buffers) do
     if non_hidden_buffer[buffer] == nil then
       if vim.api.nvim_get_option_value('modified', { buf = buffer }) then
-        vim.api.nvim_err_writeln(
-          string.format('No write since last change for buffer %d', buffer)
+        vim.notify(
+          string.format('No write since last change for buffer %d', buffer), vim.log.levels.WARN
         )
       else
         vim.cmd('bdelete ' .. buffer)
       end
     end
   end
+
+  vim.uv.fs_mkdir('.cache', 493, function(err) -- 0755
+    -- Ignore if the directory already exists
+    if err and not err:match("^EEXIST:") then
+      vim.api.notify(err, vim.log.levels.ERROR)
+    end
+  end)
 
   require('mini.sessions').write('.cache/session.vim')
 end
