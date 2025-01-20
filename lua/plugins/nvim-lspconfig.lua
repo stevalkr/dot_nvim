@@ -110,7 +110,7 @@ return {
           vim.opt.pumheight = 10
           vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
           -- https://github.com/neovim/neovim/issues/29225
-          vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = true })
+          vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = false })
         end
       end
     })

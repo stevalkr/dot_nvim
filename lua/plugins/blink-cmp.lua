@@ -105,6 +105,14 @@ return {
       ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'hide', 'fallback' },
       ['<CR>'] = { 'accept', 'fallback' },
+      ['<S-CR>'] = { function(cmp)
+        if not cmp.is_visible() then return end
+        local completion_list = require('blink.cmp.completion.list')
+        local item = completion_list.get_selected_item()
+        if item == nil then return end
+        vim.schedule(function() completion_list.apply_preview(item) end)
+        return true
+      end, 'fallback' },
 
       ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
       ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
