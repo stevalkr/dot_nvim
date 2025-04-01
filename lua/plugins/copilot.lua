@@ -1,4 +1,5 @@
 local utils = require('utils')
+
 return {
 
   'zbirenbaum/copilot.lua',
@@ -9,7 +10,7 @@ return {
       auto_trigger = true,
       keymap = {
         accept = '<C-CR>',
-        accept_word = '<C-l>'
+        accept_word = '<M-l>'
       }
     }
   }

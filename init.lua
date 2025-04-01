@@ -5,9 +5,14 @@ require('settings')
 
 
 -------------
+-- autocmd --
+-------------
+require('autocmds')
+
+
+-------------
 -- mapping --
 -------------
-vim.g.mapleader = ','
 require('mappings')
 
 
@@ -27,16 +32,39 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-if os.getenv('NVIM') ~= nil then
+if vim.env.NVIM then
   require('lazy').setup({
     'willothy/flatten.nvim',
     lazy = false,
     opts = {
       window = {
         open = 'tab'
-      },
-    },
+      }
+    }
+  })
+elseif vim.env.MULTIPLEXER then
+  require('lazy').setup({
+    'stevalkr/multiplexer.nvim',
+    lazy = false,
+    dev = true,
+    opts = {
+      default_resize_amount = 5
+    }
+  }, {
+    dev = {
+      path = vim.fn.stdpath('config') .. '/dev'
+    }
   })
 else
-  require('lazy').setup('plugins')
+  require('lazy').setup({
+    spec = {
+      { import = 'plugins' }
+    },
+    rocks = {
+      hererocks = true
+    },
+    dev = {
+      path = vim.fn.stdpath('config') .. '/dev'
+    }
+  })
 end

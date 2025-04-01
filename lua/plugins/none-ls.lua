@@ -4,9 +4,9 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = { 'nvim-lua/plenary.nvim' },
 
-  config = function()
+  opts = function()
     local null_ls = require('null-ls')
-    null_ls.setup({
+    return {
       sources = {
         null_ls.builtins.code_actions.gitsigns.with({
           config = {
@@ -22,11 +22,13 @@ return {
         null_ls.builtins.diagnostics.codespell,
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.fish,
+        null_ls.builtins.diagnostics.zsh,
 
         null_ls.builtins.formatting.nixpkgs_fmt,
         null_ls.builtins.formatting.cmake_format,
+        null_ls.builtins.formatting.fish_indent
       }
-    })
+    }
   end
 
 }

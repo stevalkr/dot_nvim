@@ -1,3 +1,5 @@
+local utils = require('utils')
+
 -- vim settings
 vim.loader.enable()
 
@@ -39,6 +41,8 @@ vim.opt.shiftround = true
 
 vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
+vim.opt.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
+
 vim.opt.wildignore =
 '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
 vim.opt.wildignorecase = true
@@ -46,15 +50,11 @@ vim.opt.wildignorecase = true
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldtext = [[v:lua.require('utils').foldtext()]]
-
-local utils = require('utils')
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.opt.foldtext = [[v:lua.require('utils').foldtext()]]
+vim.opt.foldtext = ''
 
 -- neovide settings
-local change_scale_factor = function(delta)
-  vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
-end
 if vim.g.neovide then
   vim.opt.linespace = 6
   vim.o.winblend = 50
@@ -69,167 +69,11 @@ if vim.g.neovide then
   utils.keymap({ 'v', 's', 'x' }, '<D-c>', '"+y', 'Copy to system clipboard')
   utils.keymap({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>',
     function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end,
-    'Paste from system clipboard'
-  )
+    'Paste from system clipboard')
   vim.g.neovide_scale_factor = 1.0
-  vim.keymap.set('n', '<D-=>', function() change_scale_factor(1.25) end)
-  vim.keymap.set('n', '<D-->', function() change_scale_factor(0.8) end)
+  local change_scale_factor = function(delta)
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+  end
+  utils.keymap('n', '<D-=>', function() change_scale_factor(1.25) end, 'Increase scale factor')
+  utils.keymap('n', '<D-->', function() change_scale_factor(0.8) end, 'Decrease scale factor')
 end
-
--- user commands
-vim.api.nvim_create_user_command('SaveSession',
-  utils.save_session,
-  { nargs = 0 }
-)
-
--- auto groups
-utils.augroup({
-  relative_number = {
-    {
-      event = 'InsertEnter',
-      callback = function()
-        vim.opt.relativenumber = false
-      end
-    },
-    {
-      event = 'InsertLeave',
-      callback = function()
-        vim.opt.relativenumber = true
-      end
-    }
-  },
-
-  highlight_current_line = {
-    {
-      event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
-      callback = function()
-        vim.opt.cursorline = false
-      end
-    },
-    {
-      event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
-      callback = function()
-        vim.opt.cursorline = true
-      end
-    },
-  },
-
-  wins = {
-    -- check if file changed when its window is focus, more eager than 'autoread'
-    {
-      event = 'FocusGained',
-      command = [[checktime]]
-    },
-    -- {
-    --   event = 'VimResized',
-    --   command = [[tabdo wincmd =]]
-    -- }
-  },
-
-  last_edited = {
-    {
-      event = 'BufReadPost',
-      callback = function(opts)
-        if vim.tbl_contains({ 'quickfix', 'nofile', 'help' },
-              vim.bo.buftype) then
-          return
-        end
-
-        if vim.tbl_contains({ 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
-              vim.bo.filetype) then
-          vim.cmd([[normal! gg]])
-          return
-        end
-
-        if vim.api.nvim_win_get_cursor(0)[1] > 1 then
-          return
-        end
-
-        local ft = vim.bo[opts.buf].filetype
-        local last_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
-        local buff_last_line = vim.api.nvim_buf_line_count(opts.buf)
-
-        if not (ft:match('commit') and ft:match('rebase'))
-            and last_line > 0
-            and last_line <= buff_last_line then
-          local win_last_line = vim.fn.line('w$')
-          local win_first_line = vim.fn.line('w0')
-
-          if win_last_line == buff_last_line then
-            vim.cmd [[normal! g`"]]
-          elseif buff_last_line - last_line > ((win_last_line - win_first_line) / 2) - 1 then
-            vim.cmd [[normal! g`"zz]]
-          else
-            vim.cmd [[normal! G'"<c-e>]]
-          end
-        end
-      end
-    },
-  },
-
-  tailing_spaces = {
-    {
-      event = 'BufWritePre',
-      callback = function()
-        local save_cursor = vim.fn.getpos('.')
-        vim.cmd([[%s/\s\+$//e]])
-        vim.fn.setpos('.', save_cursor)
-      end,
-    },
-  },
-
-  highlight_yank = {
-    {
-      event = 'TextYankPost',
-      callback = function()
-        vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 300 })
-      end
-    }
-  },
-
-  comment = {
-    {
-      event = 'FileType',
-      pattern = 'c,cpp',
-      callback = function()
-        vim.bo.commentstring = [[// %s]]
-      end
-    }
-  },
-
-  save_cwd = {
-    {
-      event = 'VimLeave',
-      callback = function()
-        local path = os.getenv('TMPDIR') .. '/vim_cwd'
-        local file = io.open(path, 'w')
-        if file then
-          file:write(vim.fn.getcwd())
-          file:close()
-        else
-          print('Error: Unable to write to ' .. path)
-        end
-      end
-    }
-  },
-
-  hide_copilot_suggestion = {
-    {
-      event = 'User',
-      pattern = 'BlinkCmpMenuOpen',
-      callback = function()
-        if utils.has_plugin('copilot') then
-          require('copilot.suggestion').dismiss()
-        end
-        vim.b.copilot_suggestion_hidden = true
-      end
-    },
-    {
-      event = 'User',
-      pattern = 'BlinkCmpMenuClose',
-      callback = function()
-        vim.b.copilot_suggestion_hidden = false
-      end
-    }
-  }
-})

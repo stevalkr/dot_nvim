@@ -4,9 +4,6 @@ return {
   'stevearc/oil.nvim',
   dependencies = { 'echasnovski/mini.icons' },
 
-  dir = '/Users/walker/Downloads/oil.nvim',
-  dev = true,
-
   config = function()
     local oil = require('oil')
     oil.setup({
@@ -27,8 +24,6 @@ return {
         ['L']          = 'actions.select_vsplit',
         ['T']          = 'actions.select_tab',
         ['<C-p>']      = 'actions.preview',
-        ['<C-d>']      = 'actions.preview_scroll_down',
-        ['<C-u>']      = 'actions.preview_scroll_up',
         ['<C-r>']      = 'actions.refresh',
         ['<BS>']       = 'actions.parent',
         ['<C-e>']      = 'actions.open_cwd',
@@ -40,8 +35,19 @@ return {
         ['H']          = 'actions.toggle_hidden',
         ['gy']         = 'actions.copy_to_system_clipboard',
         ['gp']         = 'actions.paste_from_system_clipboard',
-        -- ['<C-t>']      = 'actions.toggle_trash',
+        ['<C-t>']      = 'actions.toggle_trash',
         -- ['<C-o>']      = 'actions.open_external',
+        -- ['<C-d>']      = 'actions.preview_scroll_down',
+        -- ['<C-u>']      = 'actions.preview_scroll_up',
+        ['<leader>0']  = {
+          mode = 'n',
+          callback = function()
+            if utils.has_plugin('nvim-0x0') then
+              require('nvim-0x0').upload_oil_file()
+            end
+          end,
+          desc = 'Upload current file'
+        },
       },
       use_default_keymaps = false,
     })

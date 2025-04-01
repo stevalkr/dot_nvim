@@ -18,7 +18,74 @@ return {
     'echasnovski/mini.pairs',
     version = '*',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      mappings = {
+        [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+        [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+        ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+        ['['] = {
+          action = 'open',
+          pair = '[]',
+          neigh_pattern = '.[%s%z%)}%]]',
+          register = { cr = false },
+          -- foo|bar -> press '[' -> foo[bar
+          -- foobar| -> press '[' -> foobar[]
+          -- |foobar -> press '[' -> [foobar
+          -- | foobar -> press '[' -> [] foobar
+          -- foobar | -> press '[' -> foobar []
+          -- {|} -> press '[' -> {[]}
+          -- (|) -> press '[' -> ([])
+          -- [|] -> press '[' -> [[]]
+        },
+        ['{'] = {
+          action = 'open',
+          pair = '{}',
+          -- neigh_pattern = '.[%s%z%)}]',
+          neigh_pattern = '.[%s%z%)}%]]',
+          register = { cr = false },
+          -- foo|bar -> press '{' -> foo{bar
+          -- foobar| -> press '{' -> foobar{}
+          -- |foobar -> press '{' -> {foobar
+          -- | foobar -> press '{' -> {} foobar
+          -- foobar | -> press '{' -> foobar {}
+          -- (|) -> press '{' -> ({})
+          -- {|} -> press '{' -> {{}}
+        },
+        ['('] = {
+          action = 'open',
+          pair = '()',
+          -- neigh_pattern = '.[%s%z]',
+          neigh_pattern = '.[%s%z%)]',
+          register = { cr = false },
+          -- foo|bar -> press '(' -> foo(bar
+          -- foobar| -> press '(' -> foobar()
+          -- |foobar -> press '(' -> (foobar
+          -- | foobar -> press '(' -> () foobar
+          -- foobar | -> press '(' -> foobar ()
+        },
+        -- Single quote: Prevent pairing if either side is a letter
+        ['"'] = {
+          action = 'closeopen',
+          pair = '""',
+          neigh_pattern = '[^%w\\][^%w]',
+          register = { cr = false },
+        },
+        -- Single quote: Prevent pairing if either side is a letter
+        ["'"] = {
+          action = 'closeopen',
+          pair = "''",
+          neigh_pattern = '[^%w\\][^%w]',
+          register = { cr = false },
+        },
+        -- Backtick: Prevent pairing if either side is a letter
+        ['`'] = {
+          action = 'closeopen',
+          pair = '``',
+          neigh_pattern = '[^%w\\][^%w]',
+          register = { cr = false },
+        },
+      },
+    },
   },
 
   {

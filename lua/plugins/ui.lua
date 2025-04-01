@@ -1,10 +1,39 @@
 local utils = require('utils')
-
 return {
 
   {
     'dstein64/vim-startuptime',
     lazy = false
+  },
+
+  {
+    'willothy/flatten.nvim',
+    opts = {}
+  },
+
+  {
+    'stevearc/dressing.nvim',
+    opts = {},
+  },
+
+  {
+    "3rd/image.nvim",
+    enabled = vim.env.TMUX == nil,    -- https://github.com/3rd/image.nvim/issues/279
+    init = function()
+      if vim.env.HOMEBREW_PREFIX then -- TODO
+        vim.fn.setenv('PKG_CONFIG_PATH_FOR_TARGET',
+          string.format('%s:%s/lib/pkgconfig:%s/share/pkgconfig', (vim.env.PKG_CONFIG_PATH_FOR_TARGET or ''),
+            vim.env.HOMEBREW_PREFIX, vim.env.HOMEBREW_PREFIX
+          ))
+      end
+    end,
+    opts = {}
+  },
+
+  {
+    'HakonHarnes/img-clip.nvim',
+    event = 'VeryLazy',
+    opts = {}
   },
 
   {
@@ -17,8 +46,27 @@ return {
   },
 
   {
-    'willothy/flatten.nvim',
-    opts = {}
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = {
+      'echasnovski/mini.icons',
+      'nvim-treesitter/nvim-treesitter'
+    },
+    opts = {},
+  },
+
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      triggers = {
+        { '<auto>', mode = 'nxsot' },
+        { 's',      mode = 'n' }
+      },
+    }
   },
 
   {
@@ -38,7 +86,7 @@ return {
           variables = {},
         },
 
-        on_highlights = function(highlights, colors)
+        on_highlights = function(highlights, _)
           highlights['@lsp.typemod.variable.readonly.cpp'] = { undercurl = true }
         end,
       })
@@ -47,63 +95,25 @@ return {
   },
 
   {
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
+    'stevalkr/multiplexer.nvim',
+    lazy = false,
+    dev = true,
     opts = {
-      triggers = {
-        { '<auto>', mode = 'nxsot' },
-        { 's',      mode = 'n' }
-      },
+      default_resize_amount = 5,
+      on_init = function()
+        local multiplexer = require('multiplexer')
+
+        vim.keymap.set('n', '<C-h>', multiplexer.activate_pane_left, { desc = 'Activate pane to the left' })
+        vim.keymap.set('n', '<C-j>', multiplexer.activate_pane_down, { desc = 'Activate pane below' })
+        vim.keymap.set('n', '<C-k>', multiplexer.activate_pane_up, { desc = 'Activate pane above' })
+        vim.keymap.set('n', '<C-l>', multiplexer.activate_pane_right, { desc = 'Activate pane to the right' })
+
+        vim.keymap.set('n', '<C-S-h>', multiplexer.resize_pane_left, { desc = 'Resize pane to the left' })
+        vim.keymap.set('n', '<C-S-j>', multiplexer.resize_pane_down, { desc = 'Resize pane below' })
+        vim.keymap.set('n', '<C-S-k>', multiplexer.resize_pane_up, { desc = 'Resize pane above' })
+        vim.keymap.set('n', '<C-S-l>', multiplexer.resize_pane_right, { desc = 'Resize pane to the right' })
+      end
     }
-  },
-
-  {
-    'stevearc/dressing.nvim',
-    opts = {},
-  },
-
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {},
-  },
-
-  {
-    'mrjones2014/smart-splits.nvim',
-    config = function()
-      local smart_splits = require('smart-splits')
-      smart_splits.setup({
-        cursor_follows_swapped_bufs = true,
-        default_amount = 1,
-        at_edge = 'stop'
-      })
-      utils.keymap('n', '<Left>', smart_splits.resize_left, 'resize left')
-      utils.keymap('n', '<Down>', smart_splits.resize_down, 'resize down')
-      utils.keymap('n', '<Up>', smart_splits.resize_up, 'resize up')
-      utils.keymap('n', '<Right>', smart_splits.resize_right, 'resize right')
-      -- utils.keymap('n', '<leader>h', smart_splits.start_resize_mode, 'split left')
-
-      utils.keymap('n', '<C-h>', smart_splits.move_cursor_left, 'move cursor left')
-      utils.keymap('n', '<C-j>', smart_splits.move_cursor_down, 'move cursor down')
-      utils.keymap('n', '<C-k>', smart_splits.move_cursor_up, 'move cursor up')
-      utils.keymap('n', '<C-l>', smart_splits.move_cursor_right, 'move cursor right')
-      -- utils.keymap('n', '<C-\\>', smart_splits.move_cursor_previous, 'move cursor previous')
-      utils.keymap('n', '<C-S-h>', smart_splits.resize_left, 'resize left')
-      utils.keymap('n', '<C-S-j>', smart_splits.resize_down, 'resize down')
-      utils.keymap('n', '<C-S-k>', smart_splits.resize_up, 'resize up')
-      utils.keymap('n', '<C-S-l>', smart_splits.resize_right, 'resize right')
-
-      utils.keymap('n', 'sH', smart_splits.swap_buf_left, 'swap buffer left')
-      utils.keymap('n', 'sJ', smart_splits.swap_buf_down, 'swap buffer down')
-      utils.keymap('n', 'sK', smart_splits.swap_buf_up, 'swap buffer up')
-      utils.keymap('n', 'sL', smart_splits.swap_buf_right, 'swap buffer right')
-    end
   }
 
 }

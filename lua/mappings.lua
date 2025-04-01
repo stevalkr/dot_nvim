@@ -1,3 +1,5 @@
+vim.g.mapleader = ','
+
 vim.cmd([[
 
 " -------------
@@ -20,8 +22,6 @@ nnoremap <silent> <Esc> <Cmd>nohlsearch<CR>
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
-nnoremap <silent> H <Cmd>bprevious<CR>
-nnoremap <silent> L <Cmd>bnext<CR>
 nnoremap <silent> <S-Tab> <Cmd>tabprevious<CR>
 nnoremap <silent> <Tab> <Cmd>tabnext<CR>
 
@@ -112,8 +112,8 @@ inoremap <silent> <A-l> <Right>
 inoremap <silent> <C-a> <C-o>I
 inoremap <silent> <C-e> <C-o>A
 
-nnoremap <silent> <C-u> 10kzz
-nnoremap <silent> <C-d> 10jzz
+nnoremap <silent> <C-u> 10kzzm'
+nnoremap <silent> <C-d> 10jzzm'
 vnoremap <silent> <C-u> 10kzz
 vnoremap <silent> <C-d> 10jzz
 
@@ -128,6 +128,7 @@ nnoremap <silent> x "_x
 nnoremap <silent> X "_X
 nnoremap <silent> D "_D
 nnoremap <silent> C "_C
+nnoremap <silent> dd <Cmd>lua require('utils').smart_delete('dd')<CR>
 nnoremap <silent> cc "_cc
 
 vnoremap <silent> c "_c
@@ -143,6 +144,8 @@ vnoremap <silent> > >gv
 
 vnoremap <silent> J :move '>+1<CR>gv-gv
 vnoremap <silent> K :move '<-2<CR>gv-gv
+
+vnoremap <silent> <C-c> <Cmd>lua require('utils').capitalize()<CR>
 
 ]])
 

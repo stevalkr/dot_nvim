@@ -4,8 +4,9 @@ return {
   'lewis6991/gitsigns.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
 
-  config = function()
-    require('gitsigns').setup({
+  opts = function()
+    local gitsigns = require('gitsigns')
+    return {
       current_line_blame = true,
       current_line_blame_opts = {
         virt_text = true,
@@ -16,7 +17,6 @@ return {
         virt_text_priority = 100,
       },
       on_attach = function(bufnr)
-        local gitsigns = require('gitsigns')
         local kopts = { buffer = bufnr }
 
         -- Actions
@@ -58,7 +58,7 @@ return {
           end
         end, 'Prev Hunk')
       end
-    })
+    }
   end
 
 }

@@ -1,5 +1,6 @@
 local utils = require('utils')
 
+-- workaround for nvim 0.11 auto setting <Tab> and <S-Tab> mappings
 if vim.fn.has('nvim-0.11') == 1 then
   local expand = vim.snippet.expand
   ---@diagnostic disable-next-line:duplicate-set-field
@@ -32,8 +33,6 @@ return {
     { 'saghen/blink.compat', version = '*', lazy = true, opts = {} }
   },
 
-  ---@module 'blink.cmp'
-  ---@type blink.cmp.Config
   opts = {
     appearance = {
       nerd_font_variant = 'mono'
@@ -53,6 +52,11 @@ return {
         auto_show = true,
         auto_show_delay_ms = 500
       },
+      accept = {
+        auto_brackets = {
+          semantic_token_resolution = { enabled = true }
+        }
+      },
       menu = { draw = { treesitter = { 'lsp' } } }
     },
 
@@ -66,11 +70,6 @@ return {
         if utils.has_plugin('render-markdown.nvim') then
           table.insert(sources, 'markdown')
         end
-        if utils.has_plugin('avante.nvim') then
-          table.insert(sources, 'avante_commands')
-          table.insert(sources, 'avante_mentions')
-          table.insert(sources, 'avante_files')
-        end
         return sources
       end,
       providers = {
@@ -78,24 +77,6 @@ return {
           name = 'RenderMarkdown',
           module = 'render-markdown.integ.blink',
           fallbacks = { 'lsp' },
-        },
-        avante_commands = {
-          name = 'avante_commands',
-          module = 'blink.compat.source',
-          score_offset = 90,
-          opts = {},
-        },
-        avante_files = {
-          name = 'avante_commands',
-          module = 'blink.compat.source',
-          score_offset = 100,
-          opts = {},
-        },
-        avante_mentions = {
-          name = 'avante_mentions',
-          module = 'blink.compat.source',
-          score_offset = 1000,
-          opts = {},
         }
       }
     },
@@ -103,7 +84,18 @@ return {
     keymap = {
       preset = 'none',
       ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-      ['<C-e>'] = { 'hide', 'fallback' },
+      ['<C-e>'] = { function(cmp)
+        cmp.hide()
+        if utils.has_plugin('copilot.lua') then
+          vim.b.copilot_suggestion_hidden = false
+          vim.defer_fn(function()
+            local suggestion = require('copilot.suggestion')
+            if not suggestion.is_visible() then
+              suggestion.next()
+            end
+          end, 100)
+        end
+      end, 'fallback' },
       ['<CR>'] = { 'accept', 'fallback' },
       ['<S-CR>'] = { function(cmp)
         if not cmp.is_visible() then return end

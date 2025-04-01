@@ -1,10 +1,35 @@
 local utils = require('utils')
 return {
+
   'yetone/avante.nvim',
   event = 'VeryLazy',
-  lazy = false,
   version = false,
-  opts = { provider = 'copilot' },
+  opts = {
+    -- provider = 'copilot',
+    provider = "openrouter_claude",
+    vendors = {
+      openrouter_claude = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = 'anthropic/claude-3.7-sonnet:thinking',
+      },
+      openrouter_gemini = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = 'google/gemini-2.5-pro-exp-03-25:free',
+      },
+    },
+    dual_boost = {
+      enabled = true,
+      first_provider = "openrouter_gemini",
+      second_provider = "openrouter_claude",
+    },
+    behaviour = {
+      enable_cursor_planning_mode = true,
+    },
+  },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
   dependencies = {
@@ -14,7 +39,13 @@ return {
     'echasnovski/mini.icons',
     'zbirenbaum/copilot.lua',
     {
-      -- support for image pasting
+      'MeanderingProgrammer/render-markdown.nvim',
+      opts = {
+        file_types = { 'markdown', 'Avante' }
+      },
+      ft = { 'markdown', 'Avante' }
+    },
+    {
       'HakonHarnes/img-clip.nvim',
       event = 'VeryLazy',
       opts = {
@@ -23,18 +54,40 @@ return {
           prompt_for_file_name = false,
           drag_and_drop = {
             insert_mode = true
-          },
-          -- required for Windows users
-          use_absolute_path = true,
+          }
         }
       }
     },
     {
-      'MeanderingProgrammer/render-markdown.nvim',
+      'saghen/blink.cmp',
       opts = {
-        file_types = { 'markdown', 'Avante' }
-      },
-      ft = { 'markdown', 'Avante' }
-    },
+        sources = {
+          default = {
+            { 'avante_commands', 'avante_mentions', 'avante_files' }
+          },
+          providers = {
+            avante_commands = {
+              name = 'avante_commands',
+              module = 'blink.compat.source',
+              score_offset = 90,
+              opts = {},
+            },
+            avante_files = {
+              name = 'avante_commands',
+              module = 'blink.compat.source',
+              score_offset = 100,
+              opts = {},
+            },
+            avante_mentions = {
+              name = 'avante_mentions',
+              module = 'blink.compat.source',
+              score_offset = 1000,
+              opts = {},
+            }
+          }
+        }
+      }
+    }
   }
+
 }

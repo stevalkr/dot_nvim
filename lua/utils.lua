@@ -1,18 +1,35 @@
 local M = {}
 
-M.dump = function(o)
-  if type(o) == 'table' then
+---@param t table
+---@return string
+M.dump = function(t)
+  if type(t) == 'table' then
     local s = '{ '
-    for k, v in pairs(o) do
+    for k, v in pairs(t) do
       if type(k) ~= 'number' then k = '"' .. k .. '"' end
       s = s .. '[' .. k .. '] = ' .. M.dump(v) .. ','
     end
     return s .. '} '
   else
-    return tostring(o)
+    return tostring(t)
   end
 end
 
+M.capitalize = function()
+  local hlsearch = vim.v.hlsearch
+  vim.cmd([[execute "normal! \<Esc>"]])
+  vim.cmd([[s/\%V\<.\%V/\u&/g]])
+  vim.fn.histdel('/', -1)
+  vim.fn.setreg('/', vim.fn.histget('/', -1))
+  vim.v.hlsearch = hlsearch
+end
+
+---@param key string
+M.smart_delete = function(key)
+  vim.cmd.normal({ (vim.fn.getline('.'):match("^%s*$") and '"_' or "") .. key, bang = true })
+end
+
+-- used for wezterm scrollback
 M.colorize = function()
   local buf = vim.api.nvim_get_current_buf()
 
@@ -39,6 +56,8 @@ M.colorize = function()
   end, 2000)
 end
 
+---@param name string
+---@return boolean
 M.has_plugin = function(name)
   for _, plugin in ipairs(require('lazy').plugins()) do
     if plugin.name == name then
@@ -48,42 +67,23 @@ M.has_plugin = function(name)
   return false
 end
 
-M.foldtext = function()
-  local line = vim.fn.getline(vim.v.foldstart)
-  local line_count = vim.v.foldend - vim.v.foldstart + 1
-  return line .. "  <- " .. line_count .. " lines "
-end
-
+---@generic T: table
+---@param mode string|table
+---@param lhs string
+---@param rhs function|string
+---@param desc string
+---@param opts? T
 M.keymap = function(mode, lhs, rhs, desc, opts)
-  vim.validate({
-    mode = { mode, { 's', 't' } },
-    lhs = { lhs, 's' },
-    rhs = { rhs, { 's', 'f' } },
-    desc = { desc, 's' },
-    opts = { opts, 't', true }
-  })
+  vim.validate('mode', mode, { 'string', 'table' })
+  vim.validate('lhs', lhs, 'string')
+  vim.validate('rhs', rhs, { 'string', 'function' })
+  vim.validate('desc', desc, 'string')
+  vim.validate('opts', opts, 'table', true)
 
-  opts = vim.deepcopy(opts) or {}
+  opts = vim.deepcopy(opts or {})
   opts = vim.tbl_deep_extend('force', { desc = desc, remap = false, silent = true }, opts)
 
   vim.keymap.set(mode, lhs, rhs, opts)
-end
-
-M.key = function(mode, lhs, rhs, desc, opts)
-  vim.validate({
-    mode = { mode, { 's', 't' } },
-    lhs = { lhs, 's' },
-    rhs = { rhs, 's' },
-    desc = { desc, 's' },
-    opts = { opts, 't', true }
-  })
-
-  opts = vim.deepcopy(opts) or {}
-  opts = vim.tbl_deep_extend('force', {
-    [1] = lhs, [2] = rhs, mode = mode, desc = desc, remap = false, silent = true
-  }, opts)
-
-  return opts
 end
 
 M.save_session = function()
@@ -119,7 +119,7 @@ M.save_session = function()
 
   vim.uv.fs_mkdir('.cache', 493, function(err) -- 0755
     -- Ignore if the directory already exists
-    if err and not err:match("^EEXIST:") then
+    if err and not err:match('^EEXIST:') then
       vim.api.notify(err, vim.log.levels.ERROR)
     end
   end)
@@ -127,6 +127,12 @@ M.save_session = function()
   require('mini.sessions').write('.cache/session.vim')
 end
 
+---@class AutocmdDefinition
+---@field event string|table
+---@field pattern? string|table
+---@field command? string
+---@field callback? string|fun(opts: table)
+---@param definitions table<string, AutocmdDefinition[]>
 M.augroup = function(definitions)
   for group_name, definition in pairs(definitions) do
     vim.api.nvim_create_augroup(group_name, { clear = true })

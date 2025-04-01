@@ -1,0 +1,3 @@
+[submodule "dev/multiplexer.nvim"]
+	path = dev/multiplexer.nvim
+	url = https://github.com/stevalkr/multiplexer.nvim

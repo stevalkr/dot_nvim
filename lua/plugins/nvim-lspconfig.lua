@@ -14,6 +14,12 @@ return {
     end
 
     vim.lsp.inlay_hint.enable()
+    vim.diagnostic.config({
+      virtual_text = { severity = { max = vim.diagnostic.severity.WARN } },
+      virtual_lines = { severity = vim.diagnostic.severity.ERROR },
+      update_in_insert = false,
+      severity_sort = true
+    })
 
     lspconfig['nixd'].setup({})
     lspconfig['zls'].setup({ capabilities = capabilities })
@@ -111,6 +117,13 @@ return {
           vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
           -- https://github.com/neovim/neovim/issues/29225
           vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = false })
+        end
+
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client and client:supports_method('textDocument/foldingRange') then
+          local win = vim.api.nvim_get_current_win()
+          vim.wo[win][0].foldmethod = 'expr'
+          vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
         end
       end
     })
