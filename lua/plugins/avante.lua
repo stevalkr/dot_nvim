@@ -2,7 +2,10 @@ local utils = require('utils')
 return {
 
   'yetone/avante.nvim',
-  event = 'VeryLazy',
+  cmd = { 'AvanteAsk', 'AvanteToggle', 'AvanteChat' },
+  keys = {
+    { '<leader>aa', '<Cmd>AvanteToggle<CR>', desc = 'Toggle Avante' }
+  },
   version = false,
   opts = {
     -- provider = 'copilot',
@@ -11,13 +14,13 @@ return {
       openrouter_claude = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
-        api_key_name = 'OPENROUTER_API_KEY',
+        api_key_name = { 'op', 'read', 'op://Private/OpenRouter/credential' },
         model = 'anthropic/claude-3.7-sonnet:thinking',
       },
       openrouter_gemini = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
-        api_key_name = 'OPENROUTER_API_KEY',
+        api_key_name = { 'op', 'read', 'op://Private/OpenRouter/credential' },
         model = 'google/gemini-2.5-pro-exp-03-25:free',
       },
     },
