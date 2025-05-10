@@ -46,7 +46,11 @@ utils.augroup({
     },
     {
       event = 'VimResized',
-      command = [[tabdo wincmd =]]
+      callback = function ()
+        local tab = vim.api.nvim_get_current_tabpage()
+        vim.cmd([[tabdo wincmd =]])
+        vim.api.nvim_set_current_tabpage(tab)
+      end
     }
   },
 

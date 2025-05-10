@@ -1,5 +1,8 @@
-local utils = require('utils')
 return {
+
+  {
+    'ron-rs/ron.vim',
+  },
 
   {
     'dstein64/vim-startuptime',
@@ -14,26 +17,6 @@ return {
   {
     'stevearc/dressing.nvim',
     opts = {},
-  },
-
-  {
-    "3rd/image.nvim",
-    enabled = vim.env.TMUX == nil,    -- https://github.com/3rd/image.nvim/issues/279
-    init = function()
-      if vim.env.HOMEBREW_PREFIX then -- TODO
-        vim.fn.setenv('PKG_CONFIG_PATH_FOR_TARGET',
-          string.format('%s:%s/lib/pkgconfig:%s/share/pkgconfig', (vim.env.PKG_CONFIG_PATH_FOR_TARGET or ''),
-            vim.env.HOMEBREW_PREFIX, vim.env.HOMEBREW_PREFIX
-          ))
-      end
-    end,
-    opts = {}
-  },
-
-  {
-    'HakonHarnes/img-clip.nvim',
-    event = 'VeryLazy',
-    opts = {}
   },
 
   {
@@ -92,28 +75,6 @@ return {
       })
       require('nord').load()
     end
-  },
-
-  {
-    'stevalkr/multiplexer.nvim',
-    lazy = false,
-    dev = true,
-    opts = {
-      default_resize_amount = 5,
-      on_init = function()
-        local multiplexer = require('multiplexer')
-
-        vim.keymap.set('n', '<C-h>', multiplexer.activate_pane_left, { desc = 'Activate pane to the left' })
-        vim.keymap.set('n', '<C-j>', multiplexer.activate_pane_down, { desc = 'Activate pane below' })
-        vim.keymap.set('n', '<C-k>', multiplexer.activate_pane_up, { desc = 'Activate pane above' })
-        vim.keymap.set('n', '<C-l>', multiplexer.activate_pane_right, { desc = 'Activate pane to the right' })
-
-        vim.keymap.set('n', '<C-S-h>', multiplexer.resize_pane_left, { desc = 'Resize pane to the left' })
-        vim.keymap.set('n', '<C-S-j>', multiplexer.resize_pane_down, { desc = 'Resize pane below' })
-        vim.keymap.set('n', '<C-S-k>', multiplexer.resize_pane_up, { desc = 'Resize pane above' })
-        vim.keymap.set('n', '<C-S-l>', multiplexer.resize_pane_right, { desc = 'Resize pane to the right' })
-      end
-    }
   }
 
 }

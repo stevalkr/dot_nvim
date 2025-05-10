@@ -8,26 +8,23 @@ return {
   },
   version = false,
   opts = {
-    -- provider = 'copilot',
-    provider = "openrouter_claude",
+    provider = "aistudio_gemini_2_5_pro_preview",
     vendors = {
-      openrouter_claude = {
-        __inherited_from = 'openai',
-        endpoint = 'https://openrouter.ai/api/v1',
-        api_key_name = { 'op', 'read', 'op://Private/OpenRouter/credential' },
-        model = 'anthropic/claude-3.7-sonnet:thinking',
+      aistudio_gemini_2_0_flash = {
+        __inherited_from = 'gemini',
+        api_key_name = { 'op', 'read', 'op://Private/AiStudio/credential' },
+        model = 'gemini-2.0-flash',
       },
-      openrouter_gemini = {
-        __inherited_from = 'openai',
-        endpoint = 'https://openrouter.ai/api/v1',
-        api_key_name = { 'op', 'read', 'op://Private/OpenRouter/credential' },
-        model = 'google/gemini-2.5-pro-exp-03-25:free',
+      aistudio_gemini_2_5_pro_preview = {
+        __inherited_from = 'gemini',
+        api_key_name = { 'op', 'read', 'op://Private/AiStudio/credential' },
+        model = 'gemini-2.5-pro-preview-05-06',
       },
     },
     dual_boost = {
-      enabled = true,
-      first_provider = "openrouter_gemini",
-      second_provider = "openrouter_claude",
+      enabled = false,
+      first_provider = "aistudio_gemini_2_0_flash",
+      second_provider = "aistudio_gemini_2_5_pro_preview",
     },
     behaviour = {
       enable_cursor_planning_mode = true,

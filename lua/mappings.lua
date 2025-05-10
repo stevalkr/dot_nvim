@@ -6,10 +6,22 @@ vim.cmd([[
 " -- general --
 " -------------
 
+nnoremap <silent> i m'i
+nnoremap <silent> I m'I
+nnoremap <silent> a m'a
+nnoremap <silent> A m'A
+nnoremap <silent> o m'o
+nnoremap <silent> O m'O
+
 nnoremap <silent> j gj
 nnoremap <silent> k gk
+vnoremap <silent> j gj
+vnoremap <silent> k gk
 nnoremap <silent> gj j
 nnoremap <silent> gk k
+
+nnoremap <silent> <C-;> g;
+nnoremap <silent> <C-,> g,
 
 inoremap <silent> jj <Esc>
 tnoremap <silent> jj <C-\><C-n>
@@ -112,8 +124,8 @@ inoremap <silent> <A-l> <Right>
 inoremap <silent> <C-a> <C-o>I
 inoremap <silent> <C-e> <C-o>A
 
-nnoremap <silent> <C-u> 10kzzm'
-nnoremap <silent> <C-d> 10jzzm'
+nnoremap <silent> <C-u> 10kzz
+nnoremap <silent> <C-d> 10jzz
 vnoremap <silent> <C-u> 10kzz
 vnoremap <silent> <C-d> 10jzz
 
@@ -148,4 +160,3 @@ vnoremap <silent> K :move '<-2<CR>gv-gv
 vnoremap <silent> <C-c> <Cmd>lua require('utils').capitalize()<CR>
 
 ]])
-

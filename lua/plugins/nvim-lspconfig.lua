@@ -20,17 +20,21 @@ return {
       update_in_insert = false,
       severity_sort = true
     })
-
-    lspconfig['nixd'].setup({})
-    lspconfig['zls'].setup({ capabilities = capabilities })
-    lspconfig['gopls'].setup({ capabilities = capabilities })
-    lspconfig['svelte'].setup({ capabilities = capabilities })
-    lspconfig['pyright'].setup({ capabilities = capabilities })
-    lspconfig['rust_analyzer'].setup({ capabilities = capabilities })
-    lspconfig['elixirls'].setup({ capabilities = capabilities, cmd = { 'elixir-ls' } })
-
-    lspconfig['clangd'].setup({
+    vim.lsp.config('*', {
       capabilities = capabilities,
+    })
+
+    vim.lsp.enable('zls')
+    vim.lsp.enable('nixd')
+    vim.lsp.enable('gopls')
+    vim.lsp.enable('clangd')
+    vim.lsp.enable('lua_ls')
+    vim.lsp.enable('svelte')
+    vim.lsp.enable('pyright')
+    vim.lsp.enable('elixirls')
+    vim.lsp.enable('rust_analyzer')
+
+    vim.lsp.config('clangd', {
       cmd = {
         'clangd',
         '--offset-encoding=utf-16',
@@ -53,9 +57,7 @@ return {
             '%C%m,'
       end
     })
-
-    lspconfig['lua_ls'].setup({
-      capabilities = capabilities,
+    vim.lsp.config('lua_ls', {
       on_init = function(client)
         local path = client.workspace_folders and client.workspace_folders[1].name or '.'
         if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
@@ -68,6 +70,11 @@ return {
           },
           workspace = {
             checkThirdParty = false,
+            ignoreDir = {
+              '.git',
+              '.pixi',
+              '.cache'
+            },
             library = {
               vim.env.VIMRUNTIME,
               '${3rd}/luv/library',
@@ -79,6 +86,9 @@ return {
       settings = {
         Lua = {}
       }
+    })
+    vim.lsp.config('elixirls', {
+      cmd = { 'elixir-ls' }
     })
 
     utils.keymap('n', '<leader>d', vim.diagnostic.open_float, 'Open diagnostic')
