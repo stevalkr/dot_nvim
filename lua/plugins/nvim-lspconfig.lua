@@ -57,6 +57,7 @@ return {
             '%C%m,'
       end
     })
+
     vim.lsp.config('lua_ls', {
       on_init = function(client)
         local path = client.workspace_folders and client.workspace_folders[1].name or '.'
@@ -87,6 +88,7 @@ return {
         Lua = {}
       }
     })
+
     vim.lsp.config('elixirls', {
       cmd = { 'elixir-ls' }
     })

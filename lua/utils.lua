@@ -74,11 +74,21 @@ end
 ---@param desc string
 ---@param opts? T
 M.keymap = function(mode, lhs, rhs, desc, opts)
-  vim.validate('mode', mode, { 'string', 'table' })
-  vim.validate('lhs', lhs, 'string')
-  vim.validate('rhs', rhs, { 'string', 'function' })
-  vim.validate('desc', desc, 'string')
-  vim.validate('opts', opts, 'table', true)
+  if vim.fn.has('nvim-0.11') == 1 then
+    vim.validate('mode', mode, { 'string', 'table' })
+    vim.validate('lhs', lhs, 'string')
+    vim.validate('rhs', rhs, { 'string', 'function' })
+    vim.validate('desc', desc, 'string')
+    vim.validate('opts', opts, 'table', true)
+  else
+    vim.validate({
+      mode = { mode, { 'string', 'table' } },
+      lhs = { lhs, 'string' },
+      rhs = { rhs, { 'string', 'function' } },
+      desc = { desc, 'string' },
+      opts = { opts, 'table', true }
+    })
+  end
 
   opts = vim.deepcopy(opts or {})
   opts = vim.tbl_deep_extend('force', { desc = desc, remap = false, silent = true }, opts)

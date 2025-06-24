@@ -24,6 +24,7 @@ return {
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.zsh,
 
+        null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.nixpkgs_fmt,
         null_ls.builtins.formatting.cmake_format,
         null_ls.builtins.formatting.fish_indent
