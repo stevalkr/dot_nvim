@@ -1,10 +1,10 @@
 local utils = require('utils')
 return {
+
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile' },
 
   config = function()
-    local lspconfig = require('lspconfig')
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     if utils.has_plugin('nvim-cmp') then
       capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -58,6 +58,14 @@ return {
       end
     })
 
+    vim.lsp.config('rust_analyzer', {
+      settings = {
+        ['rust-analyzer'] = {
+          check = { command = 'clippy' },
+        }
+      }
+    })
+
     vim.lsp.config('lua_ls', {
       on_init = function(client)
         local path = client.workspace_folders and client.workspace_folders[1].name or '.'
@@ -107,7 +115,6 @@ return {
         utils.keymap('i', '<C-k>', vim.lsp.buf.signature_help, 'Signature help', kopts)
 
         utils.keymap('n', '<leader>rn', vim.lsp.buf.rename, 'Rename', kopts)
-        utils.keymap({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format { async = true } end, 'Format', kopts)
 
         -- utils.keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Go to type definition', kopts)
         -- utils.keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, 'Add workspace', kopts)
@@ -115,6 +122,10 @@ return {
         -- utils.keymap('n', '<leader>wl', function()
         --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         -- end, 'List workspace', kopts)
+
+        if not utils.has_plugin('conform.nvim') then
+          utils.keymap({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format { async = true } end, 'Format', kopts)
+        end
 
         if not utils.has_plugin('fzf-lua') then
           utils.keymap('n', 'gd', vim.lsp.buf.definition, 'Go to definition', kopts)
