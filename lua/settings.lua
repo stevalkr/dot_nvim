@@ -39,12 +39,14 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
 
-vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.opt.sessionoptions =
+  'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
 
-vim.opt.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
+vim.opt.diffopt =
+  'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
 
 vim.opt.wildignore =
-'.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
+  '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
 vim.opt.wildignorecase = true
 
 vim.opt.foldenable = true
@@ -67,13 +69,22 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
   utils.keymap({ 'v', 's', 'x' }, '<D-c>', '"+y', 'Copy to system clipboard')
-  utils.keymap({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>',
-    function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end,
-    'Paste from system clipboard')
+  utils.keymap(
+    { 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' },
+    '<D-v>',
+    function()
+      vim.api.nvim_paste(vim.fn.getreg('+'), true, -1)
+    end,
+    'Paste from system clipboard'
+  )
   vim.g.neovide_scale_factor = 1.0
   local change_scale_factor = function(delta)
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
   end
-  utils.keymap('n', '<D-=>', function() change_scale_factor(1.25) end, 'Increase scale factor')
-  utils.keymap('n', '<D-->', function() change_scale_factor(0.8) end, 'Decrease scale factor')
+  utils.keymap('n', '<D-=>', function()
+    change_scale_factor(1.25)
+  end, 'Increase scale factor')
+  utils.keymap('n', '<D-->', function()
+    change_scale_factor(0.8)
+  end, 'Decrease scale factor')
 end

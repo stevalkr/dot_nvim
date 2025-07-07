@@ -9,10 +9,30 @@ return {
 
   config = function()
     local servers = {
-      'c', 'lua', 'vim', 'vimdoc', 'query',
-      'cpp', 'python', 'elixir', 'rust', 'go',
-      'cmake', 'yaml', 'json', 'bash', 'comment',
-      'markdown', 'markdown_inline',
+      'bash',
+      'c',
+      'cmake',
+      'comment',
+      'cpp',
+      'csv',
+      'diff',
+      'fish',
+      'go',
+      'json',
+      'lua',
+      'make',
+      'markdown',
+      'markdown_inline',
+      'meson',
+      'nix',
+      'python',
+      'ron',
+      'rust',
+      'tmux',
+      'toml',
+      'vim',
+      'vimdoc',
+      'yaml',
     }
 
     require('nvim-treesitter').install(servers)
@@ -20,9 +40,10 @@ return {
     for _, server in ipairs(servers) do
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { server },
-        callback = function() vim.treesitter.start() end,
+        callback = function()
+          vim.treesitter.start()
+        end,
       })
     end
-  end
-
+  end,
 }

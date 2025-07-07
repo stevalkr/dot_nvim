@@ -21,5 +21,4 @@ return {
       conform.format({ async = true })
     end, 'Format code')
   end,
-
 }

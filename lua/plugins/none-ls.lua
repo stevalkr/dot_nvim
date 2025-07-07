@@ -23,8 +23,7 @@ return {
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.zsh,
-      }
+      },
     }
-  end
-
+  end,
 }

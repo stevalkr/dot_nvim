@@ -6,7 +6,9 @@ M.dump = function(t)
   if type(t) == 'table' then
     local s = '{ '
     for k, v in pairs(t) do
-      if type(k) ~= 'number' then k = '"' .. k .. '"' end
+      if type(k) ~= 'number' then
+        k = '"' .. k .. '"'
+      end
       s = s .. '[' .. k .. '] = ' .. M.dump(v) .. ','
     end
     return s .. '} '
@@ -26,7 +28,108 @@ end
 
 ---@param key string
 M.smart_delete = function(key)
-  vim.cmd.normal({ (vim.fn.getline('.'):match("^%s*$") and '"_' or "") .. key, bang = true })
+  vim.cmd.normal({
+    (vim.fn.getline('.'):match('^%s*$') and '"_' or '') .. key,
+    bang = true,
+  })
+end
+
+M.format_project = function()
+  local FILE_THRESHOLD = 1000
+
+  local original_view = vim.fn.winsaveview()
+  local original_buf = vim.api.nvim_get_current_buf()
+
+  vim.notify('Scanning project files with `fd`...', vim.log.levels.INFO)
+
+  vim.system({ 'fd', '--type', 'f' }, { text = true }, function(job)
+    -- Check for errors from the fd command itself
+    if job.code ~= 0 then
+      vim.schedule(function()
+        vim.notify(
+          'Error running `fd`: ' .. (job.stderr or 'Unknown error'),
+          vim.log.levels.ERROR
+        )
+      end)
+      return
+    end
+
+    local files = vim.split(job.stdout, '\n', { trimempty = true })
+    if #files > FILE_THRESHOLD then
+      vim.schedule(function()
+        vim.notify(
+          string.format(
+            'Found %d files, which exceeds the threshold of %d. Aborting.',
+            #files,
+            FILE_THRESHOLD
+          ),
+          vim.log.levels.WARN
+        )
+      end)
+      return
+    end
+
+    if #files == 0 then
+      vim.schedule(function()
+        vim.notify('No files found to format.', vim.log.levels.INFO)
+      end)
+      return
+    end
+
+    local success_count = 0
+    local files_processed = 0
+
+    local function process_next_file(index)
+      if index > #files then
+        vim.api.nvim_set_current_buf(original_buf)
+        vim.fn.winrestview(original_view)
+        vim.schedule(function()
+          vim.notify(
+            string.format(
+              'Project formatting complete. %d/%d files formatted.',
+              success_count,
+              files_processed
+            ),
+            vim.log.levels.INFO
+          )
+        end)
+        return
+      end
+
+      vim.schedule(function()
+        local on_format_done = function()
+          if vim.bo.modified then
+            vim.cmd.write()
+            success_count = success_count + 1
+          end
+          process_next_file(index + 1)
+        end
+
+        local file_path = files[index]
+        files_processed = files_processed + 1
+
+        vim.cmd.edit(vim.fn.fnameescape(file_path))
+
+        if M.has_plugin('conform') then
+          require('conform').format(
+            { bufnr = vim.api.nvim_get_current_buf(), async = true },
+            function()
+              on_format_done()
+            end
+          )
+        else
+          -- TODO: async if closed: https://github.com/neovim/neovim/issues/31206
+          vim.lsp.buf.format({
+            async = false,
+            bufnr = vim.api.nvim_get_current_buf(),
+          })
+          on_format_done()
+        end
+      end)
+    end
+
+    process_next_file(1)
+  end)
 end
 
 -- used for wezterm scrollback
@@ -41,10 +144,19 @@ M.colorize = function()
 
   vim.b[buf].minianimate_disable = true
 
-  vim.api.nvim_chan_send(vim.api.nvim_open_term(buf, {}), table.concat(lines, '\r\n'))
+  vim.api.nvim_chan_send(
+    vim.api.nvim_open_term(buf, {}),
+    table.concat(lines, '\r\n')
+  )
   vim.keymap.set('n', 'q', '<cmd>qa!<cr>', { silent = true, buffer = buf })
-  vim.api.nvim_create_autocmd('TextChanged', { buffer = buf, command = 'normal! G$' })
-  vim.api.nvim_create_autocmd('TermEnter', { buffer = buf, command = 'stopinsert' })
+  vim.api.nvim_create_autocmd(
+    'TextChanged',
+    { buffer = buf, command = 'normal! G$' }
+  )
+  vim.api.nvim_create_autocmd(
+    'TermEnter',
+    { buffer = buf, command = 'stopinsert' }
+  )
 
   vim.wo.relativenumber = false
   vim.wo.statuscolumn = ''
@@ -59,12 +171,8 @@ end
 ---@param name string
 ---@return boolean
 M.has_plugin = function(name)
-  for _, plugin in ipairs(require('lazy').plugins()) do
-    if plugin.name == name then
-      return true
-    end
-  end
-  return false
+  local succ, mod = pcall(require, name)
+  return succ and mod
 end
 
 ---@generic T: table
@@ -86,12 +194,16 @@ M.keymap = function(mode, lhs, rhs, desc, opts)
       lhs = { lhs, 'string' },
       rhs = { rhs, { 'string', 'function' } },
       desc = { desc, 'string' },
-      opts = { opts, 'table', true }
+      opts = { opts, 'table', true },
     })
   end
 
   opts = vim.deepcopy(opts or {})
-  opts = vim.tbl_deep_extend('force', { desc = desc, remap = false, silent = true }, opts)
+  opts = vim.tbl_deep_extend(
+    'force',
+    { desc = desc, remap = false, silent = true },
+    opts
+  )
 
   vim.keymap.set(mode, lhs, rhs, opts)
 end
@@ -102,7 +214,10 @@ M.save_session = function()
     return false
   end
   local function buffer_filter(buf)
-    if not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_get_option_value('buflisted', { buf = buf }) then
+    if
+      not vim.api.nvim_buf_is_valid(buf)
+      or not vim.api.nvim_get_option_value('buflisted', { buf = buf })
+    then
       return false
     end
     return true
@@ -119,7 +234,8 @@ M.save_session = function()
     if non_hidden_buffer[buffer] == nil then
       if vim.api.nvim_get_option_value('modified', { buf = buffer }) then
         vim.notify(
-          string.format('No write since last change for buffer %d', buffer), vim.log.levels.WARN
+          string.format('No write since last change for buffer %d', buffer),
+          vim.log.levels.WARN
         )
       else
         vim.cmd('bdelete ' .. buffer)
@@ -151,11 +267,10 @@ M.augroup = function(definitions)
         pattern = def.pattern,
         group = group_name,
         command = def.command,
-        callback = def.callback
+        callback = def.callback,
       })
     end
   end
 end
-
 
 return M

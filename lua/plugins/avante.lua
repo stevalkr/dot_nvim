@@ -4,27 +4,27 @@ return {
   'yetone/avante.nvim',
   cmd = { 'AvanteAsk', 'AvanteToggle', 'AvanteChat' },
   keys = {
-    { '<leader>aa', '<Cmd>AvanteToggle<CR>', desc = 'Toggle Avante' }
+    { '<leader>aa', '<Cmd>AvanteToggle<CR>', desc = 'Toggle Avante' },
   },
   version = false,
   opts = {
-    provider = "aistudio_gemini_2_5_pro_preview",
+    provider = 'aistudio_gemini_2_5_pro_preview',
     vendors = {
-      aistudio_gemini_2_0_flash = {
+      aistudio_gemini_2_5_flash = {
         __inherited_from = 'gemini',
         api_key_name = { 'op', 'read', 'op://Private/AiStudio/credential' },
-        model = 'gemini-2.0-flash',
+        model = 'gemini-2.5-flash',
       },
-      aistudio_gemini_2_5_pro_preview = {
+      aistudio_gemini_2_5_pro = {
         __inherited_from = 'gemini',
         api_key_name = { 'op', 'read', 'op://Private/AiStudio/credential' },
-        model = 'gemini-2.5-pro-preview-05-06',
+        model = 'gemini-2.5-pro',
       },
     },
     dual_boost = {
       enabled = false,
-      first_provider = "aistudio_gemini_2_0_flash",
-      second_provider = "aistudio_gemini_2_5_pro_preview",
+      first_provider = 'aistudio_gemini_2_5_flash',
+      second_provider = 'aistudio_gemini_2_5_pro',
     },
     behaviour = {
       enable_cursor_planning_mode = true,
@@ -41,9 +41,9 @@ return {
     {
       'MeanderingProgrammer/render-markdown.nvim',
       opts = {
-        file_types = { 'markdown', 'Avante' }
+        file_types = { 'markdown', 'Avante' },
       },
-      ft = { 'markdown', 'Avante' }
+      ft = { 'markdown', 'Avante' },
     },
     {
       'HakonHarnes/img-clip.nvim',
@@ -53,17 +53,17 @@ return {
           embed_image_as_base64 = false,
           prompt_for_file_name = false,
           drag_and_drop = {
-            insert_mode = true
-          }
-        }
-      }
+            insert_mode = true,
+          },
+        },
+      },
     },
     {
       'saghen/blink.cmp',
       opts = {
         sources = {
           default = {
-            { 'avante_commands', 'avante_mentions', 'avante_files' }
+            { 'avante_commands', 'avante_mentions', 'avante_files' },
           },
           providers = {
             avante_commands = {
@@ -83,11 +83,10 @@ return {
               module = 'blink.compat.source',
               score_offset = 1000,
               opts = {},
-            }
-          }
-        }
-      }
-    }
-  }
-
+            },
+          },
+        },
+      },
+    },
+  },
 }

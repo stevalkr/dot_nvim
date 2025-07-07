@@ -6,12 +6,12 @@ return {
 
   {
     'dstein64/vim-startuptime',
-    lazy = false
+    lazy = false,
   },
 
   {
     'willothy/flatten.nvim',
-    opts = {}
+    opts = {},
   },
 
   {
@@ -25,14 +25,14 @@ return {
     tag = 'legacy',
     opts = {
       window = { blend = 0 },
-    }
+    },
   },
 
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = {
       'echasnovski/mini.icons',
-      'nvim-treesitter/nvim-treesitter'
+      'nvim-treesitter/nvim-treesitter',
     },
     opts = {},
   },
@@ -47,9 +47,9 @@ return {
     opts = {
       triggers = {
         { '<auto>', mode = 'nxsot' },
-        { 's',      mode = 'n' }
+        { 's', mode = 'n' },
       },
-    }
+    },
   },
 
   {
@@ -70,13 +70,14 @@ return {
         },
 
         on_highlights = function(highlights, c)
-          highlights['TabLine'] = { fg = c.polar_night.light, bg = c.polar_night.bright }
+          highlights['TabLine'] =
+            { fg = c.polar_night.light, bg = c.polar_night.bright }
           highlights['TabLineSel'] = { fg = c.frost.ice, bg = c.fg_gutter }
-          highlights['@lsp.typemod.variable.readonly.cpp'] = { undercurl = true }
+          highlights['@lsp.typemod.variable.readonly.cpp'] =
+            { undercurl = true }
         end,
       })
       require('nord').load()
-    end
-  }
-
+    end,
+  },
 }

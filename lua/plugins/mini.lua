@@ -4,14 +4,14 @@ return {
     'echasnovski/mini.ai',
     version = '*',
     event = 'VeryLazy',
-    opts = {}
+    opts = {},
   },
 
   {
     'echasnovski/mini.icons',
     version = '*',
     event = 'VeryLazy',
-    opts = {}
+    opts = {},
   },
 
   {
@@ -22,12 +22,44 @@ return {
   },
 
   {
+    'echasnovski/mini.hipatterns',
+    version = '*',
+    event = 'VeryLazy',
+    opts = function()
+      return {
+        highlighters = {
+          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          fixme = {
+            pattern = '%f[%w]()FIXME()%f[%W]',
+            group = 'MiniHipatternsFixme',
+          },
+          hack = {
+            pattern = '%f[%w]()HACK()%f[%W]',
+            group = 'MiniHipatternsHack',
+          },
+          todo = {
+            pattern = '%f[%w]()TODO()%f[%W]',
+            group = 'MiniHipatternsTodo',
+          },
+          note = {
+            pattern = '%f[%w]()NOTE()%f[%W]',
+            group = 'MiniHipatternsNote',
+          },
+
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = require('mini.hipatterns').gen_highlighter.hex_color(),
+        },
+      }
+    end,
+  },
+
+  {
     'echasnovski/mini.cursorword',
     version = '*',
     event = 'VeryLazy',
     opts = {
       delay = 100,
-    }
+    },
   },
 
   {
@@ -39,7 +71,7 @@ return {
       file = '.cache/session.vim',
       directory = '',
       force = { read = false, write = true, delete = true },
-    }
+    },
   },
 
   {
@@ -49,13 +81,13 @@ return {
     opts = function()
       return {
         draw = {
-          animation = require('mini.indentscope').gen_animation.none()
+          animation = require('mini.indentscope').gen_animation.none(),
         },
         options = {
-          try_as_border = true
-        }
+          try_as_border = true,
+        },
       }
-    end
+    end,
   },
 
   {
@@ -131,5 +163,4 @@ return {
       },
     },
   },
-
 }

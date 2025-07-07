@@ -1,8 +1,15 @@
 local utils = require('utils')
 
 -- user commands
-vim.api.nvim_create_user_command('SaveSession',
+vim.api.nvim_create_user_command(
+  'SaveSession',
   utils.save_session,
+  { nargs = 0 }
+)
+
+vim.api.nvim_create_user_command(
+  'FormatProject',
+  utils.format_project,
   { nargs = 0 }
 )
 
@@ -13,14 +20,14 @@ utils.augroup({
       event = 'InsertEnter',
       callback = function()
         vim.opt.relativenumber = false
-      end
+      end,
     },
     {
       event = 'InsertLeave',
       callback = function()
         vim.opt.relativenumber = true
-      end
-    }
+      end,
+    },
   },
 
   highlight_current_line = {
@@ -28,13 +35,13 @@ utils.augroup({
       event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
       callback = function()
         vim.opt.cursorline = false
-      end
+      end,
     },
     {
       event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
       callback = function()
         vim.opt.cursorline = true
-      end
+      end,
     },
   },
 
@@ -42,29 +49,34 @@ utils.augroup({
     -- check if file changed when its window is focus, more eager than 'autoread'
     {
       event = 'FocusGained',
-      command = [[checktime]]
+      command = [[checktime]],
     },
     {
       event = 'VimResized',
-      callback = function ()
+      callback = function()
         local tab = vim.api.nvim_get_current_tabpage()
         vim.cmd([[tabdo wincmd =]])
         vim.api.nvim_set_current_tabpage(tab)
-      end
-    }
+      end,
+    },
   },
 
   last_edited = {
     {
       event = 'BufReadPost',
       callback = function(opts)
-        if vim.tbl_contains({ 'quickfix', 'nofile', 'help' },
-              vim.bo.buftype) then
+        if
+          vim.tbl_contains({ 'quickfix', 'nofile', 'help' }, vim.bo.buftype)
+        then
           return
         end
 
-        if vim.tbl_contains({ 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
-              vim.bo.filetype) then
+        if
+          vim.tbl_contains(
+            { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
+            vim.bo.filetype
+          )
+        then
           vim.cmd([[normal! gg]])
           return
         end
@@ -77,21 +89,26 @@ utils.augroup({
         local last_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
         local buff_last_line = vim.api.nvim_buf_line_count(opts.buf)
 
-        if not (ft:match('commit') and ft:match('rebase'))
-            and last_line > 0
-            and last_line <= buff_last_line then
+        if
+          not (ft:match('commit') and ft:match('rebase'))
+          and last_line > 0
+          and last_line <= buff_last_line
+        then
           local win_last_line = vim.fn.line('w$')
           local win_first_line = vim.fn.line('w0')
 
           if win_last_line == buff_last_line then
-            vim.cmd [[normal! g`"]]
-          elseif buff_last_line - last_line > ((win_last_line - win_first_line) / 2) - 1 then
-            vim.cmd [[normal! g`"zz]]
+            vim.cmd([[normal! g`"]])
+          elseif
+            buff_last_line - last_line
+            > ((win_last_line - win_first_line) / 2) - 1
+          then
+            vim.cmd([[normal! g`"zz]])
           else
-            vim.cmd [[normal! G'"<c-e>]]
+            vim.cmd([[normal! G'"<c-e>]])
           end
         end
-      end
+      end,
     },
   },
 
@@ -111,8 +128,8 @@ utils.augroup({
       event = 'TextYankPost',
       callback = function()
         vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 300 })
-      end
-    }
+      end,
+    },
   },
 
   comment = {
@@ -121,8 +138,8 @@ utils.augroup({
       pattern = 'c,cpp',
       callback = function()
         vim.bo.commentstring = [[// %s]]
-      end
-    }
+      end,
+    },
   },
 
   save_cwd = {
@@ -138,8 +155,8 @@ utils.augroup({
         else
           vim.notify('Error: Unable to write to ' .. path, vim.log.levels.ERROR)
         end
-      end
-    }
+      end,
+    },
   },
 
   hide_copilot_suggestion = {
@@ -147,19 +164,19 @@ utils.augroup({
       event = 'User',
       pattern = 'BlinkCmpMenuOpen',
       callback = function()
-        if utils.has_plugin('copilot.lua') then
+        if utils.has_plugin('copilot') then
           require('copilot.suggestion').dismiss()
         end
         vim.b.copilot_suggestion_hidden = true
-      end
+      end,
     },
     {
       event = 'User',
       pattern = 'BlinkCmpMenuClose',
       callback = function()
         vim.b.copilot_suggestion_hidden = false
-      end
-    }
+      end,
+    },
   },
 
   roslaunch = {
@@ -168,7 +185,7 @@ utils.augroup({
       pattern = '*.launch',
       callback = function()
         vim.bo.filetype = 'xml'
-      end
-    }
-  }
+      end,
+    },
+  },
 })

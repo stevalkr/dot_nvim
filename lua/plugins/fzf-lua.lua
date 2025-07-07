@@ -17,14 +17,14 @@ return {
       files = {
         actions = {
           ['ctrl-q'] = {
-            fn = actions.file_edit_or_qf
+            fn = actions.file_edit_or_qf,
           },
         },
       },
       grep = {
         actions = {
           ['ctrl-q'] = {
-            fn = actions.file_edit_or_qf
+            fn = actions.file_edit_or_qf,
           },
         },
       },
@@ -37,16 +37,36 @@ return {
     utils.keymap('v', ';g', fzf.grep_visual, 'Grep string')
     utils.keymap('n', ';b', fzf.buffers, 'Buffers')
 
-    utils.keymap('n', 'gd', function() fzf.lsp_definitions({ jump1 = true }) end, 'Go to definitions')
-    utils.keymap('n', 'gD', function() fzf.lsp_declarations({ jump1 = true }) end, 'Go to declarations')
-    utils.keymap('n', 'gi', function() fzf.lsp_implementations({ jump1 = true }) end,
-      'Go to implementations')
-    utils.keymap('n', 'gr', function() fzf.lsp_references({ jump1 = true, ignore_current_line = true }) end,
-      'Go to references')
-    utils.keymap('n', '<leader>D', fzf.diagnostics_document, 'Diagnostics document')
+    utils.keymap('n', 'gd', function()
+      fzf.lsp_definitions({ jump1 = true })
+    end, 'Go to definitions')
+    utils.keymap('n', 'gD', function()
+      fzf.lsp_declarations({ jump1 = true })
+    end, 'Go to declarations')
+    utils.keymap('n', 'gi', function()
+      fzf.lsp_implementations({ jump1 = true })
+    end, 'Go to implementations')
+    utils.keymap('n', 'gr', function()
+      fzf.lsp_references({ jump1 = true, ignore_current_line = true })
+    end, 'Go to references')
+    utils.keymap(
+      'n',
+      '<leader>D',
+      fzf.diagnostics_document,
+      'Diagnostics document'
+    )
     utils.keymap('n', '<leader>s', fzf.lsp_document_symbols, 'Document symbols')
-    utils.keymap('n', '<leader>S', fzf.lsp_workspace_symbols, 'Workspace symbols')
-    utils.keymap({ 'n', 'v' }, '<leader>ca', fzf.lsp_code_actions, 'Code actions')
-  end
-
+    utils.keymap(
+      'n',
+      '<leader>S',
+      fzf.lsp_workspace_symbols,
+      'Workspace symbols'
+    )
+    utils.keymap(
+      { 'n', 'v' },
+      '<leader>ca',
+      fzf.lsp_code_actions,
+      'Code actions'
+    )
+  end,
 }

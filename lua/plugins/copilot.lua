@@ -8,9 +8,8 @@ return {
       auto_trigger = true,
       keymap = {
         accept = '<C-CR>',
-        accept_word = '<M-l>'
-      }
-    }
-  }
-
+        accept_word = '<M-l>',
+      },
+    },
+  },
 }

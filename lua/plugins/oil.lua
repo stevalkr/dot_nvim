@@ -5,7 +5,9 @@ local function parse_output(proc)
   local result = proc:wait()
   local ret = {}
   if result.code == 0 then
-    for line in vim.gsplit(result.stdout, '\n', { plain = true, trimempty = true }) do
+    for line in
+      vim.gsplit(result.stdout, '\n', { plain = true, trimempty = true })
+    do
       -- Remove trailing slash
       line = line:gsub('/$', '')
       ret[line] = true
@@ -19,16 +21,26 @@ local function new_git_status()
   return setmetatable({}, {
     __index = function(self, key)
       local ignore_proc = vim.system(
-        { 'git', 'ls-files', '--ignored', '--exclude-standard', '--others', '--directory' },
+        {
+          'git',
+          'ls-files',
+          '--ignored',
+          '--exclude-standard',
+          '--others',
+          '--directory',
+        },
         {
           cwd = key,
           text = true,
         }
       )
-      local tracked_proc = vim.system({ 'git', 'ls-tree', 'HEAD', '--name-only' }, {
-        cwd = key,
-        text = true,
-      })
+      local tracked_proc = vim.system(
+        { 'git', 'ls-tree', 'HEAD', '--name-only' },
+        {
+          cwd = key,
+          text = true,
+        }
+      )
       local ret = {
         ignored = parse_output(ignore_proc),
         tracked = parse_output(tracked_proc),
@@ -69,36 +81,36 @@ return {
         autosave_changes = 'unmodified',
       },
       keymaps = {
-        ['g?']         = 'actions.show_help',
-        ['yp']         = 'actions.copy_entry_path',
-        ['<CR>']       = 'actions.select',
-        ['J']          = 'actions.select_split',
-        ['L']          = 'actions.select_vsplit',
-        ['T']          = 'actions.select_tab',
-        ['<C-p>']      = 'actions.preview',
-        ['<C-r>']      = 'actions.refresh',
-        ['<BS>']       = 'actions.parent',
-        ['<C-e>']      = 'actions.open_cwd',
+        ['g?'] = 'actions.show_help',
+        ['yp'] = 'actions.copy_entry_path',
+        ['<CR>'] = 'actions.select',
+        ['J'] = 'actions.select_split',
+        ['L'] = 'actions.select_vsplit',
+        ['T'] = 'actions.select_tab',
+        ['<C-p>'] = 'actions.preview',
+        ['<C-r>'] = 'actions.refresh',
+        ['<BS>'] = 'actions.parent',
+        ['<C-e>'] = 'actions.open_cwd',
         ['<Esc><Esc>'] = 'actions.close',
-        ['cd']         = 'actions.cd',
-        ['tcd']        = 'actions.tcd',
-        ['E']          = 'actions.open_cwd',
-        ['S']          = 'actions.change_sort',
-        ['H']          = 'actions.toggle_hidden',
-        ['gy']         = 'actions.copy_to_system_clipboard',
-        ['gp']         = 'actions.paste_from_system_clipboard',
-        ['<C-t>']      = 'actions.toggle_trash',
+        ['cd'] = 'actions.cd',
+        ['tcd'] = 'actions.tcd',
+        ['E'] = 'actions.open_cwd',
+        ['S'] = 'actions.change_sort',
+        ['H'] = 'actions.toggle_hidden',
+        ['gy'] = 'actions.copy_to_system_clipboard',
+        ['gp'] = 'actions.paste_from_system_clipboard',
+        ['<C-t>'] = 'actions.toggle_trash',
         -- ['<C-o>']      = 'actions.open_external',
         -- ['<C-d>']      = 'actions.preview_scroll_down',
         -- ['<C-u>']      = 'actions.preview_scroll_up',
-        ['<leader>0']  = {
+        ['<leader>0'] = {
           mode = 'n',
           callback = function()
             if utils.has_plugin('nvim-0x0') then
               require('nvim-0x0').upload_oil_file({ append_filename = true })
             end
           end,
-          desc = 'Upload current file'
+          desc = 'Upload current file',
         },
       },
       use_default_keymaps = false,
@@ -122,6 +134,5 @@ return {
     })
     utils.keymap('n', ';e', oil.open, 'Open Oil')
     utils.keymap('n', ';E', oil.open_float, 'Open Oil in Float')
-  end
-
+  end,
 }
