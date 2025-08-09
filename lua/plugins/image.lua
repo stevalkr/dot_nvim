@@ -30,11 +30,6 @@ return {
       end
     end,
     opts = {},
-  },
+  }
 
-  {
-    'HakonHarnes/img-clip.nvim',
-    event = 'VeryLazy',
-    opts = {},
-  },
 }

@@ -11,6 +11,7 @@ return {
         nix = { 'nixfmt', lsp_format = 'fallback' },
         rust = { 'rustfmt', lsp_format = 'fallback' },
         python = { 'black', lsp_format = 'fallback' },
+        c = { 'clang-format', lsp_format = 'fallback' },
         cpp = { 'clang-format', lsp_format = 'fallback' },
         fish = { 'fish_indent', lsp_format = 'fallback' },
         cmake = { 'cmake-format', lsp_format = 'fallback' },
