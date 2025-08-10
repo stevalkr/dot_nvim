@@ -142,23 +142,6 @@ utils.augroup({
     },
   },
 
-  save_cwd = {
-    {
-      event = 'VimLeave',
-      callback = function()
-        local path = vim.env.TMPDIR .. '/vim_cwd'
-        local file = io.open(path, 'w')
-        if file then
-          file:write(vim.fn.getcwd())
-          file:flush()
-          file:close()
-        else
-          vim.notify('Error: Unable to write to ' .. path, vim.log.levels.ERROR)
-        end
-      end,
-    },
-  },
-
   hide_copilot_suggestion = {
     {
       event = 'User',
