@@ -60,9 +60,7 @@ else
     spec = {
       { import = 'plugins' }
     },
-    rocks = {
-      hererocks = true
-    },
+    rocks = { enabled = true },
     dev = {
       path = vim.fn.stdpath('config') .. '/dev'
     }
