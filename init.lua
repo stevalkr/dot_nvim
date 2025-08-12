@@ -3,18 +3,15 @@
 -------------
 require('settings')
 
-
 -------------
 -- autocmd --
 -------------
 require('autocmds')
 
-
 -------------
 -- mapping --
 -------------
 require('mappings')
-
 
 -------------
 -- plugins --
@@ -38,9 +35,9 @@ if vim.env.NVIM then
     lazy = false,
     opts = {
       window = {
-        open = 'tab'
-      }
-    }
+        open = 'tab',
+      },
+    },
   })
 elseif vim.env.MULTIPLEXER then
   require('lazy').setup({
@@ -48,21 +45,20 @@ elseif vim.env.MULTIPLEXER then
     lazy = false,
     dev = true,
     opts = {
-      default_resize_amount = 5
-    }
+      default_resize_amount = 5,
+    },
   }, {
     dev = {
-      path = vim.fn.stdpath('config') .. '/dev'
-    }
+      path = vim.fn.stdpath('config') .. '/dev',
+    },
   })
 else
   require('lazy').setup({
     spec = {
-      { import = 'plugins' }
+      { import = 'plugins' },
     },
-    rocks = { enabled = true },
     dev = {
-      path = vim.fn.stdpath('config') .. '/dev'
-    }
+      path = vim.fn.stdpath('config') .. '/dev',
+    },
   })
 end
