@@ -45,7 +45,7 @@ return {
           if vim.treesitter.language.add(vim.bo[bufnr].filetype) then
             vim.treesitter.start()
             vim.bo[bufnr].indentexpr =
-              "v:lua.require('nvim-treesitter').indentexpr()"
+            "v:lua.require('nvim-treesitter').indentexpr()"
           end
         end,
       })

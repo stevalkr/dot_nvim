@@ -47,7 +47,7 @@ return {
     opts = {
       triggers = {
         { '<auto>', mode = 'nxsot' },
-        { 's', mode = 'n' },
+        { 's',      mode = 'n' },
       },
     },
   },
@@ -71,10 +71,10 @@ return {
 
         on_highlights = function(highlights, c)
           highlights['TabLine'] =
-            { fg = c.polar_night.light, bg = c.polar_night.bright }
+          { fg = c.polar_night.light, bg = c.polar_night.bright }
           highlights['TabLineSel'] = { fg = c.frost.ice, bg = c.fg_gutter }
           highlights['@lsp.typemod.variable.readonly.cpp'] =
-            { undercurl = true }
+          { undercurl = true }
         end,
       })
       require('nord').load()

@@ -65,18 +65,14 @@ utils.augroup({
     {
       event = 'BufReadPost',
       callback = function(opts)
-        if
-          vim.tbl_contains({ 'quickfix', 'nofile', 'help' }, vim.bo.buftype)
-        then
+        if vim.tbl_contains({ 'quickfix', 'nofile', 'help' }, vim.bo.buftype) then
           return
         end
 
-        if
-          vim.tbl_contains(
-            { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
-            vim.bo.filetype
-          )
-        then
+        if vim.tbl_contains(
+              { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
+              vim.bo.filetype
+            ) then
           vim.cmd([[normal! gg]])
           return
         end
@@ -89,20 +85,15 @@ utils.augroup({
         local last_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
         local buff_last_line = vim.api.nvim_buf_line_count(opts.buf)
 
-        if
-          not (ft:match('commit') and ft:match('rebase'))
-          and last_line > 0
-          and last_line <= buff_last_line
-        then
+        if not (ft:match('commit') and ft:match('rebase'))
+            and last_line > 0
+            and last_line <= buff_last_line then
           local win_last_line = vim.fn.line('w$')
           local win_first_line = vim.fn.line('w0')
 
           if win_last_line == buff_last_line then
             vim.cmd([[normal! g`"]])
-          elseif
-            buff_last_line - last_line
-            > ((win_last_line - win_first_line) / 2) - 1
-          then
+          elseif buff_last_line - last_line > ((win_last_line - win_first_line) / 2) - 1 then
             vim.cmd([[normal! g`"zz]])
           else
             vim.cmd([[normal! G'"<c-e>]])

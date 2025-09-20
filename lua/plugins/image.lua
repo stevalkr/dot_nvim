@@ -2,7 +2,8 @@ return {
 
   {
     '3rd/image.nvim',
-    enabled = vim.env.TMUX == nil, -- https://github.com/3rd/image.nvim/issues/279
+    build = false,
+    enabled = vim.env.TMUX == nil,    -- https://github.com/3rd/image.nvim/issues/279
     init = function()
       if vim.env.HOMEBREW_PREFIX then -- TODO
         if vim.env.PKG_CONFIG_PATH then
@@ -29,7 +30,6 @@ return {
         end
       end
     end,
-    opts = {},
+    opts = {}
   }
-
 }

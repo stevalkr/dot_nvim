@@ -214,10 +214,8 @@ M.save_session = function()
     return false
   end
   local function buffer_filter(buf)
-    if
-      not vim.api.nvim_buf_is_valid(buf)
-      or not vim.api.nvim_get_option_value('buflisted', { buf = buf })
-    then
+    if not vim.api.nvim_buf_is_valid(buf)
+        or not vim.api.nvim_get_option_value('buflisted', { buf = buf }) then
       return false
     end
     return true

@@ -50,13 +50,13 @@ return {
           'Switch to source/header'
         )
         vim.bo.errorformat = ''
-          .. '%-GIn file included from %f:%l:%c:,'
-          .. '%-GIn file included from %f:%l:,'
-          .. '%-GIn file included from %f:%l:%c,'
-          .. '%-GIn file included from %f:%l,'
-          .. '%A%f:%l:%c: %m,'
-          .. '%Z%.%#^%.%#,'
-          .. '%C%m,'
+            .. '%-GIn file included from %f:%l:%c:,'
+            .. '%-GIn file included from %f:%l:,'
+            .. '%-GIn file included from %f:%l:%c,'
+            .. '%-GIn file included from %f:%l,'
+            .. '%A%f:%l:%c: %m,'
+            .. '%Z%.%#^%.%#,'
+            .. '%C%m,'
       end,
     })
 
@@ -72,33 +72,30 @@ return {
       on_init = function(client)
         local path = client.workspace_folders
             and client.workspace_folders[1].name
-          or '.'
-        if
-          vim.uv.fs_stat(path .. '/.luarc.json')
-          or vim.uv.fs_stat(path .. '/.luarc.jsonc')
-        then
+            or '.'
+        if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
           return
         end
 
         client.config.settings.Lua =
-          vim.tbl_deep_extend('force', client.config.settings.Lua, {
-            runtime = {
-              version = 'LuaJIT',
-            },
-            workspace = {
-              checkThirdParty = false,
-              ignoreDir = {
-                '.git',
-                '.pixi',
-                '.cache',
+            vim.tbl_deep_extend('force', client.config.settings.Lua, {
+              runtime = {
+                version = 'LuaJIT',
               },
-              library = {
-                vim.env.VIMRUNTIME,
-                '${3rd}/luv/library',
-                '${3rd}/busted/library',
+              workspace = {
+                checkThirdParty = false,
+                ignoreDir = {
+                  '.git',
+                  '.pixi',
+                  '.cache',
+                },
+                library = {
+                  vim.env.VIMRUNTIME,
+                  '${3rd}/luv/library',
+                  '${3rd}/busted/library',
+                },
               },
-            },
-          })
+            })
       end,
       settings = {
         Lua = {},
@@ -191,9 +188,7 @@ return {
           )
         end
 
-        if
-          not utils.has_plugin('blink.cmp') and vim.fn.has('nvim-0.11') == 1
-        then
+        if not utils.has_plugin('blink.cmp') and vim.fn.has('nvim-0.11') == 1 then
           vim.opt.pumheight = 10
           vim.opt.completeopt = 'menu,menuone,popup,fuzzy'
           -- https://github.com/neovim/neovim/issues/29225

@@ -40,13 +40,13 @@ vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
 
 vim.opt.sessionoptions =
-  'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
+'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
 
 vim.opt.diffopt =
-  'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
+'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
 
 vim.opt.wildignore =
-  '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
+'.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
 vim.opt.wildignorecase = true
 
 vim.opt.foldenable = true
