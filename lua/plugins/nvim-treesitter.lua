@@ -42,10 +42,12 @@ return {
         pattern = { server },
         callback = function(args)
           local bufnr = args.buf
-          if vim.treesitter.language.add(vim.bo[bufnr].filetype) then
+          local language =
+            vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
+          if language and vim.treesitter.language.add(language) then
             vim.treesitter.start()
             vim.bo[bufnr].indentexpr =
-            "v:lua.require('nvim-treesitter').indentexpr()"
+              "v:lua.require('nvim-treesitter').indentexpr()"
           end
         end,
       })
