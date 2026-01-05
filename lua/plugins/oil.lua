@@ -96,6 +96,15 @@ return {
         ['H'] = 'actions.toggle_hidden',
         ['gy'] = 'actions.copy_to_system_clipboard',
         ['gp'] = 'actions.paste_from_system_clipboard',
+        ['gP'] = {
+          mode = 'n',
+          callback = function()
+            require('oil.clipboard').paste_from_system_clipboard({
+              delete_original = true,
+            })
+          end,
+          desc = 'Cut the system clipboard into the current oil directory',
+        },
         ['<C-t>'] = 'actions.toggle_trash',
         -- ['<C-o>']      = 'actions.open_external',
         -- ['<C-d>']      = 'actions.preview_scroll_down',

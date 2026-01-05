@@ -3,33 +3,13 @@ return {
   {
     '3rd/image.nvim',
     build = false,
-    enabled = vim.env.TMUX == nil,    -- https://github.com/3rd/image.nvim/issues/279
-    init = function()
-      if vim.env.HOMEBREW_PREFIX then -- TODO
-        if vim.env.PKG_CONFIG_PATH then
-          vim.fn.setenv(
-            'PKG_CONFIG_PATH',
-            string.format(
-              '%s:%s/lib/pkgconfig:%s/share/pkgconfig',
-              (vim.env.PKG_CONFIG_PATH or ''),
-              vim.env.HOMEBREW_PREFIX,
-              vim.env.HOMEBREW_PREFIX
-            )
-          )
-        end
-        if vim.env.PKG_CONFIG_PATH_FOR_TARGET then
-          vim.fn.setenv(
-            'PKG_CONFIG_PATH_FOR_TARGET',
-            string.format(
-              '%s:%s/lib/pkgconfig:%s/share/pkgconfig',
-              (vim.env.PKG_CONFIG_PATH_FOR_TARGET or ''),
-              vim.env.HOMEBREW_PREFIX,
-              vim.env.HOMEBREW_PREFIX
-            )
-          )
-        end
-      end
-    end,
-    opts = {}
-  }
+    opts = {
+      max_width = 100,
+      max_height = 12,
+      max_height_window_percentage = math.huge,
+      max_width_window_percentage = math.huge,
+      window_overlap_clear_enabled = true,
+      window_overlap_clear_ft_ignore = { 'cmp_menu', 'cmp_docs', '' },
+    },
+  },
 }

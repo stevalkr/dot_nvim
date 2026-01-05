@@ -7,6 +7,8 @@ return {
     local conform = require('conform')
     conform.setup({
       formatters_by_ft = {
+        js = { 'prettierd', lsp_format = 'fallback' },
+        json = { 'prettierd', lsp_format = 'fallback' },
         lua = { 'stylua', lsp_format = 'fallback' },
         nix = { 'nixfmt', lsp_format = 'fallback' },
         rust = { 'rustfmt', lsp_format = 'fallback' },
@@ -15,6 +17,7 @@ return {
         cpp = { 'clang-format', lsp_format = 'fallback' },
         fish = { 'fish_indent', lsp_format = 'fallback' },
         cmake = { 'cmake-format', lsp_format = 'fallback' },
+        markdown = { 'injected', lsp_format = 'fallback' },
       },
     })
 

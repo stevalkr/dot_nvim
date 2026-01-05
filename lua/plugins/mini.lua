@@ -143,14 +143,14 @@ return {
         ['"'] = {
           action = 'closeopen',
           pair = '""',
-          neigh_pattern = '[^%w\\][^%w]',
+          neigh_pattern = '[^%d%ua-eg-z\\][^%w]',
           register = { cr = false },
         },
         -- Single quote: Prevent pairing if either side is a letter
         ["'"] = {
           action = 'closeopen',
           pair = "''",
-          neigh_pattern = '[^%w\\][^%w]',
+          neigh_pattern = '[^%d%ua-eg-z\\][^%w]',
           register = { cr = false },
         },
         -- Backtick: Prevent pairing if either side is a letter
