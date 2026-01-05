@@ -20,16 +20,20 @@ return {
 
   {
     'benlubas/molten-nvim',
-    version = '^1.0.0', -- use version <2.0.0 to avoid breaking changes
     dependencies = { '3rd/image.nvim' },
     build = ':UpdateRemotePlugins',
+    ft = { 'ipynb', 'markdown', 'python' },
 
     init = function()
       vim.g.molten_image_provider = 'image.nvim'
       vim.g.molten_auto_open_output = false
-      vim.g.molten_wrap_output = true
+      -- vim.g.molten_output_virt_lines = true
+
       vim.g.molten_virt_text_output = true
-      vim.g.molten_virt_lines_off_by_1 = true
+      vim.g.molten_virt_lines_off_by_1 = false
+
+      vim.g.molten_wrap_output = true
+      vim.g.molten_output_show_more = true
       vim.g.molten_output_win_max_height = 20
 
       local job = vim.system({ 'which', 'python3' }, { text = true }):wait()
@@ -185,14 +189,14 @@ return {
       })
 
       -- automatically export output chunks to a jupyter notebook on write
-      -- vim.api.nvim_create_autocmd('BufWritePost', {
-      --   pattern = { '*.ipynb' },
-      --   callback = function()
-      --     if require('molten.status').initialized() == 'Molten' then
-      --       vim.cmd('MoltenExportOutput!')
-      --     end
-      --   end,
-      -- })
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        pattern = { '*.ipynb' },
+        callback = function()
+          if require('molten.status').initialized() == 'Molten' then
+            vim.cmd('MoltenExportOutput!')
+          end
+        end,
+      })
     end,
   },
 }

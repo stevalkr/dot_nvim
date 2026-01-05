@@ -22,7 +22,7 @@
   "mini.pairs": { "branch": "main", "commit": "d5a29b6254dad07757832db505ea5aeab9aad43a" },
   "mini.sessions": { "branch": "main", "commit": "dd7fe484dfcbf270a788e9291545df509cdb9691" },
   "mini.surround": { "branch": "main", "commit": "5aab42fcdcf31fa010f012771eda5631c077840a" },
-  "molten-nvim": { "branch": "main", "commit": "a286aa914d9a154bc359131aab788b5a077a5a99" },
+  "molten-nvim": { "branch": "main", "commit": "4fd7be6a12b5efda5179db642f13bad60893acca" },
   "none-ls.nvim": { "branch": "main", "commit": "5fcb73913a9290f78097e34420fe0e6130c5c33c" },
   "nord.nvim": { "branch": "main", "commit": "57fb474a1d628bdf9d1e7964719464ed5675d7c7" },
   "nvim-0x0": { "branch": "main", "commit": "4890fd111d76d7297971c2f0a01dacbdfc48c819" },
