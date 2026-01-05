@@ -63,13 +63,84 @@ return {
       utils.keymap(
         'n',
         '<leader>rr',
-        '<Cmd>MoltenReevaluateCell<CR>',
+        -- '<Cmd>MoltenReevaluateCell<CR>',
+        function()
+          local parser = vim.treesitter.get_parser()
+          if not parser then
+            vim.notify('No parser found', vim.log.levels.WARN)
+            return
+          end
+
+          parser:parse()
+          local file_lang = parser:lang()
+
+          local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+          local range = { row - 1, col, row - 1, col + 1 }
+          local ltree = parser:language_for_range(range)
+          if not ltree then
+            vim.notify('No syntax tree found', vim.log.levels.WARN)
+            return
+          end
+
+          local lang = ltree:lang()
+          if lang == file_lang then
+            vim.notify('Not inside a code block', vim.log.levels.WARN)
+            return
+          end
+
+          local trees = ltree:trees()
+          for _, tree in ipairs(trees) do
+            local node = tree:root()
+            if vim.treesitter.node_contains(node, range) then
+              local srow, _, erow, _ = node:range(false)
+              vim.fn.setpos("'<", { 0, srow + 1, 1, 0 })
+              vim.fn.setpos("'>", { 0, erow, vim.v.maxcol, 0 })
+              vim.cmd([[MoltenEvaluateVisual]])
+            end
+          end
+        end,
         're-evaluate cell'
       )
+      utils.keymap('n', '<leader>ra', function()
+        local parser = vim.treesitter.get_parser()
+        if not parser then
+          vim.notify('No parser found', vim.log.levels.WARN)
+          return
+        end
+
+        local ts_tree = parser:parse()
+        if not ts_tree or #ts_tree == 0 then
+          vim.notify('No syntax tree found', vim.log.levels.WARN)
+          return
+        end
+
+        local tree = ts_tree[1]
+        local root = tree:root()
+
+        local query = vim.treesitter.query.parse(
+          'markdown',
+          [[ (fenced_code_block (code_fence_content) @code) ]]
+        )
+
+        local cursor_row = vim.api.nvim_win_get_cursor(0)[1]
+        for _, node in query:iter_captures(root, 0, 0, cursor_row) do
+          local srow, _, erow, _ = node:range(false)
+
+          if srow < cursor_row then
+            vim.fn.setpos("'<", { 0, srow + 1, 1, 0 })
+            vim.fn.setpos("'>", { 0, erow, vim.v.maxcol, 0 })
+            vim.cmd([[MoltenEvaluateVisual]])
+          end
+        end
+      end, 'run all code blocks up to cursor')
       utils.keymap(
         'v',
         '<leader>re',
-        ':<C-u>MoltenEvaluateVisual<CR>`>j',
+        -- ':<C-u>MoltenEvaluateVisual<CR>`>j',
+        function()
+          vim.cmd([[execute "normal! \<Esc>"]])
+          vim.cmd([[MoltenEvaluateVisual]])
+        end,
         'evaluate visual selection'
       )
       utils.keymap(
