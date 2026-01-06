@@ -3,6 +3,7 @@ local utils = require('utils')
 return {
 
   'stevalkr/nvim-0x0',
+
   config = function()
     local n0x0 = require('nvim-0x0')
     n0x0.setup({
@@ -18,5 +19,4 @@ return {
     )
     utils.keymap('v', '<leader>0', n0x0.upload_selection, 'Upload selection')
   end,
-
 }
