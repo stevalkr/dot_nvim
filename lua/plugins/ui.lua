@@ -15,16 +15,11 @@ return {
   },
 
   {
-    'stevearc/dressing.nvim',
-    opts = {},
-  },
-
-  {
     'j-hui/fidget.nvim',
-    event = 'BufReadPost',
-    tag = 'legacy',
     opts = {
-      window = { blend = 0 },
+      notification = {
+        window = { winblend = 0 },
+      },
     },
   },
 

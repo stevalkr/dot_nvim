@@ -1,28 +1,28 @@
 return {
 
   {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.input',
     version = '*',
     event = 'VeryLazy',
     opts = {},
   },
 
   {
-    'echasnovski/mini.icons',
+    'nvim-mini/mini.icons',
     version = '*',
     event = 'VeryLazy',
     opts = {},
   },
 
   {
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     version = '*',
     event = 'VeryLazy',
     opts = {},
   },
 
   {
-    'echasnovski/mini.hipatterns',
+    'nvim-mini/mini.hipatterns',
     version = '*',
     event = 'VeryLazy',
     opts = function()
@@ -54,7 +54,7 @@ return {
   },
 
   {
-    'echasnovski/mini.cursorword',
+    'nvim-mini/mini.cursorword',
     version = '*',
     event = 'VeryLazy',
     opts = {
@@ -63,7 +63,7 @@ return {
   },
 
   {
-    'echasnovski/mini.sessions',
+    'nvim-mini/mini.sessions',
     version = '*',
     opts = {
       autoread = true,
@@ -75,7 +75,7 @@ return {
   },
 
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     version = '*',
     event = 'VeryLazy',
     opts = function()
@@ -91,7 +91,7 @@ return {
   },
 
   {
-    'echasnovski/mini.pairs',
+    'nvim-mini/mini.pairs',
     version = '*',
     event = 'VeryLazy',
     opts = {

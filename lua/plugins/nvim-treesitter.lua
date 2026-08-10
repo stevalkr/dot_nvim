@@ -2,6 +2,15 @@ return {
 
   'nvim-treesitter/nvim-treesitter',
   lazy = false,
+  dependencies = {
+    {
+      'nvim-treesitter/nvim-treesitter-context',
+      opts = {
+        max_lines = 3,
+        multiline_threshold = 1,
+      },
+    },
+  },
   build = function()
     require('nvim-treesitter.install').update()
   end,
@@ -27,7 +36,6 @@ return {
       'python',
       'ron',
       'rust',
-      'tmux',
       'toml',
       'vim',
       'vimdoc',

@@ -30,6 +30,8 @@ return {
       },
     })
 
+    fzf.register_ui_select()
+
     utils.keymap('n', ';;', fzf.resume, 'Resume')
     utils.keymap('n', ';a', fzf.builtin, 'Fzf builtin')
     utils.keymap('n', ';f', fzf.files, 'Find files')

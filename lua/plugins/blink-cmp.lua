@@ -3,7 +3,7 @@ local utils = require('utils')
 return {
 
   'saghen/blink.cmp',
-  version = '*',
+  version = '1.*',
   dependencies = {
     'rafamadriz/friendly-snippets',
     { 'saghen/blink.compat', version = '*', lazy = true, opts = {} },
