@@ -67,7 +67,9 @@ return {
           analysis = {
             diagnosticSeverityOverrides = {
               reportUnusedExpression = 'none',
+              reportPrivateImportUsage = 'none',
             },
+            useLibraryCodeForTypes = true,
           },
         },
       },
