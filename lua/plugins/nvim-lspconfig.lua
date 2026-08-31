@@ -66,8 +66,9 @@ return {
         python = {
           analysis = {
             diagnosticSeverityOverrides = {
-              reportUnusedExpression = 'none',
-              reportPrivateImportUsage = 'none',
+              reportUnusedExpression = 'information',
+              reportPrivateImportUsage = 'information',
+              reportIncompatibleMethodOverride = 'warning',
             },
             useLibraryCodeForTypes = true,
           },
@@ -137,6 +138,18 @@ return {
       vim.diagnostic.setqflist,
       'Set diagnostic quickfix'
     )
+    utils.keymap('n', '[d', function()
+      vim.diagnostic.jump({
+        count = -1,
+        severity = vim.diagnostic.severity.ERROR,
+      })
+    end, 'Go to previous diagnostic')
+    utils.keymap('n', ']d', function()
+      vim.diagnostic.jump({
+        count = 1,
+        severity = vim.diagnostic.severity.ERROR,
+      })
+    end, 'Go to next diagnostic')
 
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
