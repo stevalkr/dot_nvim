@@ -150,6 +150,12 @@ return {
         severity = vim.diagnostic.severity.ERROR,
       })
     end, 'Go to next diagnostic')
+    utils.keymap('n', '[D', function()
+      vim.diagnostic.jump({ count = -1 })
+    end, 'Go to previous diagnostic')
+    utils.keymap('n', ']D', function()
+      vim.diagnostic.jump({ count = 1 })
+    end, 'Go to next diagnostic')
 
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),

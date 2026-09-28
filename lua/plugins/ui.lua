@@ -20,6 +20,11 @@ return {
   },
 
   {
+    'abecodes/tabout.nvim',
+    opts = {},
+  },
+
+  {
     'j-hui/fidget.nvim',
     opts = {
       notification = {
