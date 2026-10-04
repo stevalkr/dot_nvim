@@ -209,46 +209,7 @@ M.keymap = function(mode, lhs, rhs, desc, opts)
 end
 
 M.save_session = function()
-  if not M.has_plugin('mini.sessions') then
-    vim.notify('Plugin mini.sessions is not installed', vim.log.levels.ERROR)
-    return false
-  end
-  local function buffer_filter(buf)
-    if not vim.api.nvim_buf_is_valid(buf)
-        or not vim.api.nvim_get_option_value('buflisted', { buf = buf }) then
-      return false
-    end
-    return true
-  end
-
-  local buffers = vim.tbl_filter(buffer_filter, vim.api.nvim_list_bufs())
-
-  local non_hidden_buffer = {}
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
-  end
-
-  for _, buffer in ipairs(buffers) do
-    if non_hidden_buffer[buffer] == nil then
-      if vim.api.nvim_get_option_value('modified', { buf = buffer }) then
-        vim.notify(
-          string.format('No write since last change for buffer %d', buffer),
-          vim.log.levels.WARN
-        )
-      else
-        vim.cmd('bdelete ' .. buffer)
-      end
-    end
-  end
-
-  vim.uv.fs_mkdir('.cache', 493, function(err) -- 0755
-    -- Ignore if the directory already exists
-    if err and not err:match('^EEXIST:') then
-      vim.api.notify(err, vim.log.levels.ERROR)
-    end
-  end)
-
-  require('mini.sessions').write('.cache/session.vim')
+  return require('sessions').save()
 end
 
 ---@class AutocmdDefinition

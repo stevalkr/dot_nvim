@@ -1,10 +1,5 @@
-return {
-
-  'nvimtools/none-ls.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
-  dependencies = { 'nvim-lua/plenary.nvim' },
-
-  opts = function()
+local function setup()
+  require('null-ls').setup((function()
     local null_ls = require('null-ls')
     return {
       sources = {
@@ -25,5 +20,13 @@ return {
         null_ls.builtins.diagnostics.zsh,
       },
     }
-  end,
+  end)())
+end
+
+return {
+  {
+    src = 'https://github.com/nvimtools/none-ls.nvim',
+    dependencies = { 'plenary.nvim' },
+    setup = setup,
+  },
 }

@@ -1,10 +1,7 @@
 local utils = require('utils')
-return {
 
-  'lewis6991/gitsigns.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
-
-  opts = function()
+local function setup()
+  require('gitsigns').setup((function()
     local gitsigns = require('gitsigns')
     return {
       signcolumn = false,
@@ -137,5 +134,12 @@ return {
         end, 'Prev Hunk')
       end,
     }
-  end,
+  end)())
+end
+
+return {
+  {
+    src = 'https://github.com/lewis6991/gitsigns.nvim',
+    setup = setup,
+  },
 }

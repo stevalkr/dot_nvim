@@ -1,13 +1,5 @@
-return {
-
-  'andrewferrier/debugprint.nvim',
-  lazy = false,
-  dependencies = {
-    'echasnovski/mini.hipatterns',
-    'ibhagwan/fzf-lua',
-  },
-
-  opts = {
+local function setup()
+  require('debugprint').setup({
     keymaps = {
       normal = {
         plain_below = '<leader>rp',
@@ -28,5 +20,12 @@ return {
       },
     },
     print_tag = '🪵',
+  })
+end
+
+return {
+  {
+    src = 'https://github.com/andrewferrier/debugprint.nvim',
+    setup = setup,
   },
 }

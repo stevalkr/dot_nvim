@@ -1,15 +1,7 @@
 local utils = require('utils')
 
-return {
-
-  'saghen/blink.cmp',
-  version = '1.*',
-  dependencies = {
-    'rafamadriz/friendly-snippets',
-    { 'saghen/blink.compat', version = '*', lazy = true, opts = {} },
-  },
-
-  opts = {
+local function setup()
+  require('blink.cmp').setup({
     appearance = {
       nerd_font_variant = 'mono',
     },
@@ -117,6 +109,22 @@ return {
       ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
       ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
     },
+  })
+end
+
+return {
+  { src = 'https://github.com/rafamadriz/friendly-snippets' },
+  {
+    src = 'https://github.com/saghen/blink.compat',
+    version = vim.version.range('*'),
+    setup = function()
+      require('blink.compat').setup({})
+    end,
   },
-  opts_extend = { 'sources.default' },
+  {
+    src = 'https://github.com/saghen/blink.cmp',
+    dependencies = { 'blink.compat', 'friendly-snippets' },
+    version = vim.version.range('1.*'),
+    setup = setup,
+  },
 }

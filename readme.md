@@ -8,7 +8,7 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 
 ## requirements
 
-- [neovim](https://github.com/neovim/neovim) (version >= 0.10)
+- [neovim](https://github.com/neovim/neovim) (version >= 0.13)
 - [nerd fonts](https://github.com/ryanoasis/nerd-fonts) (recommended)
 - [tree-sitter](https://github.com/tree-sitter/tree-sitter) (recommended)
 - [kitty](https://sw.kovidgoyal.net/kitty/) (version >= 0.21, or any emulator supports XTVERSION escape codes)
@@ -20,7 +20,8 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 ## updates
 
 - `:TSUpdate` Update installed tree-sitter parsers
-- `:Lazy sync` Update plugins
+- `:packupdate` Review plugin updates; `:write` applies them and `:quit` discards them
+- `:restart` Restart after applying updates
 - `$ brew upgrade neovim` Update neovim by your package manager
 
 ## usage
@@ -29,6 +30,83 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 $ git clone https://github.com/etherswangel/dot_nvim.git ~/.config/nvim
 $ nvim
 ```
+
+Plugins use native `vim.pack` and load eagerly. `lua/plugins.lua` discovers
+Lua configuration files directly under `lua/plugins/` in alphabetical order.
+Every configuration module returns a list of specs. `lua/plugin_loader.lua` accepts
+native `src`, `name` and `version` fields, a local `dir` instead of `src`, and
+optional `init`, `setup` and `build` callbacks. The `dependencies` field lists
+plugin names that must run first; missing dependencies and cycles are rejected.
+`init` runs before plugin scripts load; `setup` runs eagerly after all runtime
+paths are available; `build` runs after managed installation or updates.
+`nvim-pack-lock.json` records exact revisions and should stay in version control.
+Plugin updates rebuild Treesitter parsers and register Molten's remote plugins
+when those plugins change. Parser installation does not run on ordinary startup.
+The local `dev/multiplexer.nvim` and `dev/sessions.nvim` checkouts are loaded
+directly from `runtimepath`.
+
+Nested launches with `$NVIM` load Flatten and open files in a parent tab. Launches
+with `$MULTIPLEXER` load only the local multiplexer. Normal launches load the full
+collection. `$NVIM` takes precedence when both variables are present.
+
+## sessions
+
+Session management lives in the small local `dev/sessions.nvim` module.
+`:SaveSession` writes `.cache/session.vim` in the current working directory using
+native `:mksession!`. Hidden unmodified listed buffers are removed first; hidden
+modified buffers remain and produce a warning. Saving is manual.
+
+An empty normal launch restores the startup directory's session after plugin
+setup. Explicit file arguments, stdin content, another displayed buffer, or an
+already loaded session prevent restoration. Existing Mini Sessions session files
+remain compatible.
+
+## startup profiling
+
+`:StartupTime` averages 20 launches. `:StartupTime --tries 1` runs a single launch;
+`:StartupTime --input-file /path/to/startup.log` displays an existing native log.
+The profiler arguments configured in `lua/plugins/ui.lua` clear `$NVIM` and
+`$MULTIPLEXER` before each child's configuration loads, so profiling measures the
+full editor with the same Neovim executable.
+
+For repeatable terminal measurements with two warmup launches and retained logs:
+
+```sh
+python3 scripts/benchmark.py vim-pack . --output /tmp/nvim-startup-comparison \
+  --scenarios empty sample.lua sample.py sample.md session
+```
+
+Run the same command with another label and a saved configuration directory to
+compare configurations at identical plugin revisions. Each scenario records 20
+measured launches, a summary, and raw logs. Installation and builds should finish
+before profiling. The harness uses temporary fixtures and isolates cache/state,
+but uses your installed plugin and provider data. It requires a Unix PTY.
+
+Results from this migration are in [benchmarks/startup.md](benchmarks/startup.md).
+Startup timings end at the first screen update and do not measure asynchronous
+LSP or Copilot readiness.
+
+## validation
+
+```sh
+nvim --headless -u NONE -i NONE -l tests/sessions.lua
+nvim --headless -u NONE -i NONE -l tests/pack.lua
+```
+
+The package test installs and updates two temporary local Git fixtures; it does
+not fetch or update your real plugins. It also checks directory discovery,
+symlinked specs and dependency ordering.
+
+To check the full installed configuration, run from a directory without a saved
+session:
+
+```sh
+nvim --headless -i NONE -c 'luafile /absolute/path/to/nvim/tests/startup.lua'
+```
+
+This checks package activation, cursorword underlines after colorscheme reloads,
+shell Treesitter highlighting and plugin commands. It uses installed plugins and
+parsers.
 
 ## keymaps
 

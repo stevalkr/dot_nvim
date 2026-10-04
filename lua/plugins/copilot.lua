@@ -1,10 +1,5 @@
-return {
-
-  'zbirenbaum/copilot.lua',
-  cmd = 'Copilot',
-  event = { 'InsertEnter' },
-
-  opts = {
+local function setup()
+  require('copilot').setup({
     suggestion = {
       auto_trigger = true,
       keymap = {
@@ -12,5 +7,12 @@ return {
         accept_word = '<M-l>',
       },
     },
+  })
+end
+
+return {
+  {
+    src = 'https://github.com/zbirenbaum/copilot.lua',
+    setup = setup,
   },
 }

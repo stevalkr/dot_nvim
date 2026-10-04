@@ -1,7 +1,10 @@
+local function setup()
+  require('csvview').setup({})
+end
+
 return {
-  'hat0uma/csvview.nvim',
-  ---@module "csvview"
-  ---@type CsvView.Options
-  opts = {},
-  cmd = { 'CsvViewEnable', 'CsvViewDisable', 'CsvViewToggle' },
+  {
+    src = 'https://github.com/hat0uma/csvview.nvim',
+    setup = setup,
+  },
 }

@@ -1,9 +1,5 @@
-return {
-
-  'stevalkr/multiplexer.nvim',
-  lazy = false,
-  dev = true,
-  opts = {
+local function setup()
+  require('multiplexer').setup({
     default_resize_amount = 5,
     on_init = function()
       local multiplexer = require('multiplexer')
@@ -58,5 +54,12 @@ return {
         { desc = 'Resize pane to the right' }
       )
     end,
+  })
+end
+
+return {
+  {
+    dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'dev', 'multiplexer.nvim'),
+    setup = setup,
   },
 }

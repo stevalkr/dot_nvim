@@ -1,36 +1,38 @@
 local utils = require('utils')
 
-return {
+local function setup()
+  local quicker = require('quicker')
 
-  'stevearc/quicker.nvim',
-
-  config = function()
-    local quicker = require('quicker')
-
-    quicker.setup({
-      keys = {
-        {
-          '<',
-          function()
-            quicker.collapse()
-          end,
-          desc = 'Collapse quickfix context',
-        },
-        {
-          '>',
-          function()
-            quicker.expand({ before = 2, after = 2, add_to_existing = true })
-          end,
-          desc = 'Expand quickfix context',
-        },
+  quicker.setup({
+    keys = {
+      {
+        '<',
+        function()
+          quicker.collapse()
+        end,
+        desc = 'Collapse quickfix context',
       },
-    })
+      {
+        '>',
+        function()
+          quicker.expand({ before = 2, after = 2, add_to_existing = true })
+        end,
+        desc = 'Expand quickfix context',
+      },
+    },
+  })
 
-    utils.keymap('n', ';q', function()
-      quicker.toggle({ open_cmd_mods = { split = 'botright' } })
-    end, 'Toggle quickfix')
-    utils.keymap('n', ';l', function()
-      quicker.toggle({ loclist = true })
-    end, 'Close quickfix')
-  end,
+  utils.keymap('n', ';q', function()
+    quicker.toggle({ open_cmd_mods = { split = 'botright' } })
+  end, 'Toggle quickfix')
+  utils.keymap('n', ';l', function()
+    quicker.toggle({ loclist = true })
+  end, 'Close quickfix')
+end
+
+return {
+  {
+    src = 'https://github.com/stevearc/quicker.nvim',
+    setup = setup,
+  },
 }

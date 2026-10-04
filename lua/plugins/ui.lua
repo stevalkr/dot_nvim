@@ -1,65 +1,69 @@
 return {
-
+  { src = 'https://github.com/ron-rs/ron.vim' },
   {
-    'ron-rs/ron.vim',
+    src = 'https://github.com/dstein64/vim-startuptime',
+    init = function()
+      vim.g.startuptime_exe_path = vim.v.progpath
+      vim.g.startuptime_exe_args = {
+        '--cmd',
+        'lua vim.env.NVIM = nil; vim.env.MULTIPLEXER = nil',
+      }
+      vim.g.startuptime_tries = 20
+    end,
   },
-
   {
-    'dstein64/vim-startuptime',
-    lazy = false,
+    src = 'https://github.com/willothy/flatten.nvim',
+    setup = function()
+      require('flatten').setup({})
+    end,
   },
-
   {
-    'willothy/flatten.nvim',
-    opts = {},
+    src = 'https://github.com/kwkarlwang/bufjump.nvim',
+    setup = function()
+      require('bufjump').setup({})
+    end,
   },
-
   {
-    'kwkarlwang/bufjump.nvim',
-    opts = {},
+    src = 'https://github.com/abecodes/tabout.nvim',
+    setup = function()
+      require('tabout').setup({})
+    end,
   },
-
   {
-    'abecodes/tabout.nvim',
-    opts = {},
+    src = 'https://github.com/j-hui/fidget.nvim',
+    setup = function()
+      require('fidget').setup({
+        notification = {
+          window = { winblend = 0 },
+        },
+      })
+    end,
   },
-
   {
-    'j-hui/fidget.nvim',
-    opts = {
-      notification = {
-        window = { winblend = 0 },
-      },
-    },
+    src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'mini.icons', 'nvim-treesitter' },
+    setup = function()
+      require('render-markdown').setup({})
+    end,
   },
-
   {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = {
-      'echasnovski/mini.icons',
-      'nvim-treesitter/nvim-treesitter',
-    },
-    opts = {},
-  },
-
-  {
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
+    src = 'https://github.com/folke/which-key.nvim',
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
-    opts = {
-      triggers = {
-        { '<auto>', mode = 'nxsot' },
-        { 's', mode = 'n' },
-      },
-    },
+    setup = function()
+      require('which-key').setup({
+        triggers = {
+          { '<auto>', mode = 'nxsot' },
+          { 's', mode = 'n' },
+        },
+      })
+    end,
   },
-
   {
-    'gbprod/nord.nvim',
-    config = function()
+    src = 'https://github.com/gbprod/nord.nvim',
+    setup = function()
       require('nord').setup({
         transparent = vim.g.neovide == nil,
         terminal_colors = true,
@@ -82,7 +86,7 @@ return {
             { undercurl = true }
         end,
       })
-      require('nord').load()
+      vim.cmd.colorscheme('nord')
     end,
   },
 }
