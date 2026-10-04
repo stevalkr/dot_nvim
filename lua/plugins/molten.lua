@@ -35,10 +35,6 @@ return {
       vim.g.molten_wrap_output = true
       vim.g.molten_output_show_more = true
       vim.g.molten_output_win_max_height = 20
-
-      local job = vim.system({ 'which', 'python3' }, { text = true }):wait()
-      vim.g.python3_host_prog =
-        vim.split(job.stdout, '\n', { trimempty = true })[1]
     end,
 
     config = function()

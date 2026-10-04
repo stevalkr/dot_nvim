@@ -103,9 +103,7 @@ tnoremap <silent> <C-l> <C-\><C-n><C-w>l
 " -------------
 
 cnoremap <C-a> <Home>
-cnoremap <C-b> <Left>
 cnoremap <C-e> <End>
-cnoremap <C-f> <Right>
 cnoremap <A-Left> <S-Left>
 cnoremap <A-Right> <S-Right>
 

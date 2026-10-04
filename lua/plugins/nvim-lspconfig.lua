@@ -21,14 +21,10 @@ return {
       capabilities = capabilities,
     })
 
-    vim.lsp.enable('zls')
     vim.lsp.enable('nixd')
-    vim.lsp.enable('gopls')
     vim.lsp.enable('clangd')
     vim.lsp.enable('lua_ls')
-    vim.lsp.enable('svelte')
     vim.lsp.enable('pyright')
-    vim.lsp.enable('elixirls')
     vim.lsp.enable('rust_analyzer')
 
     vim.lsp.config('clangd', {
@@ -119,10 +115,6 @@ return {
       settings = {
         Lua = {},
       },
-    })
-
-    vim.lsp.config('elixirls', {
-      cmd = { 'elixir-ls' },
     })
 
     utils.keymap('n', '<leader>d', vim.diagnostic.open_float, 'Open diagnostic')
