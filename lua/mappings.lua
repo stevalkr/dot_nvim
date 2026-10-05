@@ -24,7 +24,6 @@ nnoremap <silent> <C-;> g;
 nnoremap <silent> <C-,> g,
 
 inoremap <silent> jj <Esc>
-tnoremap <silent> jj <C-\><C-n>
 
 nnoremap <silent> * *``
 nnoremap <silent> U <C-R>
@@ -85,17 +84,6 @@ nnoremap <silent> <C-S-h> <Cmd>vertical resize +1<CR>
 nnoremap <silent> <C-S-l> <Cmd>vertical resize -1<CR>
 nnoremap <silent> <C-S-k> <Cmd>resize -1<CR>
 nnoremap <silent> <C-S-j> <Cmd>resize +1<CR>
-
-
-" --------------
-" -- terminal --
-" --------------
-
-tnoremap <silent> <ESC> <C-\><C-n>
-tnoremap <silent> <C-h> <C-\><C-n><C-w>h
-tnoremap <silent> <C-j> <C-\><C-n><C-w>j
-tnoremap <silent> <C-k> <C-\><C-n><C-w>k
-tnoremap <silent> <C-l> <C-\><C-n><C-w>l
 
 
 " -------------
