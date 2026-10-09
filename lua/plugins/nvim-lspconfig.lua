@@ -17,11 +17,17 @@ local function setup()
     capabilities = capabilities,
   })
 
-  vim.lsp.enable('nixd')
-  vim.lsp.enable('clangd')
-  vim.lsp.enable('lua_ls')
-  vim.lsp.enable('pyright')
-  vim.lsp.enable('rust_analyzer')
+  for server, command in pairs({
+    nixd = 'nixd',
+    clangd = 'clangd',
+    lua_ls = 'lua-language-server',
+    pyright = 'pyright-langserver',
+    rust_analyzer = 'rust-analyzer',
+  }) do
+    if vim.fn.executable(command) == 1 then
+      vim.lsp.enable(server)
+    end
+  end
 
   vim.lsp.config('clangd', {
     cmd = {
