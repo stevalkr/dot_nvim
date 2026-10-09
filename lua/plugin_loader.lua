@@ -159,16 +159,8 @@ function M.setup(specs)
     end
   end
 
-  -- Generated package state belongs outside the Stow-managed config tree.
-  local packlock = vim.fs.joinpath(vim.fn.stdpath('data'), 'nvim-pack-lock.json')
-  if not vim.uv.fs_stat(packlock) then
-    local seed = vim.fs.joinpath(vim.fn.stdpath('config'), 'nvim-pack-lock.json')
-    if vim.uv.fs_stat(seed) then
-      vim.fn.mkdir(vim.fn.stdpath('data'), 'p')
-      assert(vim.uv.fs_copyfile(seed, packlock))
-    end
-  end
-  vim.o.packlockfile = packlock
+  vim.o.packlockfile =
+    vim.fs.joinpath(vim.fn.stdpath('config'), 'nvim-pack-lock.json')
   local pending, initializing = {}, true
   local function run_builds()
     local current = pending

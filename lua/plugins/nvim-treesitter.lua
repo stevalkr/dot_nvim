@@ -25,10 +25,6 @@ local servers = {
 }
 
 local function build()
-  -- Connected preparation awaits parser work explicitly before packaging data.
-  if vim.env.NVIM_PREPARE_RUNTIME == '1' then
-    return
-  end
   local treesitter = require('nvim-treesitter')
   local function report(err, success)
     if err or success == false then
