@@ -146,3 +146,8 @@ vnoremap <silent> K :move '<-2<CR>gv-gv
 vnoremap <silent> <C-c> <Cmd>lua require('utils').capitalize()<CR>
 
 ]])
+
+vim.keymap.set('n', '<C-[>', function()
+  local mc_ns = vim.api.nvim_create_namespace('nvim.multicursor')
+  vim.api.nvim_buf_clear_namespace(0, mc_ns, 0, -1)
+end)
