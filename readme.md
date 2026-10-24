@@ -20,6 +20,7 @@ It summarizes the keymaps and usage habits that have been most suitable for me p
 ## updates
 
 - `:TSUpdate` Update installed tree-sitter parsers
+- `:PackBuild` Rerun every plugin build hook, e.g. after an interrupted install
 - `:packupdate` Review plugin updates; `:write` applies them and `:quit` discards them
 - `:restart` Restart after applying updates
 - `$ brew upgrade neovim` Update neovim by your package manager

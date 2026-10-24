@@ -109,10 +109,6 @@
       "rev": "87394d4fc35c901bbe38326a78d31ab1ead826b6",
       "src": "https://github.com/gbprod/nord.nvim"
     },
-    "nvim-0x0": {
-      "rev": "4890fd111d76d7297971c2f0a01dacbdfc48c819",
-      "src": "https://github.com/stevalkr/nvim-0x0"
-    },
     "nvim-lspconfig": {
       "rev": "43ed3797b266e1ee8d222e491379ad471c9d3146",
       "src": "https://github.com/neovim/nvim-lspconfig"

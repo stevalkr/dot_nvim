@@ -194,6 +194,12 @@ function M.setup(specs)
       end
     end,
   })
+  vim.api.nvim_create_user_command('PackBuild', function()
+    for name in pairs(builds) do
+      pending[name] = true
+    end
+    run_builds()
+  end, { desc = 'Run every plugin build hook' })
 
   for _, spec in ipairs(specs) do
     if spec.dir then
