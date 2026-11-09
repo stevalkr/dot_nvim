@@ -14,7 +14,12 @@ local function setup()
         --   filetypes = { 'c', 'cpp', 'go', 'javascript', 'lua', 'python', 'typescript' }
         -- }),
 
-        null_ls.builtins.diagnostics.codespell,
+        null_ls.builtins.diagnostics.codespell.with({
+          -- codespell reads .codespellrc from its own cwd, not the null-ls root.
+          cwd = function()
+            return vim.fn.getcwd()
+          end,
+        }),
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.zsh,

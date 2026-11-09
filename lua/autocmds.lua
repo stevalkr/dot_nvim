@@ -133,26 +133,6 @@ utils.augroup({
     },
   },
 
-  hide_copilot_suggestion = {
-    {
-      event = 'User',
-      pattern = 'BlinkCmpMenuOpen',
-      callback = function()
-        if utils.has_plugin('copilot') then
-          require('copilot.suggestion').dismiss()
-        end
-        vim.b.copilot_suggestion_hidden = true
-      end,
-    },
-    {
-      event = 'User',
-      pattern = 'BlinkCmpMenuClose',
-      callback = function()
-        vim.b.copilot_suggestion_hidden = false
-      end,
-    },
-  },
-
   roslaunch = {
     {
       event = 'BufEnter',

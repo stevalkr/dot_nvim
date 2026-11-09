@@ -85,7 +85,7 @@ but uses your installed plugin and provider data. It requires a Unix PTY.
 
 Results from this migration are in [benchmarks/startup.md](benchmarks/startup.md).
 Startup timings end at the first screen update and do not measure asynchronous
-LSP or Copilot readiness.
+LSP readiness.
 
 ## validation
 

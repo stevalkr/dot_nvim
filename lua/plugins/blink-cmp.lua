@@ -69,21 +69,7 @@ local function setup()
     keymap = {
       preset = 'none',
       ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-      ['<C-e>'] = {
-        function(cmp)
-          cmp.hide()
-          if utils.has_plugin('copilot') then
-            vim.b.copilot_suggestion_hidden = false
-            vim.defer_fn(function()
-              local suggestion = require('copilot.suggestion')
-              if not suggestion.is_visible() then
-                suggestion.next()
-              end
-            end, 100)
-          end
-        end,
-        'fallback',
-      },
+      ['<C-e>'] = { 'hide', 'fallback' },
       ['<CR>'] = { 'accept', 'fallback' },
       ['<S-CR>'] = {
         function(cmp)
