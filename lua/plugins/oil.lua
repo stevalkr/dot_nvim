@@ -16,6 +16,48 @@ local function parse_output(proc)
   return ret
 end
 
+-- Merge two status codes, letter by letter; mixed letters become 'M'.
+-- Untracked children only show when nothing else changed.
+local function merge_status(a, b)
+  if not a or a == '??' then
+    return b
+  elseif b == '??' then
+    return a
+  end
+  local ret = ''
+  for i = 1, 2 do
+    local x, y = a:sub(i, i), b:sub(i, i)
+    ret = ret .. ((x == ' ' or x == y) and y or y == ' ' and x or 'M')
+  end
+  return ret
+end
+
+-- `git status` codes (lazygit's XY: staged, unstaged) keyed by entry name;
+-- a directory gets the merged codes of its contents
+local function parse_status(proc, prefix_proc)
+  local result = proc:wait()
+  local prefix = vim.trim(prefix_proc:wait().stdout or '')
+  local ret = {}
+  if result.code ~= 0 then
+    return ret
+  end
+  local fields =
+    vim.split(result.stdout, '\0', { plain = true, trimempty = true })
+  local i = 1
+  while i <= #fields do
+    local code, path = fields[i]:sub(1, 2), fields[i]:sub(4)
+    -- A rename or copy is followed by its source path.
+    i = i + (code:find('[RC]') and 2 or 1)
+    if vim.startswith(path, prefix) then
+      local name = path:sub(#prefix + 1):match('^[^/]+')
+      if name then
+        ret[name] = merge_status(ret[name], code)
+      end
+    end
+  end
+  return ret
+end
+
 -- build git status cache
 local function new_git_status()
   return setmetatable({}, {
@@ -38,9 +80,21 @@ local function new_git_status()
           text = true,
         }
       )
+      local status_proc = vim.system(
+        { 'git', '--no-optional-locks', 'status', '--porcelain', '-z', '.' },
+        {
+          cwd = key,
+          text = true,
+        }
+      )
+      local prefix_proc = vim.system({ 'git', 'rev-parse', '--show-prefix' }, {
+        cwd = key,
+        text = true,
+      })
       local ret = {
         ignored = parse_output(ignore_proc),
         tracked = parse_output(tracked_proc),
+        status = parse_status(status_proc, prefix_proc),
       }
 
       rawset(self, key, ret)
@@ -63,11 +117,67 @@ local function setup()
     orig_refresh(...)
   end
 
+  -- Like lazygit: staged letter green, unstaged letter and untracked red
+  local function set_hl()
+    vim.api.nvim_set_hl(0, 'OilGitStaged', { link = 'Added', default = true })
+    vim.api.nvim_set_hl(
+      0,
+      'OilGitUnstaged',
+      { link = 'Removed', default = true }
+    )
+  end
+  set_hl()
+
+  local FIELD_NAME = require('oil.constants').FIELD_NAME
+  require('oil.columns').register('git_status', {
+    render = function(entry, _, bufnr)
+      local dir = oil.get_current_dir(bufnr)
+      local code = dir and git_status[dir].status[entry[FIELD_NAME]]
+      if not code then
+        return nil
+      elseif code == '??' then
+        return { code, 'OilGitUnstaged' }
+      end
+      return { code, { { 'OilGitStaged', 0, 1 }, { 'OilGitUnstaged', 1, 2 } } }
+    end,
+    parse = function(line)
+      return line:match('^(%S+)%s+(.*)$')
+    end,
+  })
+
+  -- Files change status on write, on oil's own changes, or outside nvim
+  -- (lazygit) while unfocused.
+  local view = require('oil.view')
+  local function update_git_status()
+    git_status = new_git_status()
+    for _, bufnr in ipairs(view.get_all_buffers()) do
+      if vim.bo[bufnr].modified then
+        return
+      end
+    end
+    view.rerender_all_oil_buffers({ refetch = false })
+  end
+  utils.augroup({
+    oil_git_status = {
+      { event = 'ColorScheme', callback = set_hl },
+      {
+        event = { 'BufWritePost', 'FocusGained' },
+        callback = update_git_status,
+      },
+      {
+        event = 'User',
+        pattern = 'OilActionsPost',
+        callback = update_git_status,
+      },
+    },
+  })
+
   oil.setup({
     columns = {
       -- 'permissions',
       'mtime',
       'size',
+      'git_status',
       'icon',
     },
     lsp_file_methods = {
