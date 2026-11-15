@@ -1,0 +1,5 @@
+{
+  "name": "claude-review",
+  "version": "0.1.0",
+  "description": "Review comments from Neovim, delivered live to Claude; replies and quickfix lists go back to the editor."
+}

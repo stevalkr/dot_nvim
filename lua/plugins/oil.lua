@@ -8,7 +8,6 @@ local function parse_output(proc)
     for line in
       vim.gsplit(result.stdout, '\n', { plain = true, trimempty = true })
     do
-      -- Remove trailing slash
       line = line:gsub('/$', '')
       ret[line] = true
     end
@@ -58,7 +57,6 @@ local function parse_status(proc, prefix_proc)
   return ret
 end
 
--- build git status cache
 local function new_git_status()
   return setmetatable({}, {
     __index = function(self, key)
@@ -104,8 +102,6 @@ local function new_git_status()
 end
 
 local git_status = new_git_status()
-
--- Clear git status cache on refresh
 
 local function setup()
   local oil = require('oil')
@@ -229,7 +225,7 @@ local function setup()
     view_options = {
       is_hidden_file = function(name, bufnr)
         local dir = oil.get_current_dir(bufnr)
-        local is_dotfile = vim.startswith(name, '.') -- and name ~= '..'
+        local is_dotfile = vim.startswith(name, '.')
         -- if no local directory (e.g. for ssh connections), just hide dotfiles
         if not dir then
           return is_dotfile

@@ -1,5 +1,5 @@
 return {
-  { src = 'https://github.com/ron-rs/ron.vim' },
+  { src = 'https://github.com/nvim-lua/plenary.nvim' },
   {
     src = 'https://github.com/dstein64/vim-startuptime',
     init = function()

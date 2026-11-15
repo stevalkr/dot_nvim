@@ -43,7 +43,6 @@ M.format_project = function()
   vim.notify('Scanning project files with `fd`...', vim.log.levels.INFO)
 
   vim.system({ 'fd', '--type', 'f' }, { text = true }, function(job)
-    -- Check for errors from the fd command itself
     if job.code ~= 0 then
       vim.schedule(function()
         vim.notify(

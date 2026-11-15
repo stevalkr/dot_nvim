@@ -43,8 +43,8 @@ paths are available; `build` runs after managed installation or updates.
 `nvim-pack-lock.json` records exact revisions and should stay in version control.
 Plugin updates rebuild Treesitter parsers and register Molten's remote plugins
 when those plugins change. Parser installation does not run on ordinary startup.
-The local `dev/multiplexer.nvim` and `dev/sessions.nvim` checkouts are loaded
-directly from `runtimepath`.
+The local `dev/multiplexer.nvim`, `dev/sessions.nvim` and `dev/claude-review.nvim`
+checkouts are loaded directly from `runtimepath`.
 
 Nested launches with `$NVIM` load Flatten and open files in a parent tab. Launches
 with `$MULTIPLEXER` load only the local multiplexer. Normal launches load the full

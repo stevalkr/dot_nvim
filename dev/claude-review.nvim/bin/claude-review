@@ -1,0 +1,13 @@
+#!/bin/sh
+# claude-review [ARGS...]           Claude Code with this plugin and its channel
+#                                   (channel mode); ARGS go to `claude`.
+# claude-review --cli COMMAND ...   The bridge CLI: listen (monitor mode),
+#                                   reply, qf, comments, state, status.
+self=$(readlink -f "$0" 2>/dev/null || python3 -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$0")
+root=$(cd "$(dirname "$self")/.." && pwd -P)
+if [ "${1:-}" = --cli ]; then
+  shift
+  exec python3 "$root/bridge/bridge.py" "$@"
+fi
+exec claude --plugin-dir "$root" \
+  --dangerously-load-development-channels plugin:claude-review@inline "$@"

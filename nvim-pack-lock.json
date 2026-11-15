@@ -14,6 +14,10 @@
       "rev": "ae2728a77defbd27e9e5ef64c854fb0813ffba01",
       "src": "https://github.com/kwkarlwang/bufjump.nvim"
     },
+    "codediff.nvim": {
+      "rev": "eee54e78e6f152a6eb03b090e95f7576c96a5ad9",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "conform.nvim": {
       "rev": "619363c30309d29ffa631e67c8183f2a72caa373",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -21,10 +25,6 @@
     "csvview.nvim": {
       "rev": "5c22774c3ecc7f8883af5d143b366e45b1f0875d",
       "src": "https://github.com/hat0uma/csvview.nvim"
-    },
-    "debugprint.nvim": {
-      "rev": "957093d8b695aa4cc18c18f421ef0cb6c7380c59",
-      "src": "https://github.com/andrewferrier/debugprint.nvim"
     },
     "fidget.nvim": {
       "rev": "6f793b2bcd2d35e201c09520f698bb763220908a",
@@ -136,10 +136,6 @@
     "render-markdown.nvim": {
       "rev": "f422cb5c6855f150e2ddcfaf44e7157b98b34f6a",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
-    },
-    "ron.vim": {
-      "rev": "f749e543975a82e8dd9a6e7df9600a1c098ae800",
-      "src": "https://github.com/ron-rs/ron.vim"
     },
     "tabout.nvim": {
       "rev": "9a3499480a8e53dcaa665e2836f287e3b7764009",

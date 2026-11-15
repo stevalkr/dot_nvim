@@ -3,17 +3,6 @@ local function setup()
     local null_ls = require('null-ls')
     return {
       sources = {
-        -- null_ls.builtins.code_actions.gitsigns.with({
-        --   config = {
-        --     filter_actions = function(title)
-        --       return title:lower():match('blame') == nil
-        --     end,
-        --   },
-        -- }),
-        -- null_ls.builtins.code_actions.refactoring.with({
-        --   filetypes = { 'c', 'cpp', 'go', 'javascript', 'lua', 'python', 'typescript' }
-        -- }),
-
         null_ls.builtins.diagnostics.codespell.with({
           -- codespell reads .codespellrc from its own cwd, not the null-ls root.
           cwd = function()
