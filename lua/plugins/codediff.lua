@@ -117,6 +117,7 @@ return {
     setup = setup,
     build = function()
       vim.cmd.CodeDiff('install')
+      require('codediff.core.installer.watcher').ensure(function() end)
     end,
   },
 }
